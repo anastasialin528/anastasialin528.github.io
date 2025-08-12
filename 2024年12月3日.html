@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8"> <!-- 設定字符編碼為 UTF-8 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- 設定響應式設計，適應不同螢幕大小 -->
+  <title>晨曦前的星空</title> <!-- 網頁標題 -->
+  <style>
+    /* 基本的頁面樣式 */
+    body {
+      margin: 0; /* 去除頁面邊距 */
+      font-family: "Microsoft JhengHei", sans-serif; /* 設定字型 */
+      background: #fff; /* 設定背景顏色為白色 */
+      color: #333; /* 設定文字顏色 */
+      line-height: 1.8; /* 行高設為 1.8 */
+    }
+
+    header {
+      background: #212121; /* 設定頁首背景色為黑色 */
+      padding: 1rem 2rem; /* 設定頁首內邊距 */
+      color: #fff; /* 設定頁首文字顏色為白色 */
+    }
+
+    main {
+      max-width: 800px; /* 設定主內容區域最大寬度 */
+      margin: 2rem auto; /* 設定主內容區域上下邊距，並且居中 */
+      padding: 0 1rem; /* 設定左右邊距 */
+    }
+
+    img {
+      width: 100%; /* 圖片寬度設定為 100% */
+      border-radius: 8px; /* 圖片圓角 */
+      margin: 1.5rem 0; /* 圖片上下邊距 */
+    }
+
+    h1 {
+      color: #ff6f61; /* 設定標題顏色為橙紅色 */
+      font-size: 2rem; /* 設定標題字體大小 */
+      margin-bottom: 0.5rem; /* 設定標題下方邊距 */
+    }
+
+    p:empty { 
+      display: block; /* 空的段落顯示為塊級元素 */
+      height: 1.0rem; /* 設定空段落高度 */
+    }
+
+    .date {
+      color: #999; /* 設定日期顏色為灰色 */
+      font-size: 0.9rem; /* 設定日期字體大小 */
+      margin-bottom: 1.5rem; /* 設定日期下方邊距 */
+    }
+
+    /* 返回首頁的連結樣式 */
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #ff6f61; /* 設定返回首頁文字顏色 */
+      text-decoration: none; /* 去除連結下劃線 */
+      font-weight: bold; /* 設定文字加粗 */
+      border: 2px solid #ff6f61; /* 設定邊框顏色 */
+      padding: 0.4rem 1rem; /* 設定內邊距 */
+      border-radius: 25px; /* 設定圓角邊框 */
+      transition: all 0.3s ease; /* 設定過渡效果 */
+    }
+
+    .back-link:hover {
+      background: #ff6f61; /* 滑鼠懸停時背景顏色 */
+      color: #fff; /* 滑鼠懸停時文字顏色 */
+    }
+
+    /* 分享功能區塊 */
+    .share-section {
+      text-align: center;
+      margin-top: 3rem; /* 上方邊距 */
+    }
+
+    .line {
+      height: 1px; /* 設定黑線高度 */
+      background-color: rgba(0, 0, 0, 0.2); /* 設定黑線顏色 */
+      margin: 1rem 0; /* 設定黑線的上下邊距 */
+      width: 100%; /* 設定黑線寬度為100% */
+    }
+
+    /* 分享按鈕區塊 */
+    .share-icons {
+      display: flex;
+      justify-content: center; /* 水平居中 */
+      align-items: center; /* 垂直居中 */
+      gap: 1.5rem; /* 設定按鈕之間的間距 */
+      margin: 1rem 0; /* 上下邊距 */
+      position: relative; /* 設定相對位置 */
+    }
+
+    .icon {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: #333; /* 設定顏色 */
+      transition: transform 0.2s ease; /* 變換過渡效果 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .icon:hover {
+      transform: scale(1.2); /* 滑鼠懸停時放大效果 */
+    }
+
+    /* Facebook "f" 圖示 */
+    .facebook-icon {
+      font-size: 24px;
+      font-weight: bold;
+      color: #000; /* 設定顏色為黑色 */
+      height: 40px; /* 設定高度 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 複製連結按鈕樣式（圖片） */
+    #copy-link {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      width: 40px; /* 設定圖片顯示大小 */
+      height: 40px; /* 設定圖片顯示大小 */
+    }
+
+    /* 圖片的樣式 */
+    #copy-link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 保持圖片比例 */
+    }
+
+    #copied-msg {
+      position: absolute;
+      top: 120%; /* 設定提示框的位置 */
+      font-size: 0.9rem;
+      color: #28a745; /* 顯示顏色為綠色 */
+      display: none; /* 預設隱藏 */
+      margin-top: 5px; /* 設定提示框與按鈕之間的間距 */
+    }
+
+    /* 觀看次數與按讚次數的樣式 */
+    .stats {
+      display: flex;
+      justify-content: space-between; /* 使左右兩側對齊 */
+      align-items: center; /* 垂直置中 */
+      margin-top: 1rem;
+      padding-left: 15px; /* 內距來確保不超過黑線 */
+      padding-right: 15px; /* 右邊的內距 */
+      width: calc(100% - 30px); /* 確保寬度適配左右內距 */
+      margin-left: auto;
+      margin-right: auto; /* 使區塊居中 */
+    }
+
+    .like-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: red; /* 紅色空心愛心 */
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .like-btn:hover {
+      color: #e04848;
+    }
+
+    .like-btn span {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>晨曦前的星空</h1> <!-- 網頁標題 -->
+  </header>
+  <main>
+    <div class="date">2024年12月3日</div> <!-- 顯示日期 -->
+
+    <img src="images/1.jpg" alt="晨曦前的星空"> <!-- 顯示圖片 -->
+
+    <p>昨天早上五點半起床，剛好是航海曙光開始的時間，直到5:50左右民用曙光開始，星星就幾乎轉黯淡而不得見。早起僅能觀測二十分鐘真的時間太短了，不過癮。因此今天在天文曙光開始的五點鐘爬起來，果然可見的星又更多了！拍了幾十張，打算假日再用軟體試試疊圖的效果。</p>
+    <p>另外值得一提的是，疑似看到了火流星！！突然一顆很亮的白色火球畫過夜空，尾巴短短的，白色的頭圓圓大大的，高速飛過即消失。最近12/4-12/20是雙子座流星雨極大期的階段，不曉得這顆是不是屬於雙子座流星雨？🌠</p>
+    <p>最後說明此張照片的星座：由左往右可見大犬座亮星「天狼星」、「獵戶座」、「木星」、「御夫座」，往上可見「雙子座」。</p>
+    <p>2024/12/3 5:32 ISO250 f3.5 10.0s</p>
+
+    <a class="back-link" href="index.html">← 回到首頁</a> <!-- 返回首頁連結 -->
+
+    <!-- 分享功能區塊 -->
+    <div class="share-section">
+      <div class="line"></div> <!-- 黑色線條 -->
+      <div class="share-icons">
+        <!-- Facebook 分享圖示 -->
+        <a class="icon facebook-icon" id="fb-share"
+           href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/post.html"
+           target="_blank" rel="noopener noreferrer"
+           title="分享到 Facebook">f</a>
+
+        <!-- 複製連結圖示（使用 share.jpg 圖片） -->
+        <button class="icon" id="copy-link" title="複製連結">
+          <img src="images/share.jpg" alt="複製連結">
+        </button>
+        <span id="copied-msg">Link Copied!</span> <!-- 複製連結提示 -->
+      </div>
+      <div class="line"></div> <!-- 黑色線條 -->
+    </div>
+
+    <!-- 觀看次數與按讚次數區塊 -->
+    <div class="stats">
+      <div class="view">0 views</div> <!-- 顯示觀看次數 -->
+      <div class="like">
+         <button class="like-btn" onclick="likePost(event)">
+           ❤️<span id="like-count">0</span> <!-- 顯示按讚數 -->
+         </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // 複製連結功能
+    document.getElementById("copy-link").addEventListener("click", function () {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const msg = document.getElementById("copied-msg");
+        msg.style.display = "inline"; // 顯示 "Link Copied!" 提示
+        setTimeout(() => {
+          msg.style.display = "none"; // 2 秒後隱藏提示
+        }, 2000);
+      });
+    });
+
+    // 按讚功能
+    function likePost(event) {
+      event.preventDefault();
+      const likeCountSpan = document.getElementById("like-count");
+      let likeCount = parseInt(likeCountSpan.textContent);
+      likeCountSpan.textContent = likeCount + 1; // 點擊後按讚數+1
+    }
+  </script>
+</body>
+</html>
