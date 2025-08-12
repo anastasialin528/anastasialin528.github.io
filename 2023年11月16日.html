@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>日本東北自助旅行-弘前城公園</title>
+  <style>
+    body { 
+      margin: 0; 
+      font-family: "Microsoft JhengHei", sans-serif; 
+      background: #fff; 
+      color: #333; 
+      line-height: 1.8; 
+        }
+
+    header { 
+      background: #212121;
+      padding: 1rem 2rem; 
+      color: #fff; 
+          }
+
+    main { 
+      max-width: 800px; 
+      margin: 2rem auto; 
+      padding: 0 1rem; 
+        }
+
+    img { 
+      width: 100%; 
+      border-radius: 8px; 
+      margin: 1.5rem 0; 
+       }
+    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
+    p:empty { display: block; height: 1.0rem; }
+    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    .back-link {
+      display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold;
+      border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease;
+    }
+    .back-link:hover { background: #ff6f61; color: #fff; }
+
+    .share-section { text-align: center; margin-top: 3rem; }
+    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
+    .share-icons {
+      display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative;
+    }
+    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform 0.2s ease; display: flex; justify-content: center; align-items: center; }
+    .icon:hover { transform: scale(1.2); }
+    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
+    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
+    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
+    #copied-msg { position: absolute; top: 120%; font-size: 0.9rem; color: #28a745; display: none; margin-top: 5px; }
+
+    .stats {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;
+      padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto;
+    }
+    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
+    .like-btn:hover { color: #e04848; }
+    .like-btn span { margin-left: 5px; }
+  </style>
+</head>
+<body>
+  <header><h1>日本東北自助旅行-弘前城公園</h1></header>
+  <main>
+    <div class="date">2023年11月16日</div>
+
+    <img src="images/DSC0E8692.jpg" alt="日本東北自助旅行-弘前城公園">
+
+    <p>旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城，早晨六點半在小而巧的青森日航都市飯店精美自助式早餐前隨意選了幾樣能快速完食的食物，十分鐘內解決晨間果腹的任務，引來餐廳經理關注的目光，深怕餐點口味不合我們胃口。不得不說這間飯店雖只是三星，但是對於客人是真心的關照到心坎，禮儀周到但又保持著親切。這裡的員工認真想讓每位客人在飯店裡擁有美好回憶的態度令我感到無比溫暖。</p> <!-- 文章段落 -->
+    <p></p> <!-- 文章段落 -->
+    <p>告別了飯店，搭乘奧羽本線從青森到弘前，再轉搭Taxi到弘前公園。由於這天必須趕下午的班機，因此能夠停留在這的時間並不長。而來到這之前就有聽聞紅葉已掉的差不多，原本我對這裡的紅葉已不抱太大希望。不過事實證明，弘城公園就算沒有密滿紅葉的加持，它也仍舊有獨特的魅力。所幸最後還是有趕來看幾眼，才能捕捉到美麗的護城河一隅，看它在小小的觀景窗裡，美的像幅畫。</p> <!-- 文章段落 -->
+    
+    <a class="back-link" href="index.html">← 回到首頁</a>
+
+    <!-- 分享功能 -->
+    <div class="share-section">
+      <div class="line"></div>
+      <div class="share-icons">
+        <a class="icon facebook-icon" id="fb-share"
+           href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/post.html"
+           target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
+        <button class="icon" id="copy-link" title="複製連結">
+          <img src="images/share.jpg" alt="複製連結">
+        </button>
+        <span id="copied-msg">Link Copied!</span>
+      </div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 觀看與按讚 -->
+    <div class="stats">
+      <div class="view"><span id="post-views">0</span> views</div>
+      <div class="like">
+        <button class="like-btn" id="post-like-btn">♡ <span id="post-likes">0</span></button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 共用工具（與首頁相同） -->
+  <script>
+    const STORAGE_KEY = 'postStats_v1';
+    function loadAll(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}'); }catch{ return {}; } }
+    function saveAll(all){ localStorage.setItem(STORAGE_KEY, JSON.stringify(all)); }
+    function ensure(id){
+      const all = loadAll();
+      if(!all[id]){ all[id] = { views: 0, likes: 0, liked: false }; saveAll(all); }
+      return all[id];
+    }
+    function get(id){ const all = loadAll(); return all[id] || { views: 0, likes: 0, liked: false }; }
+    function set(id, stats){ const all = loadAll(); all[id] = stats; saveAll(all); }
+    function toggleLike(id){
+      const s = ensure(id);
+      if(s.liked){ s.liked=false; s.likes=Math.max(0, s.likes-1); }
+      else { s.liked=true; s.likes+=1; }
+      set(id, s); return s;
+    }
+    function idFromLocation(){ return location.pathname.replace(/^\//,''); }
+    function onStatsChanged(handler){ window.addEventListener('storage', e=>{ if(e.key===STORAGE_KEY) handler(JSON.parse(e.newValue||'{}')); }); }
+  </script>
+
+  <!-- 內頁邏輯：載入即 +1 觀看、按讚同步 -->
+  <script>
+    // 複製連結
+    document.getElementById("copy-link").addEventListener("click", function () {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const msg = document.getElementById("copied-msg");
+        msg.style.display = "inline";
+        setTimeout(() => { msg.style.display = "none"; }, 2000);
+      });
+    });
+
+    const postId = idFromLocation();
+
+    // 確保有資料並 +1 觀看
+    const stats = ensure(postId);
+    stats.views += 1; set(postId, stats);
+
+    // 顯示最新數據
+    function render(){
+      const s = get(postId);
+      document.getElementById('post-views').textContent = s.views;
+      document.getElementById('post-likes').textContent = s.likes;
+      document.getElementById('post-like-btn').innerHTML =
+        `${s.liked ? '❤️' : '♡'} <span id="post-likes">${s.likes}</span>`;
+    }
+    render();
+
+    // 按讚
+    document.getElementById('post-like-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleLike(postId);
+      render();
+    });
+
+    // 其他分頁更新時即時同步
+    onStatsChanged(() => render());
+  </script>
+</body>
+</html>
