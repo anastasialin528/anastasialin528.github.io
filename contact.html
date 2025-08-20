@@ -186,19 +186,22 @@
       const t = setTimeout(() => controller.abort(), 15000); // 15 秒逾時 / 15s timeout
 
       try{
-        const res = await fetch(API_URL, { // 發送到 GAS / send to GAS
-          method: 'POST', // 使用 POST / use POST
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // 使用 text/plain 以避開 CORS 預檢 / use text/plain to avoid CORS preflight
-          body: JSON.stringify({ // 將資料轉成 JSON 字串 / serialize payload
-            action:  'contact',   // 後端依此分流 / action key
-            name:    data.name,   // 姓名 / name
-            email:   data.email,  // 電子郵件 / email
-            subject: data.subject,// 主旨 / subject
-            message: data.message,// 內容 / message
-            ua:      navigator.userAgent // 使用者代理字串（可選）/ user agent (optional)
-          }),
-          signal: controller.signal // 套用逾時控制 / pass abort signal
-        });
+        // ✅ 不帶任何 headers，瀏覽器就不會做預檢（OPTIONS）
+      const payload = JSON.stringify({
+      action:  'contact',
+      name:    data.name,
+      email:   data.email,
+      subject: data.subject,
+      message: data.message,
+      ua:      navigator.userAgent
+    });
+    
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      body: payload,
+      signal: controller.signal
+    });
+
         clearTimeout(t); // 清除逾時計時器 / clear timeout
 
         let json; // 準備解析回應 JSON / response holder
@@ -228,3 +231,4 @@
   </script> <!-- 腳本結束 / end script -->
 </body> <!-- 主體結束 / end body -->
 </html> <!-- 文件結束 / end html -->
+
