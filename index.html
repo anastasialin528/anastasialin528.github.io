@@ -6,221 +6,232 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Anastasia</title>
   <style>
-    /* 設定整體背景與字體 */
-    body {
-      margin: 0;
-      font-family: "Microsoft JhengHei", sans-serif;
-      background: #f9f9f6;
-      color: #333;
-    }
+    body { 
+          margin: 0; 
+          font-family: "Microsoft JhengHei", sans-serif; 
+          background: #f9f9f6; 
+          color: #333; 
+        }
 
-    /* 頁首設定 */
-    header {
-      position: fixed;
-      top: 0; left: 0; width: 100%;
-      z-index: 1000;
-      background: #212121;
-      padding: 1rem 2rem;
-      display: flex; 
-      align-items: center; 
-      justify-content: space-between;
-      flex-wrap: nowrap; 
-      box-sizing: border-box;
-          }
-    header h1 {
-      margin: 0; 
-      font-size: 2rem; 
-      color: #fff; 
-      white-space: 
-      nowrap; 
-      flex-shrink: 0;
-              }
+    /* Header */
+    header { 
+          position: fixed; 
+          top: 0; 
+          left: 0; 
+          width: 100%; 
+          z-index: 1000; 
+          background: #212121; 
+          padding: 1rem 2rem;
+          display: flex; 
+          align-items: center; 
+          justify-content: space-between; 
+          box-sizing: border-box; 
+        }
+    header h1 { 
+          margin: 0; 
+          font-size: 2rem; 
+          color: #fff; 
+          white-space: nowrap; 
+          flex-shrink: 0; 
+        }
     nav { 
-      display: flex; 
-      gap: 1.5rem; 
-      margin-left: auto; 
-      margin-right: 1rem; 
-      flex-shrink: 0; 
+          display: flex; 
+          gap: 1.5rem; 
+          margin-left: auto; 
+          margin-right: 1rem; 
+          flex-shrink: 0; 
         }
     nav a { 
-      color: #fff; 
-      text-decoration: none; 
-      font-weight: bold; 
-      white-space: nowrap; 
-          }
+          color: #fff; 
+          text-decoration: none; 
+          font-weight: bold; 
+          white-space: nowrap; 
+        }
     nav a:hover { 
-      text-decoration: underline; 
-    }
+          text-decoration: underline; 
+        }
 
-    /* 英雄圖區塊 */
+    /* Hero */
     .hero-gallery { 
-      display: grid; 
-     /* grid-template-columns: repeat(2, 1fr); 分成兩欄*/ 
-     /* grid-template-columns: 1fr;  改成一欄 */
-      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); /*自動依圖片數量:只有一張圖時 → 滿版，兩張圖時 → 各佔一半 ;*/
-      grid-auto-rows: 50vh; 
-      width: 100vw; 
-      margin-top: 64px; 
-    }
+          display: grid; 
+          grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); 
+          grid-auto-rows: 50vh; 
+          width: 100vw; 
+          margin-top: 64px; 
+        }
     .hero-gallery img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-      display: block; 
-    }
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+          display: block; 
+        }
 
-    .hero-title {
-      text-align: center; 
-      padding: 2rem 1rem; 
-      font-size: 3rem;
-      color: #6fb1a0; 
-      font-weight: bold; 
-      font-family: 'Segoe Script', cursive;
-    }
+    .hero-title { 
+          text-align: center; 
+          padding: 2rem 1rem; 
+          font-size: 3rem; 
+          color: #6fb1a0; 
+          font-weight: bold; 
+          font-family: 'Segoe Script', cursive; 
+        }
 
+    /* Layout */
     .content-wrapper { 
-      background: #f9f9f6; 
-      padding: 2rem 1rem; 
-      display: flex; 
-      justify-content: center; 
-    }
+          background: #f9f9f6; 
+          padding: 2rem 1rem; 
+          display: flex; 
+          justify-content: center; 
+        }
     main { 
-      max-width: 1000px; 
-      width: 100%; 
-    }
+          max-width: 1000px; 
+          width: 100%; 
+        }
 
+    /* Tags */
     .tags { 
-      text-align: center; 
-      margin-bottom: 2rem; 
-    }
-    .tags button {
-      background: #fff; 
-      border: 2px solid #6fb1a0; 
-      color: #6fb1a0;
-      padding: 0.5rem 1.2rem; 
-      margin: 0.4rem; 
-      border-radius: 25px; 
-      cursor: pointer; 
-      font-size: 1rem; 
-      transition: all 0.3s ease;
-    }
+          text-align: center; 
+          margin-bottom: 2rem; 
+        }
+    .tags button { 
+          background: #fff; 
+          border: 2px solid #6fb1a0; 
+          color: #6fb1a0; 
+          padding: 0.5rem 1.2rem; 
+          margin: 0.4rem;
+          border-radius: 25px; 
+          cursor: pointer; 
+          font-size: 1rem; 
+          transition: all 0.3s ease; 
+        }
     .tags button:hover { 
-      background: #6fb1a0; 
-      color: #fff; 
-    }
+          background: #6fb1a0; 
+          color: #fff; 
+        }
 
+    /* Cards */
     .posts { 
-      column-count: 3; 
-      column-gap: 1.5rem; 
-    }
+          column-count: 3; 
+          column-gap: 1.5rem; 
+        }
     @media (max-width: 1024px){ .posts{ column-count: 2; } }
     @media (max-width: 600px){ .posts{ column-count: 1; } }
 
-    .card {
-      background: #fff; 
-      border-radius: 12px; 
-      overflow: hidden; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-decoration: none; 
-      color: inherit; 
-      transition: transform 0.3s ease;
-      display: inline-block; 
-      width: 100%; 
-      margin-bottom: 1.5rem; 
-      break-inside: avoid; 
-      position: relative;
-    }
+    .card { 
+          background: #fff; 
+          border-radius: 12px; 
+          overflow: hidden; 
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+          text-decoration: none; 
+          color: inherit; 
+          transition: transform 0.3s ease;
+          display: inline-block; 
+          width: 100%; 
+          margin-bottom: 1.5rem; 
+          break-inside: avoid; 
+          position: relative; 
+        }
     .card:hover { 
-      transform: translateY(-5px); 
-    }
+          transform: translateY(-5px); 
+        }
 
     .card img { 
-      width: 100%; 
-      height: 320px; 
-      object-fit: cover; 
-      display: block; 
+          width: 100%; 
+          height: 320px; 
+          object-fit: cover; 
+          display: block; 
+        }
+    .card-content { 
+          padding: 1rem; 
     }
-    .card-content { padding: 1rem; }
     .card-content h2 { 
-      margin: 0 0 0.5rem; 
-      color: #6fb1a0; 
-      font-size: 1.4rem; 
-    }
+          margin: 0 0 0.5rem; 
+          color: #6fb1a0; 
+          font-size: 1.4rem; 
+        }
     .card-content .date { 
-      font-size: 0.9rem; 
-      color: #999; 
-      margin-bottom: 0.5rem; 
-    }
+          font-size: 0.9rem; 
+          color: #999; 
+          margin-bottom: 0.5rem; 
+        }
     .card-content p { 
-      margin: 0; 
-      line-height: 1.6; 
-      color: #555; 
-    }
+          margin: 0; 
+          line-height: 1.6; 
+          color: #555; 
+        }
 
-    .card-meta {
-      border-top: 1px solid #ccc; 
-      margin-top: 1rem; 
-      padding-top: 0.8rem; 
-      padding-left: 0.5rem; 
-      padding-right: 0.5rem;
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      font-size: 0.9rem; 
-      color: #999;
-    }
+    .card-meta { 
+          border-top: 1px solid #ccc; 
+          margin-top: 1rem; 
+          padding-top: 0.8rem; 
+          padding-left: 0.5rem; 
+          padding-right: 0.5rem;
+          display: flex; 
+          justify-content: space-between; 
+          align-items: center; 
+          font-size: 0.9rem; 
+          color: #999; 
+        }
 
     .like-btn { 
-      background: none; 
-      border: none; 
-      color: red; 
-      cursor: pointer; 
-      font-size: 1rem; 
-      display: flex; 
-      align-items: center; 
-    }
-    .like-btn:hover { color: #559c8d; }
-    .like-btn span { margin-left: 5px; }
+          background: none; 
+          border: none; 
+          color: red; 
+          cursor: pointer; 
+          font-size: 1rem;
+          display: flex; 
+          align-items: center; 
+        }
+    .like-btn span { 
+          margin-left: 5px; 
+        }
+    /* 已按讚狀態：半透明、停用游標 */
+    .like-btn.is-liked { 
+          opacity: .6; 
+          cursor: default; 
+          pointer-events: none; 
+        }
 
-    /* ===== Footer ===== */
+    /* Footer */
     .site-footer { 
-      background: #f1f0ed; 
-      padding: 3rem 1rem; 
-    }
+          background: #f1f0ed; 
+          padding: 3rem 1rem; 
+        }
     .footer-inner { 
-      max-width: 1000px; 
-      margin: 0 auto; 
-      position: relative; 
-    }
+          max-width: 1000px; 
+          margin: 0 auto; 
+          position: relative; 
+        }
     .footer-social { 
-      display: flex; 
-      gap: 3rem; 
-      justify-content: flex-end; 
-      margin-bottom: 1.25rem; 
-      font-style: italic; 
-    }
+          display: flex; 
+          gap: 3rem; 
+          justify-content: flex-end; 
+          margin-bottom: 1.25rem; 
+          font-style: italic; 
+        }
     .footer-social a { 
-      color: #133d33; 
-      text-decoration: none; 
-    }
-    .footer-social a:hover { text-decoration: underline; }
+          color: #133d33; 
+          text-decoration: none; 
+        }
+    .footer-social a:hover { 
+          text-decoration: underline; 
+        }
     .footer-line { 
-      height: 2px; 
-      background: #133d33; 
-      border: none; 
-      width: 100%; 
-      margin: 1rem auto 1.25rem; 
-    }
+          height: 2px; 
+          background: #133d33; 
+          border: none; 
+          width: 100%; 
+          margin: 1rem auto 1.25rem; 
+        }
     .footer-copy { 
-      text-align: center; 
-      font-size: 0.9rem; 
-      color: #6b7b74; 
-    }
+          text-align: center; 
+          font-size: 0.9rem; 
+          color: #6b7b74; 
+        }
     @media (max-width: 768px){ .footer-social{ justify-content: center; gap: 2rem; } }
   </style>
 </head>
 <body>
-  <!-- 頁首區域 -->
+  <!-- Header -->
   <header>
     <h1>dEaR dIaRy</h1>
     <nav>
@@ -230,19 +241,16 @@
     </nav>
   </header>
 
-  <!-- 英雄圖區塊 -->
+  <!-- Hero -->
   <div class="hero-gallery">
-   
     <img src="images/DSC0E8628.jpg" alt="" loading="lazy">
   </div>
 
-  <!-- hero title 下方標語 -->
   <div class="hero-title">Beautiful Little Things</div>
 
-  <!-- 主內容區容器 -->
+  <!-- Content -->
   <div class="content-wrapper">
     <main>
-      <!-- 分類標籤按鈕 -->
       <div class="tags">
         <button onclick="filterTag('all')">全部</button>
         <button onclick="filterTag('旅遊')">旅遊</button>
@@ -251,11 +259,11 @@
         <button onclick="filterTag('潛水')">潛水</button>
       </div>
 
-      <!-- 文章列表 -->
       <div class="posts" id="postList"></div>
     </main>
   </div>
 
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-inner">
       <nav class="footer-social" aria-label="Social links">
@@ -270,60 +278,112 @@
     </div>
   </footer>
 
-  <!-- ===== 共用工具（首頁/內頁都要一樣） ===== -->
+  <!-- ===== 後端 API 與共用工具 ===== -->
   <script>
-    const STORAGE_KEY = 'postStats_v1';
-    function loadAll(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}'); }catch{ return {}; } }
-    function saveAll(all){ localStorage.setItem(STORAGE_KEY, JSON.stringify(all)); }
-    function ensure(id){
-      const all = loadAll();
-      if(!all[id]){ all[id] = { views: 0, likes: 0, liked: false }; saveAll(all); }
-      return all[id];
+    // ⬇⬇⬇ 這一行務必換成你自己的 Web App URL（以 /exec 結尾）
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzSGUNGw-XjR-6HHFTbnUmUMauSG5jw_ARmJyHiF2vfkNSaS-JroqO4-rdHSGCkJlp9/exec';
+
+    // GET 呼叫（與你 ping 相容）
+    async function api(params) {
+      const url = API_URL + '?' + new URLSearchParams(params).toString();
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        return await r.json();
+      } catch (e) {
+        console.error('API error:', e);
+        return { ok:false, error: String(e) };
+      }
     }
-    function get(id){ const all = loadAll(); return all[id] || { views: 0, likes: 0, liked: false }; }
-    function set(id, stats){ const all = loadAll(); all[id] = stats; saveAll(all); }
-    function toggleLike(id){
-      const s = ensure(id);
-      if(s.liked){ s.liked=false; s.likes=Math.max(0, s.likes-1); }
-      else { s.liked=true; s.likes+=1; }
-      set(id, s); return s;
+    const getStats = (id) => api({ action:'get', id });
+    const likeAPI  = (id) => api({ action:'like', id });
+    const unlikeAPI= (id) => api({ action:'unlike', id });
+
+    // ===== 本機紀錄是否按過讚（兩頁共用） =====
+    const LIKE_KEY = 'blog_liked_map';
+    function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} }
+    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
+    function isLiked(id){ return !!loadLiked()[id]; }
+    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); }
+
+    // 統一渲染愛心按鈕：按過 -> 變紅心並停用；沒按過 -> 空心可按
+    function renderHeart(btnEl, id, likeCount, likesSpanId){
+      const liked = isLiked(id);
+      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`;
+      btnEl.classList.toggle('is-liked', liked);
+      btnEl.disabled = liked;
     }
-    function idFromHref(href){ return new URL(href, location.href).pathname.replace(/^\//,''); }
-    function onStatsChanged(handler){ window.addEventListener('storage', e=>{ if(e.key===STORAGE_KEY) handler(JSON.parse(e.newValue||'{}')); }); }
+
+    // 跨分頁/頁面同步（有人在別頁按了讚，本頁會自動把按鈕變停用）
+    window.addEventListener('storage', (e) => {
+      if (e.key !== LIKE_KEY) return;
+      if (typeof syncAllHearts === 'function') syncAllHearts();
+    });
+
+    // 取得文章 ID（只取檔名）
+    function idFromHref(href){
+      const last = new URL(href, location.href).pathname.split('/').pop();
+      return decodeURIComponent(last || 'index.html');
+    }
   </script>
 
-  <!-- ===== 首頁卡片產生與連動 ===== -->
+  <!-- ===== 首頁卡片產生 + 從後端取數 + 同步愛心 ===== -->
   <script>
     const posts = [
-      { tag:"旅遊", href:"2023年11月16日.html", img:"images/DSC0E8692.jpg", title:"日本東北自助旅行-弘前城公園", date:"2023-11-16", excerpt:"旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城..." },
 
-      { tag:"旅遊", href:"2023年11月24日.html", img:"images/DSC0E8750.jpg", title:"日本東北自助旅行-弘前城植物園", date:"2023-11-24", excerpt:"之於火紅的楓葉🍁其實我更愛銀杏的黃" },
+      { tag:"旅遊", href:"2023年6月25日.html", img:"images/九份.jpg", title:"｜九份｜", date:"2023年6月25日", excerpt:"收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️" },
 
-      { tag:"旅行", href:"2023年11月26日.html", img:"images/DSC0E8282.jpg", title:"標準鏡", date:"2023年11月26日", excerpt:"旅行的時候，我最常用使用的是標準鏡..." },
+      { tag:"旅遊", href:"2023年7月2日.html", img:"images/BLUE.jpg", title:"｜台中老家三日遊｜", date:"2023年7月2日", excerpt:"LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳" },
 
-      { tag:"旅遊", href:"2023年11月28日.html", img:"images/DSC08289.jpg", title:"日本東北自助旅行-鳴子峽火車站！", date:"2023年11月28日", excerpt:"11/10旅行第二天6:50左右，我們從Hotel Monte Hermana Sendai步行到附近的「仙台站」搭乘7:06發車的Yamabiko號，沿著東北·北海道幹線到「谷川站」，接著從「谷川站」轉乘陸羽東線前往「鳴子溫泉站」。" },
+      { tag:"旅遊", href:"2023年9月29日.html", img:"images/林口海邊夕陽.jpg", title:"｜林口海邊｜", date:"2023年9月29日", excerpt:"放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋" },
 
-      { tag:"星空", href:"2024年12月3日.html", img:"images/1.jpg", title:"晨曦前的星空", date:"2024年12月3日", excerpt:"昨天早上五點半起床，剛好是航海曙光開始的時間，直到5:50左右民用曙光開始，星星就幾乎轉黯淡而不得見。早起僅能觀測二十分鐘真的時間太短了，不過癮。因此今天在天文曙光開始的五點鐘爬起來，果然可見的星又更多了！拍了幾十張，打算假日再用軟體試試疊圖的效果。" },
+      { tag:"旅遊", href:"2023年11月16日.html", img:"images/DSC0E8692.jpg", title:"｜弘前城公園｜", date:"2023年11月16日", excerpt:"旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城..." },
 
-      { tag:"星空", href:"2025年3月2日.html", img:"images/DSC09815.jpg", title:"溫馨的夜", date:"2025年3月2日", excerpt:"今天日落左右，站在頂樓耐心等候這片厚厚的雲撥開小小的帷幕，讓可愛的上弦月及明亮的金星能夠微微地露個臉，果然是值得的。" },
+      { tag:"旅遊", href:"2023年11月18日.html", img:"images/街貓.jpg", title:"｜街貓｜", date:"2023年11月18日", excerpt:"好幸運，今天遇見住在柿園裡的小貓。更幸運的是能有機會迅速拍下牠可愛的背影。相機果然需要隨身攜帶，路途中總是有美好的畫面值得紀錄。" },
 
-      { tag:"日常", href:"2024年10月23日.html", img:"images/聖誕樹.jpg", title:"聖誕樹", date:"2024年10月23日", excerpt:"在我人生中一直渴望的一件事情..." },
+      { tag:"旅遊", href:"2023年11月19日.html", img:"images/楓樹.jpg", title:"｜毛越寺的楓樹｜", date:"2023年11月19日", excerpt:"光影從葉子上頭打下來，或穿透或產生暗部陰影的效果，加上楓葉原先漸層的色彩令人著迷。" },
 
-      { tag:"日常", href:"2025年3月5日.html", img:"images/天空大鳥.jpg", title:"美麗的天空", date:"2025年3月5日", excerpt:"天氣不好的時候，拍不到星星。只能就地取材，有什麼拍什麼。" },
+      { tag:"旅遊", href:"2023年11月24日.html", img:"images/DSC0E8750.jpg", title:"｜弘前城植物園｜", date:"2023年11月24日", excerpt:"之於火紅的楓葉🍁其實我更愛銀杏的黃。好想讓整片銀杏佈滿底片啊～這棵在弘前城植物園超巨大的樹🌲" },
 
-      { tag:"日常", href:"2025年4月15日.html", img:"images/苔蘚.jpg", title:"四月十五日", date:"2025年4月15日", excerpt:"今天翻以前的網誌，看見一篇幾年前蠻有感覺的詩，也想起過往曾經的全心全意。走過的路，雖然過去，卻也是道美麗的風景，美好的回憶。" },
+      { tag:"旅行", href:"2023年11月26日.html", img:"images/DSC0E8282.jpg", title:"｜標準鏡｜", date:"2023年11月26日", excerpt:"旅行的時候，我最常用使用的是標準鏡。它不只在拍中、遠景時，搭配小光圈就可以讓遠近畫面都很清晰，達到偽廣角的效果之外。最喜歡它在拍攝這種小花小草特寫的時候能夠有最自然的呈現，完整保留當時我看見它們的樣貌。" },
 
-      { tag:"潛水", href:"2025年4月21日.html", img:"images/面鏡.jpg", title:"面鏡開箱", date:"2025年4月21日", excerpt:"週間下班後沒時間去游泳，是一個缺憾。..." },
+      { tag:"旅遊", href:"2023年11月28日.html", img:"images/DSC08289.jpg", title:"｜鳴子峽火車站｜", date:"2023年11月28日", excerpt:"11/10旅行第二天6:50左右，我們從仙台站搭乘山彥號..." },
+
+      { tag:"星空", href:"2024年12月3日.html", img:"images/1.jpg", title:"｜晨曦前的星空｜", date:"2024年12月3日", excerpt:"昨天早上五點半起床，剛好是航海曙光開始的時間..." },
+
+      { tag:"星空", href:"2025年3月2日.html", img:"images/DSC09815.jpg", title:"｜溫馨的夜｜", date:"2025年3月2日", excerpt:"今天日落左右，等雲撥開讓上弦月與金星露臉..." },
+
+      { tag:"日常", href:"2024年10月23日.html", img:"images/聖誕樹.jpg", title:"｜聖誕樹｜", date:"2024年10月23日", excerpt:"在我人生中一直渴望的一件事情..." },
+
+      { tag:"日常", href:"2025年3月5日.html", img:"images/天空大鳥.jpg", title:"｜美麗的天空｜", date:"2025年3月5日", excerpt:"天氣不好的時候，拍不到星星。只能就地取材..." },
+
+      { tag:"日常", href:"2025年4月15日.html", img:"images/苔蘚.jpg", title:"｜四月十五日｜", date:"2025年4月15日", excerpt:"今天翻以前的網誌，看見一篇幾年前蠻有感覺的詩..." },
+
+      { tag:"潛水", href:"2025年4月21日.html", img:"images/面鏡.jpg", title:"｜面鏡開箱｜", date:"2025年4月21日", excerpt:"週間下班後沒時間去游泳，是一個缺憾..." }
     ];
 
     const postList = document.getElementById("postList");
 
+    // 讓 storage 事件時可以同步整頁按鈕
+    function syncAllHearts(){
+      posts.forEach((post, index) => {
+        const id = idFromHref(post.href);
+        const btn = document.getElementById(`like-btn-${index}`);
+        const likesSpan = document.getElementById(`likes-${index}`);
+        if (btn && likesSpan) {
+          const currentLikes = parseInt(likesSpan.textContent || '0', 10);
+          renderHeart(btn, id, currentLikes, `likes-${index}`);
+        }
+      });
+    }
+
+    // 先畫卡片，再逐一拉取後端數字
     posts.forEach((post, index) => {
-      const postId = idFromHref(post.href);
-      const stats = ensure(postId); // 確保存在，但不重設
+      const id = idFromHref(post.href);
 
       const card = document.createElement("a");
-      card.href = post.href; card.className = "card"; card.setAttribute("data-tag", post.tag);
+      card.href = post.href;
+      card.className = "card";
+      card.setAttribute("data-tag", post.tag);
       card.innerHTML = `
         <img src="${post.img}" alt="">
         <div class="card-content">
@@ -331,42 +391,61 @@
           <div class="date">${post.date}</div>
           <p>${post.excerpt}</p>
           <div class="card-meta">
-            <span id="views-${index}">${stats.views} views</span>
+            <span id="views-${index}">0 views</span>
             <button class="like-btn" type="button" id="like-btn-${index}">
-              ${stats.liked ? '❤️' : '♡'} <span id="likes-${index}">${stats.likes}</span>
+              ♡ <span id="likes-${index}">0</span>
             </button>
           </div>
         </div>
       `;
       postList.appendChild(card);
 
-      // 愛心點擊（只改數據，不跳頁）
-      document.getElementById(`like-btn-${index}`).addEventListener('click', (e) => {
+      // 從後端取回真實數字
+      getStats(id).then(resp => {
+        if (resp && resp.ok) {
+          const v = document.getElementById(`views-${index}`);
+          const btn = document.getElementById(`like-btn-${index}`);
+          if (v) v.textContent = `${resp.views ?? 0} views`;
+          if (btn) renderHeart(btn, id, resp.likes ?? 0, `likes-${index}`);
+        } else {
+          const btn = document.getElementById(`like-btn-${index}`);
+          if (btn) renderHeart(btn, id, 0, `likes-${index}`);
+        }
+      }).catch(console.error);
+
+      // 愛心點擊：按過的使用者不可再按
+      document.getElementById(`like-btn-${index}`).addEventListener('click', async (e) => {
         e.preventDefault(); e.stopPropagation();
-        const updated = toggleLike(postId);
-        document.getElementById(`likes-${index}`).textContent = updated.likes;
-        e.currentTarget.innerHTML = `${updated.liked ? '❤️' : '♡'} <span id="likes-${index}">${updated.likes}</span>`;
+        if (isLiked(id)) return;
+
+        const btn = e.currentTarget;
+        const likesSpan = document.getElementById(`likes-${index}`);
+        let curLikes = parseInt(likesSpan.textContent || '0', 10);
+
+        // 樂觀 +1
+        renderHeart(btn, id, curLikes + 1, `likes-${index}`);
+
+        const res = await likeAPI(id);
+        if (res && res.ok) {
+          setLiked(id, true);
+          renderHeart(btn, id, res.likes ?? (curLikes + 1), `likes-${index}`);
+        } else {
+          // 失敗復原
+          renderHeart(btn, id, curLikes, `likes-${index}`);
+          alert('按讚失敗，請稍後再試。');
+        }
       });
     });
 
-    // RWD 的篩選
+    // 篩選
     function filterTag(tag){
       const cards = document.querySelectorAll('.card');
-      cards.forEach(card => { card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none'; });
-    }
-
-    // 其他分頁有變動時（例如內頁增加瀏覽/按讚），首頁即時同步
-    onStatsChanged(() => {
-      posts.forEach((post, index) => {
-        const s = get(idFromHref(post.href));
-        const v = document.getElementById(`views-${index}`);
-        const l = document.getElementById(`likes-${index}`);
-        const b = document.getElementById(`like-btn-${index}`);
-        if (v) v.textContent = `${s.views} views`;
-        if (l) l.textContent = s.likes;
-        if (b) b.innerHTML = `${s.liked ? '❤️' : '♡'} <span id="likes-${index}">${s.likes}</span>`;
+      cards.forEach(card => {
+        card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none';
       });
-    });
+    }
   </script>
 </body>
 </html>
+
+
