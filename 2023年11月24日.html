@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>日本東北自助旅行-弘前城植物園</title>
+  <title>｜日本東北自助旅行-弘前城植物園｜</title>
   <style>
     body { 
       margin: 0; 
@@ -11,62 +11,155 @@
       background: #fff; 
       color: #333; 
       line-height: 1.8; 
-        }
-
+    }
     header { 
-      background: #212121;
+      background: #212121; 
       padding: 1rem 2rem; 
       color: #fff; 
-          }
-
+    }
     main { 
       max-width: 800px; 
       margin: 2rem auto; 
       padding: 0 1rem; 
-        }
-
+    }
     img { 
       width: 100%; 
       border-radius: 8px; 
       margin: 1.5rem 0; 
-       }
-    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
-    p:empty { display: block; height: 1.0rem; }
-    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
-
-    .back-link {
-      display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold;
-      border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease;
     }
-    .back-link:hover { background: #ff6f61; color: #fff; }
-
-    .share-section { text-align: center; margin-top: 3rem; }
-    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
-    .share-icons {
-      display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative;
+    h1 { 
+      color: #ff6f61; 
+      font-size: 2rem; 
+      margin-bottom: 0.5rem;
     }
-    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform 0.2s ease; display: flex; justify-content: center; align-items: center; }
-    .icon:hover { transform: scale(1.2); }
-    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
-    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
-    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
-    #copied-msg { position: absolute; top: 120%; font-size: 0.9rem; color: #28a745; display: none; margin-top: 5px; }
-
-    .stats {
-      display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;
-      padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto;
+    p:empty { 
+      display: block; 
+      height: 1.0rem; 
     }
-    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
-    .like-btn:hover { color: #e04848; }
-    .like-btn span { margin-left: 5px; }
+    .date { 
+      color: #999; 
+      font-size: 0.9rem; 
+      margin-bottom: 1.5rem; 
+    }
+
+    .back-link { 
+      display: inline-block; 
+      margin-top: 2rem; 
+      color: #ff6f61; 
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid #ff6f61; 
+      padding: 0.4rem 1rem; 
+      border-radius: 25px; 
+      transition: all 0.3s ease; 
+    }
+    .back-link:hover { 
+      background: #ff6f61; 
+      color: #fff; 
+    }
+
+    .share-section { 
+      text-align: center; 
+      margin-top: 3rem; 
+    }
+    .line { 
+      height: 1px; 
+      background-color: rgba(0,0,0,0.2); 
+      margin: 1rem 0; 
+      width: 100%; 
+    }
+    .share-icons { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 1.5rem; 
+      margin: 1rem 0; 
+      position: relative; 
+    }
+    .icon { 
+      background: none; 
+      border: none; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+      text-decoration: none; 
+      color: #333; 
+      transition: transform 0.2s ease; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+    }
+    .icon:hover { 
+      transform: scale(1.2); 
+    }
+    .facebook-icon { 
+      font-size: 24px; 
+      font-weight: bold; 
+      color: #000; 
+      height: 40px; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+    }
+    #copy-link { 
+      background: none; 
+      border: none; 
+      cursor: pointer; 
+      padding: 0; 
+      width: 40px; 
+      height: 40px; 
+    }
+    #copy-link img { 
+      width: 100%; 
+      height: 100%; 
+      object-fit: cover; 
+    }
+    #copied-msg { 
+      position: absolute; 
+      top: 120%; 
+      font-size: 0.9rem; 
+      color: #28a745; 
+      display: none; 
+      margin-top: 5px; 
+    }
+
+    .stats { 
+      display: flex; 
+      justify-content: space-between;
+      align-items: center; 
+      margin-top: 1rem;
+      padding-left: 15px; 
+      padding-right: 15px; 
+      width: calc(100% - 30px); 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+    .like-btn { 
+      background: none; 
+      border: none; 
+      font-size: 1.2rem; 
+      color: red; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+    }
+    .like-btn:hover { 
+      color: #e04848; 
+    }
+    .like-btn span { 
+      margin-left: 5px; 
+    }
+    .like-btn.is-liked { 
+      opacity: .6; cursor: default; 
+      pointer-events: none; 
+    }
   </style>
 </head>
 <body>
-  <header><h1>日本東北自助旅行-弘前城植物園</h1></header>
+  <header><h1>｜日本東北自助旅行-弘前城植物園｜</h1></header>
   <main>
     <div class="date">2023年11月24日</div>
 
-    <img src="images/DSC0E8750.jpg" alt="日本東北自助旅行-弘前城植物園">
+    <img src="images/DSC0E8750.jpg" alt="｜日本東北自助旅行-弘前城植物園｜">
 
     <p>之於火紅的楓葉🍁</p> <!-- 文章段落 -->
     <p>其實我更愛銀杏的黃</p> <!-- 文章段落 -->
@@ -77,6 +170,7 @@
     <p></p> <!-- 空段落 -->
     <p>哈囉，大樹🌳</p> <!-- 文章段落 -->
     <p>當時能夠見到你真的很感動呢！</p> <!-- 文章段落 -->
+
     <a class="back-link" href="index.html">← 回到首頁</a>
 
     <!-- 分享功能 -->
@@ -103,64 +197,123 @@
     </div>
   </main>
 
-  <!-- 共用工具（與首頁相同） -->
+  <!-- 後端 API 與共用工具 -->
   <script>
-    const STORAGE_KEY = 'postStats_v1';
-    function loadAll(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}'); }catch{ return {}; } }
-    function saveAll(all){ localStorage.setItem(STORAGE_KEY, JSON.stringify(all)); }
-    function ensure(id){
-      const all = loadAll();
-      if(!all[id]){ all[id] = { views: 0, likes: 0, liked: false }; saveAll(all); }
-      return all[id];
+    // 與首頁一致
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzSGUNGw-XjR-6HHFTbnUmUMauSG5jw_ARmJyHiF2vfkNSaS-JroqO4-rdHSGCkJlp9/exec';
+    async function api(params) {
+      const url = API_URL + '?' + new URLSearchParams(params).toString();
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        return await r.json();
+      } catch (e) {
+        console.error('API error:', e);
+        return { ok:false, error: String(e) };
+      }
     }
-    function get(id){ const all = loadAll(); return all[id] || { views: 0, likes: 0, liked: false }; }
-    function set(id, stats){ const all = loadAll(); all[id] = stats; saveAll(all); }
-    function toggleLike(id){
-      const s = ensure(id);
-      if(s.liked){ s.liked=false; s.likes=Math.max(0, s.likes-1); }
-      else { s.liked=true; s.likes+=1; }
-      set(id, s); return s;
+    const getStats = (id) => api({ action:'get', id });
+    const addView  = (id) => api({ action:'addView', id });
+    const likeAPI  = (id) => api({ action:'like', id });
+    const unlikeAPI= (id) => api({ action:'unlike', id });
+
+    // 本機 liked map（與首頁共用同一 key）
+    const LIKE_KEY = 'blog_liked_map';
+    function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} }
+    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
+    function isLiked(id){ return !!loadLiked()[id]; }
+    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); }
+
+    function renderHeart(btnEl, id, likeCount, likesSpanId){
+      const liked = isLiked(id);
+      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`;
+      btnEl.classList.toggle('is-liked', liked);
+      btnEl.disabled = liked;
     }
-    function idFromLocation(){ return location.pathname.replace(/^\//,''); }
-    function onStatsChanged(handler){ window.addEventListener('storage', e=>{ if(e.key===STORAGE_KEY) handler(JSON.parse(e.newValue||'{}')); }); }
+
+    function getPostIdFromLocation(){
+      const last = location.pathname.split('/').pop();
+      return decodeURIComponent(last || 'index.html');
+    }
+
+    // storage 同步（當其他頁按了讚）
+    window.addEventListener('storage', (e) => {
+      if (e.key !== LIKE_KEY) return;
+      if (typeof syncCurrentHeart === 'function') syncCurrentHeart();
+    });
   </script>
 
-  <!-- 內頁邏輯：載入即 +1 觀看、按讚同步 -->
+  <!-- 內頁邏輯 -->
   <script>
-    // 複製連結
-    document.getElementById("copy-link").addEventListener("click", function () {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        const msg = document.getElementById("copied-msg");
-        msg.style.display = "inline";
-        setTimeout(() => { msg.style.display = "none"; }, 2000);
+    // 分享連結
+    const fbA = document.getElementById('fb-share');
+    if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
+    const copyBtn = document.getElementById("copy-link");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          const msg = document.getElementById("copied-msg");
+          if (!msg) return;
+          msg.style.display = "inline";
+          setTimeout(() => { msg.style.display = "none"; }, 2000);
+        });
       });
-    });
-
-    const postId = idFromLocation();
-
-    // 確保有資料並 +1 觀看
-    const stats = ensure(postId);
-    stats.views += 1; set(postId, stats);
-
-    // 顯示最新數據
-    function render(){
-      const s = get(postId);
-      document.getElementById('post-views').textContent = s.views;
-      document.getElementById('post-likes').textContent = s.likes;
-      document.getElementById('post-like-btn').innerHTML =
-        `${s.liked ? '❤️' : '♡'} <span id="post-likes">${s.likes}</span>`;
     }
-    render();
 
-    // 按讚
-    document.getElementById('post-like-btn').addEventListener('click', (e) => {
-      e.preventDefault();
-      toggleLike(postId);
-      render();
-    });
+    // 讓 storage 事件能同步這頁的愛心
+    function syncCurrentHeart(){
+      const id = getPostIdFromLocation();
+      const btn = document.getElementById('post-like-btn');
+      const likesSpan = document.getElementById('post-likes');
+      if (btn && likesSpan) {
+        const currentLikes = parseInt(likesSpan.textContent || '0', 10);
+        renderHeart(btn, id, currentLikes, 'post-likes');
+      }
+    }
 
-    // 其他分頁更新時即時同步
-    onStatsChanged(() => render());
+    (async () => {
+      const POST_ID = getPostIdFromLocation();
+
+      // 開頁 +1 觀看
+      await addView(POST_ID);
+
+      // 取得最新數字
+      const statsResp = await getStats(POST_ID);
+      const views = (statsResp && statsResp.ok && statsResp.views != null) ? statsResp.views : 0;
+      const likes = (statsResp && statsResp.ok && statsResp.likes != null) ? statsResp.likes : 0;
+
+      const viewEl = document.getElementById('post-views');
+      const likesEl = document.getElementById('post-likes');
+      const btn = document.getElementById('post-like-btn');
+
+      if (viewEl) viewEl.textContent = views;
+      if (likesEl) likesEl.textContent = likes;
+      if (btn) renderHeart(btn, POST_ID, likes, 'post-likes');
+
+      // 愛心：同一使用者不可重複按
+      if (btn) {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          if (isLiked(POST_ID)) return;
+
+          btn.disabled = true;
+          let curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
+
+          // 樂觀 +1
+          renderHeart(btn, POST_ID, curLikes + 1, 'post-likes');
+
+          const res = await likeAPI(POST_ID);
+          if (res && res.ok) {
+            setLiked(POST_ID, true);
+            renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
+          } else {
+            // 失敗復原
+            renderHeart(btn, POST_ID, curLikes, 'post-likes');
+            alert('按讚失敗，請稍後再試。');
+            btn.disabled = false;
+          }
+        });
+      }
+    })();
   </script>
 </body>
 </html>
