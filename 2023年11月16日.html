@@ -154,6 +154,21 @@
     }
   </style>
 </head>
+
+  <script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyalOSHqfhnv6jG0q_MZ07cISdssvny0rqjFtyBGRlDD-wDBB8hjK9DTBahlFqB54Hc/exec';
+
+  // 這篇文章的 ID（用檔名）
+  const PAGE_ID = decodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+
+  // 進到內頁就 +1（用 GET，免 CORS 預檢）
+  fetch(API_URL + '?' + new URLSearchParams({ action:'addView', id: PAGE_ID }), { cache:'no-store' })
+    .then(r => r.json())
+    .then(j => console.log('view+1', PAGE_ID, j))
+    .catch(console.error);
+</script>
+
+  
 <body>
   <header><h1>日本東北自助旅行-弘前城公園</h1></header>
   <main>
@@ -311,4 +326,5 @@
   </script>
 </body>
 </html>
+
 
