@@ -2,67 +2,97 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact · dEaR dIaRy</title>
   <style>
-    body {
-      font-family: "Microsoft JhengHei", sans-serif;
-      margin: 0;
-      background: #fff8f0;
-      color: #333;
+    :root{
+      --bg:#f2f0f2;      /* 粉灰色背景 */
+      --panel:#ffffff;   /* 卡片底 */
+      --ink:#2d3e50;     /* 主文色（灰藍） */
+      --muted:#6a6a6a;   /* 次文色 */
+      --accent:#d19bb3;  /* 粉紫紅點綴 */
+      --header:#000000;  /* 黑色頂欄 */
+      --edge:18px;
+      --shadow:0 12px 30px rgba(0,0,0,.07);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{
+      font-family:"Microsoft JhengHei",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        linear-gradient(rgba(249,249,246,0.5), rgba(249,249,246,0.5)),
+        url("images/照片牆7.jpg") no-repeat center center / cover;
+      color:var(--ink);
+      line-height:1.7;
     }
 
-    header {
-      background: #212121;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* 頂部導覽 */
+    header{
+      background:var(--header); color:#fff;
+      padding:14px 20px; position:sticky; top:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    header h1{margin:0; font-size:1.2rem; letter-spacing:.3px}
+    header nav a{ color:#fff; text-decoration:none; font-weight:600; margin-left:1rem; opacity:.9 }
+    header nav a:hover{ opacity:1; text-decoration:underline }
+
+    /* Hero 區 */
+    .hero{
+      padding:64px 20px 28px;
+      text-align:center;
+      max-width:800px; margin:0 auto;
+    }
+    .eyebrow{
+      text-transform:uppercase; letter-spacing:.18em; color:var(--muted);
+      font-size:.85rem; margin-bottom:.3rem;
+    }
+    .title{
+      font-size:2.4rem; margin:.2rem 0 .5rem;
+      letter-spacing:.02em;
+    }
+    .sub{
+      color:var(--muted); max-width:600px; margin:0 auto;
     }
 
-    header h1 {
-      color: #fff;
-      font-size: 2rem;
+    /* 表單卡片 */
+    .card{
+      max-width:700px; margin:40px auto 80px; padding:26px 24px;
+      background:var(--panel); border-radius:var(--edge); box-shadow:var(--shadow);
     }
-
-    nav a {
-      margin-left: 1rem;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
+    form{ display:grid; gap:14px }
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px }
+    label{ font-weight:600; font-size:.95rem }
+    input, textarea{
+      margin-top:6px; width:100%; border:1px solid #e2e8ec; background:#fff;
+      border-radius:12px; padding:12px 14px; font-size:1rem; color:var(--ink);
+      outline:none; transition:border .15s ease, box-shadow .15s ease;
     }
-
-    nav a:hover {
-      text-decoration: underline;
+    input:focus, textarea:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px rgba(209,155,179,.18);
     }
+    textarea{ min-height:160px; resize:vertical }
 
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    .actions{ display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border:2px solid var(--accent); border-radius:999px; padding:.6rem 1.2rem;
+      color:var(--ink); background:#fff; font-weight:700; text-decoration:none;
+      transition:.18s; cursor:pointer;
     }
+    .btn:hover{ background:var(--accent); color:#fff }
+    .note{ color:var(--muted); font-size:.9rem }
 
-    h2 {
-      color: #ff6f61;
+    .msg{
+      display:none; margin-top:10px; font-weight:600;
+      padding:10px 12px; border-radius:10px;
     }
+    .msg.ok{ display:block; color:#0a6a4a; background:#e8f6ef; border:1px solid #cde9df }
+    .msg.err{ display:block; color:#7a1d1d; background:#fdeeee; border:1px solid #f3d1d1 }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      margin: 0.5rem 0;
-    }
-
-    a {
-      color: #ff6f61;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+    @media (max-width: 700px){
+      .row{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -76,14 +106,87 @@
     </nav>
   </header>
 
-  <main>
-    <h2>聯絡我</h2>
-    <p>如果你有任何問題、想要合作、或只是想說聲嗨，歡迎透過以下方式與我聯繫：</p>
-    <ul>
-      <li>Email：<a href="mailto:anastasialin528@gmail.com">anastasialin528@gmail.com</a></li>
-      <li>Instagram：<a href="https://www.instagram.com/anastasialin528/" target="_blank">@anastasialin528</a></li>
-    </ul>
-    <p>期待收到你的來信或留言 😊</p>
-  </main>
+  <section class="hero">
+    <div class="eyebrow">Contact</div>
+    <h2 class="title">寫信給我吧</h2>
+    <p class="sub">有合作想法、內容交流，或只是想說聲嗨，都非常歡迎。填寫下方表單，留言會儲存在我的 Google 試算表。</p>
+  </section>
+
+  <section class="card" aria-label="聯絡表單">
+    <form id="contactForm" novalidate>
+      <div class="row">
+        <div>
+          <label>你的稱呼
+            <input type="text" name="name" placeholder="例如：Anastasia" required />
+          </label>
+        </div>
+        <div>
+          <label>Email
+            <input type="email" name="email" placeholder="你的 Email" required />
+          </label>
+        </div>
+      </div>
+      <label>主旨
+        <input type="text" name="subject" placeholder="想聊的主題" required />
+      </label>
+      <label>訊息內容
+        <textarea name="message" placeholder="想對我說的話…" required></textarea>
+      </label>
+      <div class="actions">
+        <button class="btn" type="submit">送出訊息</button>
+        <span class="note">留言將寫入 Google 試算表（不會寄 Email）。</span>
+      </div>
+      <div id="formMsg" class="msg"></div>
+    </form>
+  </section>
+
+  <script>
+    // ★ 把這一行換成你的 GAS Web App URL（以 /exec 結尾）
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzSGUNGw-XjR-6HHFTbnUmUMauSG5jw_ARmJyHiF2vfkNSaS-JroqO4-rdHSGCkJlp9/exec';
+
+    const f = document.getElementById('contactForm');
+    const msgBox = document.getElementById('formMsg');
+
+    function showMsg(type, text){
+      msgBox.className = 'msg ' + (type === 'ok' ? 'ok' : 'err');
+      msgBox.textContent = text;
+      msgBox.style.display = 'block';
+    }
+
+    f.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = Object.fromEntries(new FormData(f).entries());
+      if(!data.name || !data.email || !data.subject || !data.message){
+        showMsg('err', '請完整填寫所有欄位。');
+        return;
+      }
+
+      try{
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'contact',        // 後端會用這個 action 來判斷
+            name: data.name,
+            email: data.email,
+            subject: data.subject,
+            message: data.message
+          })
+        });
+        const json = await res.json();
+        if (res.ok && json && json.ok){
+          f.reset();
+          showMsg('ok', '已送出！留言已存到試算表。');
+        }else{
+          throw new Error(json && json.msg || '寫入失敗');
+        }
+      }catch(err){
+        console.error(err);
+        showMsg('err', '送出失敗，請稍後再試。');
+      }
+    });
+  </script>
 </body>
 </html>
+
