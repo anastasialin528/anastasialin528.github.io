@@ -1,49 +1,138 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Me</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About Me · dEaR dIaRy</title>
   <style>
-    body {
-      font-family: "Microsoft JhengHei", sans-serif;
-      margin: 0;
-      background: #fff8f0;
-      color: #333;
+    :root{
+      /* 調色盤：灰藍 + 灰 + 淺米 */
+      --bg: #f9f9f6;      /* 頁面底：淺灰米色 */
+      --panel: #ffffff;   /* 卡片/側欄底 */
+      --ink: #2d3e50;     /* 主要文字深灰藍 */
+      --muted:#55636d;    /* 次要文字灰藍 */
+      --accent:#8cb5c4;   /* 淺青藍點綴 */
+      --header:#000000;   /* 頂部黑色（你前面指定） */
+      --edge: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%}
+    body{
+      font-family:"Microsoft JhengHei",sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.7;
     }
 
-    header {
-      background: #212121;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* 頂部導覽 */
+    header{
+      background:var(--header);
+      color:#fff;
+      padding:12px 20px;
+      position:sticky; top:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    header h1{margin:0; font-size:1.4rem}
+    header nav a{
+      color:#fff; text-decoration:none; font-weight:bold; margin-left:1rem;
+    }
+    header nav a:hover{ text-decoration:underline }
+
+    /* 主要版型：左側固定名片 + 右側內容 */
+    .wrap{
+      max-width:1200px; margin:32px auto; padding:0 16px;
+      display:grid; grid-template-columns: 320px 1fr; gap:24px;
     }
 
-    header h1 {
-      color: #fff;
-      font-size: 2rem;
+    .sidebar{
+      position:sticky; top:88px;
+      background:var(--panel);
+      border-radius:var(--edge);
+      box-shadow:var(--shadow);
+      padding:24px;
+      height: fit-content;
+    }
+    .avatar{
+      width:100%; max-width:220px; aspect-ratio:1/1; margin:0 auto 16px;
+      border-radius:50%;
+      background:#ddd url("images/我.jpg") center/cover no-repeat;
+      border:6px solid #fff;
+      box-shadow:0 8px 24px rgba(0,0,0,.12);
+    }
+    .name{ text-align:center; margin:8px 0 4px; font-size:1.4rem }
+    .role{ text-align:center; color:var(--muted); font-size:.95rem; margin:0 0 12px }
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:8px 0 16px }
+    .chip{
+      border:1px solid var(--accent); color:#2d3e50; background:#fff;
+      padding:.28rem .6rem; border-radius:999px; font-size:.85rem;
     }
 
-    nav a {
-      margin-left: 1rem;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
+    .content{
+      background:var(--panel);
+      border-radius:var(--edge);
+      box-shadow:var(--shadow);
+      padding:32px 24px;
+    }
+    .section + .section{ margin-top:28px }
+    h2{
+      margin:0 0 10px; font-size:1.3rem; color:var(--ink);
+      border-left:6px solid var(--accent); padding-left:10px;
+    }
+    p{ margin:.4rem 0; color:var(--muted) }
+
+    .cta{ margin-top:18px; }
+    .btn{
+      border:2px solid var(--accent); color:#2d3e50; background:#fff;
+      border-radius:999px; padding:.5rem 1rem; text-decoration:none; font-weight:bold;
+      transition:.2s;
+    }
+    .btn:hover{ background:var(--accent); color:#fff; }
+
+    /* 小照片牆 */
+    .photo-wall{
+      margin-top:28px;
+      background: var(--panel);
+      border-radius: var(--edge);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:10px;
+    }
+    /* RWD：縮小時自動減少欄數 */
+    @media (max-width: 1000px){
+      .grid{ grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 760px){
+      .grid{ grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 520px){
+      .grid{ grid-template-columns: repeat(2, 1fr); }
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    .grid img{
+      width:100%;
+      aspect-ratio:1/1;           /* 統一方形縮圖 */
+      object-fit:cover;
+      border-radius:12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      transition: transform .18s ease, box-shadow .18s ease;
+      display:block;
+    }
+    .grid img:hover{
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 18px rgba(0,0,0,.12);
     }
 
-    main {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    h2 {
-      color: #ff6f61;
+    @media (max-width: 900px){
+      .wrap{ grid-template-columns: 1fr; }
+      .sidebar{ position:static; display:flex; align-items:center; gap:16px; }
+      .avatar{ width:120px; max-width:none; margin:0; }
+      .name, .role{ text-align:left }
+      .chips{ justify-content:flex-start }
     }
   </style>
 </head>
@@ -57,11 +146,66 @@
     </nav>
   </header>
 
-  <main>
-    <h2>關於我</h2>
-    <p>我喜歡拍照、旅行、觀星與寫作。這個小天地是我用來記錄生活中那些美麗、溫柔又珍貴的小事情。</p>
-    <p>我熱愛大自然，也熱愛發現每一個日常裡的悸動。不論是清晨的泳池、夜晚的星空，或是一場說走就走的旅程，都讓我覺得人生充滿故事。</p>
-    <p>謝謝你來到這裡，希望這裡的每一篇日記，都能帶給你一點溫暖或靈感。</p>
+  <main class="wrap">
+    <!-- 左：個人名片區（固定） -->
+    <aside class="sidebar" aria-label="個人資訊">
+      <div class="avatar" aria-label="我的照片"></div>
+      <div class="name">Anastasia</div>
+      <div class="role">大數據／資料工程師</div>
+
+      <div class="chips" aria-label="興趣標籤">
+        <span class="chip">動物</span>
+        <span class="chip">植物</span>
+        <span class="chip">旅行</span>
+        <span class="chip">游泳</span>
+        <span class="chip">潛水</span>
+        <span class="chip">資料工程</span>
+      </div>
+    </aside>
+
+    <!-- 右：自我介紹內容 + 照片牆 -->
+    <article class="content">
+      <section class="section">
+        <h2>關於我</h2>
+        <p>嗨！歡迎來到我的小角落。</p>
+        <p>我是資料工程師，每天的工作和程式、資料為伍，拆解、整理、轉換，讓數據能真正發揮價值。</p>
+        <p>雖然我的專業領域是科技，但其實我的人生經歷並不是一路直直走到這裡的。</p>
+        <p>在進入這行之前，我曾經在飯店工作，也待過物流業。</p>
+        <p>這些不同產業的經驗，讓我學會換位思考，也讓我習慣去觀察「數字背後的人與故事」。</p>
+        <p>比起只專注在技術，我更享受把資料和生活連結起來的過程。</p>
+      </section>
+
+      <section class="section">
+        <h2>我喜歡</h2>
+        <p>工作之餘，我是個喜歡探索生活各種面向的人。</p>
+        <p>喜歡動物：和牠們相處總能感受到純粹的快樂。</p>
+        <p>喜歡植物與自然：從照顧小小的綠植，到旅行時接觸不同的風景，都是我療癒自己的方式。</p>
+        <p>喜歡旅行：走到新的地方，感受不同文化，讓我覺得生活更寬廣。</p>
+        <p>最近，我正挑戰自我，學習游泳與潛水。</p>
+        <p>水的世界很特別，學會放鬆、學會適應，甚至有點像在學另一種生活哲學。</p>
+      </section>
+
+      <section class="section">
+        <h2>為什麼寫這個網誌</h2>
+        <p>寫這個網誌，是想把我的經驗、觀察和小小的喜歡記錄下來。</p>
+        <p>如果你剛好也喜歡動物、植物、旅行，或正在學習什麼新東西，也許我們能在這裡找到共鳴。</p>
+
+        <div class="cta">
+          <a class="btn" href="index.html">← 回首頁</a>
+        </div>
+      </section>
+
+      <!-- 照片牆（已移除文字標題） -->
+      <section class="photo-wall" aria-label="照片牆">
+        <div class="grid">
+          <img src="images/照片牆5.jpg" alt="旅程片段 1">
+          <img src="images/照片牆7.jpg" alt="旅程片段 2">
+          <img src="images/照片牆8.jpg" alt="旅程片段 3">
+          <img src="images/照片牆9.jpg" alt="旅程片段 4">
+          <img src="images/照片牆6.jpg" alt="旅程片段 5">
+        </div>
+      </section>
+    </article>
   </main>
 </body>
 </html>
