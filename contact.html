@@ -141,51 +141,106 @@
   </section>
 
   <script>
-    // ★ 把這一行換成你的 GAS Web App URL（以 /exec 結尾）
-    const API_URL = 'https://script.google.com/macros/s/AKfycbzSGUNGw-XjR-6HHFTbnUmUMauSG5jw_ARmJyHiF2vfkNSaS-JroqO4-rdHSGCkJlp9/exec';
+    // ★ 把這一行換成你的 GAS Web App URL（一定要是 /exec 結尾）
+  const API_URL = 'https://script.google.com/macros/s/AKfycbza5xJhVNq-ax0vAvcRD4lv_xeIta6cgM7znzJv6CXtKTkYFzUVcB1ZRBNBUYbHDvW8/exec';
 
-    const f = document.getElementById('contactForm');
-    const msgBox = document.getElementById('formMsg');
+  const form   = document.getElementById('contactForm');
+  const msgBox = document.getElementById('formMsg');
+  const submitBtn = form?.querySelector('button[type="submit"], input[type="submit"]');
 
-    function showMsg(type, text){
-      msgBox.className = 'msg ' + (type === 'ok' ? 'ok' : 'err');
-      msgBox.textContent = text;
-      msgBox.style.display = 'block';
+  function showMsg(type, text){
+    if(!msgBox) return;
+    msgBox.className = 'msg ' + (type === 'ok' ? 'ok' : 'err');
+    msgBox.textContent = text;
+    msgBox.style.display = 'block';
+  }
+
+  function isValidEmail(s){
+    // 簡單驗證：有 @ 與 .
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    // 去頭尾空白
+    ['name','email','subject','message'].forEach(k => data[k] = (data[k]||'').trim());
+
+    // 前端基本驗證
+    if(!data.name || !data.email || !data.subject || !data.message){
+      showMsg('err', '請完整填寫所有欄位。');
+      return;
+    }
+    if(!isValidEmail(data.email)){
+      showMsg('err','Email 格式好像不正確喔。');
+      return;
     }
 
-    f.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    // 防機器人（可選）：若頁面有 name="website" 的隱藏欄位，填了就擋掉
+    if (data.website) {
+      showMsg('ok','已送出！'); // 假成功，避免被反偵測
+      form.reset();
+      return;
+    }
 
-      const data = Object.fromEntries(new FormData(f).entries());
-      if(!data.name || !data.email || !data.subject || !data.message){
-        showMsg('err', '請完整填寫所有欄位。');
-        return;
+    // 禁止連點 + 顯示處理中
+    const origText = submitBtn ? (submitBtn.textContent || submitBtn.value) : '';
+    if (submitBtn){
+      submitBtn.disabled = true;
+      if('textContent' in submitBtn) submitBtn.textContent = '送出中...';
+      if('value' in submitBtn) submitBtn.value = '送出中...';
+    }
+    showMsg('ok','資料傳送中...');
+
+    // 設定逾時（避免卡住）
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), 15000); // 15 秒
+
+    try{
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }, // 一定要
+        body: JSON.stringify({
+          action:  'contact',          // 後端用這個判斷
+          name:    data.name,
+          email:   data.email,
+          subject: data.subject,
+          message: data.message,
+          ua:      navigator.userAgent // 你的 GAS 有欄位可放（非必填）
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(t);
+
+      // 嘗試解析 JSON；若不是 JSON 會丟錯
+      let json;
+      try {
+        json = await res.json();
+      } catch(parseErr){
+        throw new Error('伺服器回應格式非 JSON（可能用了 /dev 或權限不對）');
       }
 
-      try{
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'contact',        // 後端會用這個 action 來判斷
-            name: data.name,
-            email: data.email,
-            subject: data.subject,
-            message: data.message
-          })
-        });
-        const json = await res.json();
-        if (res.ok && json && json.ok){
-          f.reset();
-          showMsg('ok', '已送出！留言已存到試算表。');
-        }else{
-          throw new Error(json && json.msg || '寫入失敗');
-        }
-      }catch(err){
-        console.error(err);
-        showMsg('err', '送出失敗，請稍後再試。');
+      if (res.ok && json && json.ok){
+        form.reset();
+        showMsg('ok', '已送出！留言已存到試算表。');
+      } else {
+        throw new Error(json && (json.msg || json.error) || `HTTP ${res.status}`);
       }
-    });
+    } catch(err){
+      console.error(err);
+      const hint = (err.name === 'AbortError')
+        ? '連線逾時，請稍後再試。'
+        : (err.message || '送出失敗，請稍後再試。');
+      showMsg('err', hint);
+    } finally {
+      if (submitBtn){
+        submitBtn.disabled = false;
+        if('textContent' in submitBtn) submitBtn.textContent = origText;
+        if('value' in submitBtn) submitBtn.value = origText;
+      }
+    }
+  });
   </script>
 </body>
 </html>
