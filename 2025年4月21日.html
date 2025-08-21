@@ -5,153 +5,32 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>｜面鏡開箱｜</title>
   <style>
-    body { 
-      margin: 0; 
-      font-family: "Microsoft JhengHei", sans-serif; 
-      background: #fff; 
-      color: #333; 
-      line-height: 1.8; 
-    }
-    header { 
-      background: #212121; 
-      padding: 1rem 2rem; 
-      color: #fff; 
-    }
-    main { 
-      max-width: 800px; 
-      margin: 2rem auto; 
-      padding: 0 1rem; 
-    }
-    img { 
-      width: 100%; 
-      border-radius: 8px; 
-      margin: 1.5rem 0; 
-    }
-    h1 { 
-      color: #ff6f61; 
-      font-size: 2rem; 
-      margin-bottom: 0.5rem;
-    }
-    p:empty { 
-      display: block; 
-      height: 1.0rem; 
-    }
-    .date { 
-      color: #999; 
-      font-size: 0.9rem; 
-      margin-bottom: 1.5rem; 
-    }
+    body { margin: 0; font-family: "Microsoft JhengHei", sans-serif; background: #fff; color: #333; line-height: 1.8; }
+    header { background: #212121; padding: 1rem 2rem; color: #fff; }
+    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
+    p:empty { display: block; height: 1.0rem; }
+    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
 
-    .back-link { 
-      display: inline-block; 
-      margin-top: 2rem; 
-      color: #ff6f61; 
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid #ff6f61; 
-      padding: 0.4rem 1rem; 
-      border-radius: 25px; 
-      transition: all 0.3s ease; 
-    }
-    .back-link:hover { 
-      background: #ff6f61; 
-      color: #fff; 
-    }
+    .back-link { display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold; border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease; }
+    .back-link:hover { background: #ff6f61; color: #fff; }
 
-    .share-section { 
-      text-align: center; 
-      margin-top: 3rem; 
-    }
-    .line { 
-      height: 1px; 
-      background-color: rgba(0,0,0,0.2); 
-      margin: 1rem 0; 
-      width: 100%; 
-    }
-    .share-icons { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      gap: 1.5rem; 
-      margin: 1rem 0; 
-      position: relative; 
-    }
-    .icon { 
-      background: none; 
-      border: none; 
-      font-size: 1.5rem; 
-      cursor: pointer; 
-      text-decoration: none; 
-      color: #333; 
-      transition: transform 0.2s ease; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-    }
-    .icon:hover { 
-      transform: scale(1.2); 
-    }
-    .facebook-icon { 
-      font-size: 24px; 
-      font-weight: bold; 
-      color: #000; 
-      height: 40px; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center;
-    }
-    #copy-link { 
-      background: none; 
-      border: none; 
-      cursor: pointer; 
-      padding: 0; 
-      width: 40px; 
-      height: 40px; 
-    }
-    #copy-link img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-    }
-    #copied-msg { 
-      position: absolute; 
-      top: 120%; 
-      font-size: 0.9rem; 
-      color: #28a745; 
-      display: none; 
-      margin-top: 5px; 
-    }
+    .share-section { text-align: center; margin-top: 3rem; }
+    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
+    .share-icons { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative; }
+    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform 0.2s ease; display: flex; justify-content: center; align-items: center; }
+    .icon:hover { transform: scale(1.2); }
+    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
+    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
+    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
+    #copied-msg { position: absolute; top: 120%; font-size: 0.9rem; color: #28a745; display: none; margin-top: 5px; }
 
-    .stats { 
-      display: flex; 
-      justify-content: space-between;
-      align-items: center; 
-      margin-top: 1rem;
-      padding-left: 15px; 
-      padding-right: 15px; 
-      width: calc(100% - 30px); 
-      margin-left: auto; 
-      margin-right: auto; 
-    }
-    .like-btn { 
-      background: none; 
-      border: none; 
-      font-size: 1.2rem; 
-      color: red; 
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-    }
-    .like-btn:hover { 
-      color: #e04848; 
-    }
-    .like-btn span { 
-      margin-left: 5px; 
-    }
-    .like-btn.is-liked { 
-      opacity: .6; cursor: default; 
-      pointer-events: none; 
-    }
+    .stats { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto; }
+    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
+    .like-btn:hover { color: #e04848; }
+    .like-btn span { margin-left: 5px; }
+    .like-btn.is-liked { opacity: .6; cursor: default; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -160,10 +39,10 @@
     <div class="date">2025年4月21日</div>
 
     <img src="images/面鏡.jpg" alt="｜面鏡開箱｜">
-    <p>週間下班後沒時間去游泳，是一個缺憾。</p> <!-- 文章段落 -->
-    <p>總是希望快點把課堂上教練教的動作練習到像呼吸一樣不用大腦思考地那麼熟練，也希望能快點再去水中感受自己的肌肉和身體的感覺，把姿勢調整到最有效率的狀態，另外耐受性也需要時間養成。</p> <!-- 文章段落 -->
+    <p>週間下班後沒時間去游泳，是一個缺憾。</p>
+    <p>總是希望快點把課堂上教練教的動作練習到像呼吸一樣不用大腦思考地那麼熟練，也希望能快點再去水中感受自己的肌肉和身體的感覺，把姿勢調整到最有效率的狀態，另外耐受性也需要時間養成。</p>
     <p></p>
-    <p>很希望下次上課之前，已經把前一堂的菜單練好。因此週間找不到時間到泳池，讓我感到有點不安。就算週休二日規劃好會去練習，還是怕這樣不夠。可是擔心也沒有辦法，那樣並不能改變什麼。因此決定找些陸地上的鍛鍊方式，讓我轉移注意力。</p> <!-- 文章段落 -->
+    <p>很希望下次上課之前，已經把前一堂的菜單練好。因此週間找不到時間到泳池，讓我感到有點不安。就算週休二日規劃好會去練習，還是怕這樣不夠。可是擔心也沒有辦法，那樣並不能改變什麼。因此決定找些陸地上的鍛鍊方式，讓我轉移注意力。</p>
     <p></p>
     <p>第一個想到的是伸展，讓坐了一整天姿勢歪七扭八又僵硬的身體在安靜的夜晚得到舒展，讓身體恢復柔軟。另外今天也想來把玩潛水的工具，也就是，把週六剛買回來的面鏡進行開鏡～</p>
     <p>人生第一次面鏡開鏡，值得紀錄下來😊</p>
@@ -171,9 +50,9 @@
     <p>［開鏡儀式］：</p>
     <p>1. 使用牙膏搓洗內側鏡片，至少搓10分鐘。</p>
     <p>2. 用清水洗淨鏡面，擦乾多餘的水。</p>
-    <p>3.對鏡面呼一口氣，霧氣馬上消失即開鏡成功🏅</p>
+    <p>3. 對鏡面呼一口氣，霧氣馬上消失即開鏡成功🏅</p>
     <p></p>
-    <p>p.s.請勿使用含有顆粒以及美白牙膏</p>
+    <p>p.s. 請勿使用含有顆粒以及美白牙膏</p>
 
     <a class="back-link" href="index.html">← 回到首頁</a>
 
@@ -181,9 +60,7 @@
     <div class="share-section">
       <div class="line"></div>
       <div class="share-icons">
-        <a class="icon facebook-icon" id="fb-share"
-           href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/post.html"
-           target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
+        <a class="icon facebook-icon" id="fb-share" href="#" target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
         <button class="icon" id="copy-link" title="複製連結">
           <img src="images/share.jpg" alt="複製連結">
         </button>
@@ -201,32 +78,31 @@
     </div>
   </main>
 
+  <!-- 先載入共用 API 設定檔（務必放在任何用到 API_URL 的 <script> 前） -->
+  <script src="./api.js?v=1"></script>
+
   <!-- 後端 API 與共用工具 -->
   <script>
-    // 與首頁一致
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyalOSHqfhnv6jG0q_MZ07cISdssvny0rqjFtyBGRlDD-wDBB8hjK9DTBahlFqB54Hc/exec';
-    async function api(params) {
+    const API_URL = window.API_URL; // 由 api.js 提供
+
+    // —— GET 呼叫（避免預檢）——
+    async function api(params){
       const url = API_URL + '?' + new URLSearchParams(params).toString();
-      try {
-        const r = await fetch(url, { cache: 'no-store' });
-        return await r.json();
-      } catch (e) {
-        console.error('API error:', e);
-        return { ok:false, error: String(e) };
-      }
+      const r = await fetch(url, { cache: 'no-store' });
+      return r.json();
     }
     const getStats = (id) => api({ action:'get', id });
     const addView  = (id) => api({ action:'addView', id });
     const likeAPI  = (id) => api({ action:'like', id });
-    const unlikeAPI= (id) => api({ action:'unlike', id });
 
-    // 本機 liked map（與首頁共用同一 key）
+    // 本機 liked map（與首頁共用）
     const LIKE_KEY = 'blog_liked_map';
-    function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} }
+    function loadLiked(){ try { return JSON.parse(localStorage.getItem(LIKE_KEY) || '{}'); } catch { return {}; } }
     function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
     function isLiked(id){ return !!loadLiked()[id]; }
-    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); }
+    function setLiked(id,v){ const m = loadLiked(); m[id] = !!v; saveLiked(m); }
 
+    // 渲染愛心
     function renderHeart(btnEl, id, likeCount, likesSpanId){
       const liked = isLiked(id);
       btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`;
@@ -234,27 +110,28 @@
       btnEl.disabled = liked;
     }
 
+    // 文章 id（用檔名）
     function getPostIdFromLocation(){
       const last = location.pathname.split('/').pop();
       return decodeURIComponent(last || 'index.html');
     }
 
-    // storage 同步（當其他頁按了讚）
+    // 跨分頁同步（別頁按讚時，這頁更新樣式）
     window.addEventListener('storage', (e) => {
       if (e.key !== LIKE_KEY) return;
-      if (typeof syncCurrentHeart === 'function') syncCurrentHeart();
+      syncCurrentHeart();
     });
   </script>
 
   <!-- 內頁邏輯 -->
   <script>
-    // 分享連結
+    // 分享：動態塞目前網址
     const fbA = document.getElementById('fb-share');
     if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
     const copyBtn = document.getElementById("copy-link");
     if (copyBtn) {
-      copyBtn.addEventListener("click", function () {
-        navigator.clipboard.writeText(window.location.href).then(() => {
+      copyBtn.addEventListener("click", () => {
+        navigator.clipboard.writeText(location.href).then(() => {
           const msg = document.getElementById("copied-msg");
           if (!msg) return;
           msg.style.display = "inline";
@@ -277,41 +154,51 @@
     (async () => {
       const POST_ID = getPostIdFromLocation();
 
-      // 開頁 +1 觀看
-      await addView(POST_ID);
+      // 開頁 +1 觀看（就算失敗也不中斷）
+      try { await addView(POST_ID); } catch(e){ console.warn('addView fail', e); }
 
-      // 取得最新數字
-      const statsResp = await getStats(POST_ID);
-      const views = (statsResp && statsResp.ok && statsResp.views != null) ? statsResp.views : 0;
-      const likes = (statsResp && statsResp.ok && statsResp.likes != null) ? statsResp.likes : 0;
+      // 取得最新數字（失敗給 0）
+      let views = 0, likes = 0;
+      try {
+        const s = await getStats(POST_ID);
+        views = (s && s.ok && s.views != null) ? s.views : 0;
+        likes = (s && s.ok && s.likes != null) ? s.likes : 0;
+      } catch(e) {
+        console.warn('getStats fail', e);
+      }
 
-      const viewEl = document.getElementById('post-views');
+      // 畫到頁面
+      const viewEl  = document.getElementById('post-views');
       const likesEl = document.getElementById('post-likes');
-      const btn = document.getElementById('post-like-btn');
-
-      if (viewEl) viewEl.textContent = views;
+      const btn     = document.getElementById('post-like-btn');
+      if (viewEl)  viewEl.textContent = views;
       if (likesEl) likesEl.textContent = likes;
-      if (btn) renderHeart(btn, POST_ID, likes, 'post-likes');
+      if (btn)     renderHeart(btn, POST_ID, likes, 'post-likes');
 
-      // 愛心：同一使用者不可重複按
+      // 綁定愛心
       if (btn) {
         btn.addEventListener('click', async (e) => {
           e.preventDefault();
           if (isLiked(POST_ID)) return;
 
           btn.disabled = true;
-          let curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
+          const curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
 
           // 樂觀 +1
           renderHeart(btn, POST_ID, curLikes + 1, 'post-likes');
 
-          const res = await likeAPI(POST_ID);
-          if (res && res.ok) {
-            setLiked(POST_ID, true);
-            renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
-          } else {
-            // 失敗復原
-            renderHeart(btn, POST_ID, curLikes, 'post-likes');
+          try {
+            const res = await likeAPI(POST_ID);
+            if (res && res.ok) {
+              setLiked(POST_ID, true);
+              renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
+            } else {
+              renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
+              alert('按讚失敗，請稍後再試。');
+              btn.disabled = false;
+            }
+          } catch (err) {
+            renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
             alert('按讚失敗，請稍後再試。');
             btn.disabled = false;
           }
@@ -321,4 +208,3 @@
   </script>
 </body>
 </html>
-
