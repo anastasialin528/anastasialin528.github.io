@@ -1,167 +1,245 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <!-- 設定文件的編碼與響應式設計 -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Anastasia</title>
+<!DOCTYPE html> <!-- HTML5 文件宣告 -->
+<html lang="zh-Hant"> <!-- 頁面語系：繁體中文 -->
+<head> <!-- 文件頭開始 -->
+  <meta charset="UTF-8"> <!-- 編碼 UTF-8，避免亂碼 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- RWD 視窗設定 -->
+  <title>Anastasia</title> <!-- 瀏覽器分頁標題 -->
   <style>
-    body{margin:0;font-family:"Microsoft JhengHei",sans-serif;background:#f9f9f6;color:#333}
+    /* ====== 全站基本樣式 ====== */
+    body{margin:0; /* 移除預設外距 */
+         font-family:"Microsoft JhengHei",sans-serif; /* 預設字型 */
+         background:#f9f9f6; /* 背景色 */
+         color:#333} /* 文字色 */
 
-    /* Header */
-    header{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#212121;padding:1rem 2rem;
-      display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
-    header h1{margin:0;font-size:2rem;color:#fff;white-space:nowrap;flex-shrink:0}
-    nav{display:flex;gap:1.5rem;margin-left:auto;margin-right:1rem;flex-shrink:0}
-    nav a{color:#fff;text-decoration:none;font-weight:bold;white-space:nowrap}
-    nav a:hover{text-decoration:underline}
+    /* ====== Header（固定在頂端）====== */
+    header{position:fixed; /* 固定定位 */
+           top:0;left:0;width:100%; /* 置頂且滿寬 */
+           z-index:1000; /* 讓 header 蓋住內容 */
+           background:#212121; /* 深色底 */
+           padding:1rem 2rem; /* 內距 */
+           display:flex;align-items:center;justify-content:space-between; /* 彈性置中排列 */
+           box-sizing:border-box} /* 包含邊框計算 */
+    header h1{margin:0; /* 移除外距 */
+              font-size:2rem; /* 標題大小 */
+              color:#fff; /* 白字 */
+              white-space:nowrap; /* 不換行 */
+              flex-shrink:0} /* 不縮 */
+    nav{display:flex; /* 導覽橫排 */
+        gap:1.5rem; /* 選單間距 */
+        margin-left:auto;margin-right:1rem; /* 靠右 */
+        flex-shrink:0} /* 不縮 */
+    nav a{color:#fff; /* 白字 */
+          text-decoration:none; /* 移除底線 */
+          font-weight:bold; /* 粗體 */
+          white-space:nowrap} /* 不換行 */
+    nav a:hover{text-decoration:underline} /* 滑過加底線 */
 
-    /* Hero */
-    .hero-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(100%,1fr));grid-auto-rows:50vh;width:100vw;margin-top:64px}
-    .hero-gallery img{width:100%;height:100%;object-fit:cover;display:block}
-    .hero-title{text-align:center;padding:2rem 1rem;font-size:3rem;color:#6fb1a0;font-weight:bold;font-family:'Segoe Script',cursive}
+    /* ====== Hero 區塊 ====== */
+    .hero-gallery{display:grid; /* 用 grid 製作 hero 容器 */
+                  grid-template-columns:repeat(auto-fit,minmax(100%,1fr)); /* 單張滿版 */
+                  grid-auto-rows:50vh; /* 高度 50vh */
+                  width:100vw; /* 滿寬 */
+                  margin-top:64px} /* 騰出 header 高度 */
+    .hero-gallery img{width:100%;height:100%; /* 佔滿容器 */
+                      object-fit:cover; /* 覆蓋裁切 */
+                      display:block} /* 消除下方間隙 */
+    .hero-title{text-align:center; /* 置中 */
+                padding:2rem 1rem; /* 內距 */
+                font-size:3rem; /* 大字 */
+                color:#6fb1a0; /* 主題綠 */
+                font-weight:bold; /* 粗體 */
+                font-family:'Segoe Script',cursive} /* 手寫風格字型 */
 
-    /* Layout */
-    .content-wrapper{background:#f9f9f6;padding:2rem 1rem;display:flex;justify-content:center}
-    main{max-width:1000px;width:100%}
+    /* ====== 版面容器 ====== */
+    .content-wrapper{background:#f9f9f6; /* 背景 */
+                     padding:2rem 1rem; /* 內距 */
+                     display:flex;justify-content:center} /* 內容置中 */
+    main{max-width:1000px; /* 主欄最大寬度 */
+         width:100%} /* 滿主欄寬 */
 
-    /* Tags */
-    .tags{text-align:center;margin-bottom:2rem}
-    .tags button{background:#fff;border:2px solid #6fb1a0;color:#6fb1a0;padding:.5rem 1.2rem;margin:.4rem;
-      border-radius:25px;cursor:pointer;font-size:1rem;transition:all .3s ease}
-    .tags button:hover{background:#6fb1a0;color:#fff}
+    /* ====== 標籤（篩選） ====== */
+    .tags{text-align:center; /* 置中 */
+          margin-bottom:2rem} /* 與下方間距 */
+    .tags button{background:#fff; /* 白底 */
+                 border:2px solid #6fb1a0; /* 主題綠框 */
+                 color:#6fb1a0; /* 字色綠 */
+                 padding:.5rem 1.2rem; /* 內距 */
+                 margin:.4rem; /* 外距 */
+                 border-radius:25px; /* 膠囊圓角 */
+                 cursor:pointer; /* 滑鼠指標 */
+                 font-size:1rem; /* 字級 */
+                 transition:all .3s ease} /* 動畫 */
+    .tags button:hover{background:#6fb1a0;color:#fff} /* 滑過反相 */
 
-    /* Cards */
-    .posts{column-count:3;column-gap:1.5rem}
-    @media (max-width:1024px){.posts{column-count:2}}
-    @media (max-width:600px){.posts{column-count:1}}
-    .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.1);
-      text-decoration:none;color:inherit;transition:transform .3s ease;display:inline-block;width:100%;
-      margin-bottom:1.5rem;break-inside:avoid;position:relative}
-    .card:hover{transform:translateY(-5px)}
-    .card img{width:100%;height:320px;object-fit:cover;display:block}
-    .card-content{padding:1rem}
-    .card-content h2{margin:0 0 .5rem;color:#6fb1a0;font-size:1.4rem}
-    .card-content .date{font-size:.9rem;color:#999;margin-bottom:.5rem}
-    .card-content p{margin:0;line-height:1.6;color:#555}
-    .card-meta{border-top:1px solid #ccc;margin-top:1rem;padding-top:.8rem;padding-left:.5rem;padding-right:.5rem;
-      display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:#999}
-    .like-btn{background:none;border:none;color:red;cursor:pointer;font-size:1rem;display:flex;align-items:center}
-    .like-btn span{margin-left:5px}
-    .like-btn.is-liked{opacity:.6;cursor:default;pointer-events:none}
+    /* ====== 卡片牆（Masonry 模擬） ====== */
+    .posts{column-count:3; /* 三欄 */
+           column-gap:1.5rem} /* 欄間距 */
+    @media (max-width:1024px){.posts{column-count:2}} /* 平板二欄 */
+    @media (max-width:600px){.posts{column-count:1}} /* 手機一欄 */
 
-    /* Footer */
-    .site-footer{background:#f1f0ed;padding:3rem 1rem}
-    .footer-inner{max-width:1000px;margin:0 auto;position:relative}
-    .footer-social{display:flex;gap:3rem;justify-content:flex-end;margin-bottom:1.25rem;font-style:italic}
-    .footer-social a{color:#133d33;text-decoration:none}
-    .footer-social a:hover{text-decoration:underline}
-    .footer-line{height:2px;background:#133d33;border:none;width:100%;margin:1rem auto 1.25rem}
-    .footer-copy{text-align:center;font-size:.9rem;color:#6b7b74}
-    @media (max-width:768px){.footer-social{justify-content:center;gap:2rem}}
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <header>
-    <h1>dEaR dIaRy</h1>
-    <nav>
-      <a href="index.html">MAIN PAGE</a>
-      <a href="about.html">ABOUT ME</a>
-      <a href="contact.html">CONTACT</a>
+    /* ====== 卡片樣式 ====== */
+    .card{background:#fff; /* 白底 */
+          border-radius:12px; /* 圓角 */
+          overflow:hidden; /* 超出裁切 */
+          box-shadow:0 4px 12px rgba(0,0,0,.1); /* 陰影 */
+          text-decoration:none; /* 連結無底線 */
+          color:inherit; /* 承襲文字色 */
+          transition:transform .3s ease; /* 浮起動畫 */
+          display:inline-block; /* 讓 column-count 生效 */
+          width:100%; /* 滿寬 */
+          margin-bottom:1.5rem; /* 卡片間距 */
+          break-inside:avoid; /* 避免跨欄截斷 */
+          position:relative} /* 便於放絕對元素 */
+    .card:hover{transform:translateY(-5px)} /* 滑過微浮起 */
+    .card img{width:100%;height:320px; /* 固定高 */
+              object-fit:cover; /* 覆蓋裁切 */
+              display:block} /* 去除縫隙 */
+    .card-content{padding:1rem} /* 內距 */
+    .card-content h2{margin:0 0 .5rem; /* 與日期距離 */
+                     color:#6fb1a0; /* 標題綠 */
+                     font-size:1.4rem} /* 標題大小 */
+    .card-content .date{font-size:.9rem; /* 日期小字 */
+                        color:#999; /* 灰字 */
+                        margin-bottom:.5rem} /* 與摘要距離 */
+    .card-content p{margin:0; /* 移除外距 */
+                    line-height:1.6; /* 行高 */
+                    color:#555} /* 文字色 */
+    .card-meta{border-top:1px solid #ccc; /* 上方分隔線 */
+               margin-top:1rem; /* 與摘要距離 */
+               padding-top:.8rem; /* 與分隔線距離 */
+               padding-left:.5rem;padding-right:.5rem; /* 左右內距 */
+               display:flex;justify-content:space-between;align-items:center; /* 兩側對齊 */
+               font-size:.9rem;color:#999} /* 小字灰色 */
+    .like-btn{background:none; /* 透明底 */
+              border:none; /* 無邊框 */
+              color:red; /* 紅色愛心 */
+              cursor:pointer; /* 游標 */
+              font-size:1rem; /* 字級 */
+              display:flex;align-items:center} /* 愛心與數字橫排 */
+    .like-btn span{margin-left:5px} /* 愛心與數字間距 */
+    .like-btn.is-liked{opacity:.6;cursor:default;pointer-events:none} /* 已按讚：半透明且不能再按 */
+
+    /* ====== 頁尾 ====== */
+    .site-footer{background:#f1f0ed; /* 底色 */
+                 padding:3rem 1rem} /* 內距 */
+    .footer-inner{max-width:1000px; /* 與主欄同寬 */
+                  margin:0 auto; /* 置中 */
+                  position:relative} /* 可放絕對元素 */
+    .footer-social{display:flex; /* 橫排 */
+                   gap:3rem; /* 間距 */
+                   justify-content:flex-end; /* 置右 */
+                   margin-bottom:1.25rem; /* 與下分隔線距離 */
+                   font-style:italic} /* 斜體風格 */
+    .footer-social a{color:#133d33; /* 深綠字 */
+                     text-decoration:none} /* 無底線 */
+    .footer-social a:hover{text-decoration:underline} /* 滑過加底線 */
+    .footer-line{height:2px;background:#133d33;border:none;width:100%;margin:1rem auto 1.25rem} /* 分隔線 */
+    .footer-copy{text-align:center;font-size:.9rem;color:#6b7b74} /* 版權文字 */
+    @media (max-width:768px){.footer-social{justify-content:center;gap:2rem}} /* 手機置中社群連結 */
+  </style> <!-- 樣式結束 -->
+</head> <!-- 文件頭結束 -->
+<body> <!-- 主體開始 -->
+  <!-- ====== Header ====== -->
+  <header> <!-- 固定導覽列 -->
+    <h1>dEaR dIaRy</h1> <!-- 網站標題 -->
+    <nav> <!-- 主選單 -->
+      <a href="index.html">MAIN PAGE</a> <!-- 回首頁 -->
+      <a href="about.html">ABOUT ME</a> <!-- 關於我 -->
+      <a href="contact.html">CONTACT</a> <!-- 聯絡我 -->
     </nav>
   </header>
 
-  <!-- Hero -->
-  <div class="hero-gallery">
-    <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy">
+  <!-- ====== Hero 區 ====== -->
+  <div class="hero-gallery"> <!-- 首屏大圖容器 -->
+    <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy"> <!-- Hero 圖片 -->
   </div>
-  <div class="hero-title">Beautiful Little Things</div>
+  <div class="hero-title">Beautiful Little Things</div> <!-- Hero 標語 -->
 
-  <!-- Content -->
-  <div class="content-wrapper">
-    <main>
-      <div class="tags" aria-label="文章分類篩選">
-        <button type="button" onclick="filterTag('all')">全部</button>
-        <button type="button" onclick="filterTag('旅遊')">旅遊</button>
-        <button type="button" onclick="filterTag('星空')">星空</button>
-        <button type="button" onclick="filterTag('日常')">日常</button>
-        <button type="button" onclick="filterTag('潛水')">潛水</button>
+  <!-- ====== 主內容 ====== -->
+  <div class="content-wrapper"> <!-- 包住主欄做置中 -->
+    <main> <!-- 主欄 -->
+      <div class="tags" aria-label="文章分類篩選"> <!-- 篩選區 -->
+        <button type="button" onclick="filterTag('all')">全部</button> <!-- 全部按鈕 -->
+        <button type="button" onclick="filterTag('旅遊')">旅遊</button> <!-- 旅遊按鈕 -->
+        <button type="button" onclick="filterTag('星空')">星空</button> <!-- 星空按鈕 -->
+        <button type="button" onclick="filterTag('日常')">日常</button> <!-- 日常按鈕 -->
+        <button type="button" onclick="filterTag('潛水')">潛水</button> <!-- 潛水按鈕 -->
       </div>
-      <div class="posts" id="postList"></div>
+      <div class="posts" id="postList"></div> <!-- 卡片牆容器 -->
     </main>
   </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <nav class="footer-social" aria-label="Social links">
-        <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a>
-        <a href="https://www.instagram.com/anastasialin528/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a>
-        <a href="https://www.youtube.com/" target="_blank" rel="noopener">Youtube</a>
-        <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+  <!-- ====== Footer ====== -->
+  <footer class="site-footer"> <!-- 頁尾 -->
+    <div class="footer-inner"> <!-- 頁尾內框 -->
+      <nav class="footer-social" aria-label="Social links"> <!-- 社群連結 -->
+        <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a> <!-- FB -->
+        <a href="https://www.instagram.com/anastasialin528/" target="_blank" rel="noopener">Instagram</a> <!-- IG -->
+        <a href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a> <!-- Pinterest -->
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener">Youtube</a> <!-- YouTube -->
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a> <!-- ChatGPT -->
       </nav>
-      <hr class="footer-line">
-      <div class="footer-copy">© 2025 我的日記部落格</div>
+      <hr class="footer-line"> <!-- 裝飾分隔線 -->
+      <div class="footer-copy">© 2025 我的日記部落格</div> <!-- 版權文字 -->
     </div>
   </footer>
 
-  <!-- 共用 API 設定（請在網站根目錄放 api.js，內含 window.API_URL = "你的 /exec";） -->
-  <script src="/api.js?v=1"></script>
-
-  <!-- 後端 API 與共用工具 -->
+  <!-- ====== 後端 API 與共用工具（批次取數版） ====== -->
   <script>
-    // 讀取共用 API_URL
-    const API_URL = window.API_URL;
-    if (!API_URL) console.error('找不到 window.API_URL，請確認已正確部署 /api.js');
+    /* === 你的 GAS Web App /exec（已通過 debug 測試）=== */
+    const API_URL =
+      'https://script.google.com/macros/s/AKfycbyTlpjl4rx60TElPIFNqnm7vNwk1GiP8M885Z_SWLsMtPgx2eCFTqA8fajErx6d9g9V/exec'; // Web App 端點
 
-    async function api(params){
-      if (!API_URL) return { ok:false, error:'NO_API_URL' };
-      const url = API_URL + '?' + new URLSearchParams(params).toString();
-      try{
-        const r = await fetch(url, { cache:'no-store' });
-        return await r.json();
-      }catch(e){
-        console.error('API error:', e);
-        return { ok:false, error:String(e) };
-      }
-    }
-    const getStats = (id) => api({ action:'get', id });
-    const likeAPI  = (id) => api({ action:'like', id });
-    const unlikeAPI= (id) => api({ action:'unlike', id });
-
-    // 本機紀錄是否按過讚（跨頁共用）
-    const LIKE_KEY = 'blog_liked_map';
-    function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} }
-    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
-    function isLiked(id){ return !!loadLiked()[id]; }
-    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); }
-
-    // 統一渲染愛心
-    function renderHeart(btnEl, id, likeCount, likesSpanId){
-      const liked = isLiked(id);
-      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`;
-      btnEl.classList.toggle('is-liked', liked);
-      btnEl.disabled = liked;
+    /* === GET：給舊介面（like/unlike）或備援時使用 === */
+    async function apiGet(params){ // 用 GET 呼叫後端
+      const url = API_URL + '?' + new URLSearchParams(params).toString(); // 串 URL 查詢參數
+      const r = await fetch(url, { cache:'no-store' }); // 取資料（不快取）
+      return r.json(); // 解析 JSON
     }
 
-    // 跨分頁同步
-    window.addEventListener('storage', (e) => {
-      if (e.key !== LIKE_KEY) return;
-      if (typeof syncAllHearts === 'function') syncAllHearts();
+    /* === POST：首頁批次取數用（一次拿多篇 views/likes）=== */
+    async function apiPost(body){ // 用 POST 呼叫後端
+      const r = await fetch(API_URL, { method:'POST', body:JSON.stringify(body) }); // 傳送 JSON
+      return r.json(); // 解析 JSON
+    }
+
+    /* === 舊款 API 包裝（保留相容性）=== */
+    const getStats = (id) => apiGet({ action:'get', id }); // 單篇查詢（備援用）
+    const likeAPI  = (id) => apiGet({ action:'like', id }); // 送出按讚（沿用 GET）
+    const unlikeAPI= (id) => apiGet({ action:'unlike', id }); // 取消讚（目前未使用）
+
+    /* === 本機紀錄是否按過讚（跨頁共用）=== */
+    const LIKE_KEY = 'blog_liked_map'; // localStorage 鍵名
+    function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} } // 取出 map
+    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); } // 存入 map
+    function isLiked(id){ return !!loadLiked()[id]; } // 查某 id 是否已按讚
+    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); } // 設定某 id 按讚狀態
+
+    /* === 統一渲染愛心按鈕 === */
+    function renderHeart(btnEl, id, likeCount, likesSpanId){ // 渲染愛心與數字
+      const liked = isLiked(id); // 讀本地是否按過讚
+      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`; // 內容
+      btnEl.classList.toggle('is-liked', liked); // 樣式切換
+      btnEl.disabled = liked; // 已按讚則停用按鈕
+    }
+
+    /* === 跨分頁同步（其他分頁按讚，這頁跟著更新圖示）=== */
+    window.addEventListener('storage', (e) => { // 監聽 storage 事件
+      if (e.key !== LIKE_KEY) return; // 只處理喜歡鍵
+      if (typeof syncAllHearts === 'function') syncAllHearts(); // 重新渲染愛心
     });
 
-    // 取得文章 ID（只取檔名）
-    function idFromHref(href){
-      const last = new URL(href, location.href).pathname.split('/').pop();
-      return decodeURIComponent(last || 'index.html');
+    /* === 從連結 href 取得文章 ID（檔名）=== */
+    function idFromHref(href){ // 解析檔名作為文章 ID
+      const last = new URL(href, location.href).pathname.split('/').pop(); // 取最後一段
+      return decodeURIComponent(last || 'index.html'); // 還原編碼
     }
   </script>
 
-  <!-- 首頁卡片產生 + 從後端取數 + 同步愛心 -->
+  <!-- ====== 首頁卡片產生 + 批次取數 + 愛心同步 ====== -->
   <script>
-    const posts = [
+    /* === 文章清單（首頁顯示順序）=== */
+    const posts = [ // 每筆：標籤、內頁、首圖、標題、日期、摘要
       { tag:"旅遊", href:"2023年6月25日.html", img:"images/九份.jpg",      title:"｜九份｜",           date:"2023年6月25日", excerpt:"收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️" },
       { tag:"旅遊", href:"2023年7月2日.html",  img:"images/BLUE.jpg",     title:"｜台中老家三日遊｜", date:"2023年7月2日",  excerpt:"LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳" },
       { tag:"旅遊", href:"2023年9月29日.html", img:"images/林口海邊夕陽.jpg", title:"｜林口海邊｜",       date:"2023年9月29日", excerpt:"放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋" },
@@ -179,84 +257,105 @@
       { tag:"潛水", href:"2025年4月21日.html", img:"images/面鏡.jpg",       title:"｜面鏡開箱｜",         date:"2025年4月21日", excerpt:"週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。" }
     ];
 
-    const postList = document.getElementById("postList");
+    const postList = document.getElementById("postList"); // 取得卡片牆容器
 
-    function syncAllHearts(){
-      posts.forEach((post, index) => {
-        const id = idFromHref(post.href);
-        const btn = document.getElementById(`like-btn-${index}`);
-        const likesSpan = document.getElementById(`likes-${index}`);
-        if (btn && likesSpan) {
-          const currentLikes = parseInt(likesSpan.textContent || '0', 10);
-          renderHeart(btn, id, currentLikes, `likes-${index}`);
+    /* === storage 事件時重新渲染所有愛心（跨分頁同步）=== */
+    function syncAllHearts(){ // 被 storage 事件呼叫
+      posts.forEach((post, index) => { // 逐張卡片
+        const id = idFromHref(post.href); // 算出文章 id
+        const btn = document.getElementById(`like-btn-${index}`); // 找按鈕
+        const likesSpan = document.getElementById(`likes-${index}`); // 找數字
+        if (btn && likesSpan) { // 都在才處理
+          const currentLikes = parseInt(likesSpan.textContent || '0', 10); // 現值
+          renderHeart(btn, id, currentLikes, `likes-${index}`); // 依「本機是否按過」改外觀
         }
       });
     }
 
-    // 先畫卡片（立即依本機 liked 狀態渲染），再拉取後端數字覆蓋
-    posts.forEach((post, index) => {
-      const id = idFromHref(post.href);
+    /* === 第一步：先畫卡片（用本機 liked 狀態渲染愛心）=== */
+    const ids = []; // 收集全部文章 id（供批次查詢）
+    posts.forEach((post, index) => { // 逐筆資料建立卡片
+      const id = idFromHref(post.href); // 取得文章 id（檔名）
+      ids.push(id); // 收集到陣列
 
-      const card = document.createElement("a");
-      card.href = post.href;
-      card.className = "card";
-      card.setAttribute("data-tag", post.tag);
-      card.innerHTML = `
-        <img src="${post.img}" alt="${post.title}" loading="lazy">
-        <div class="card-content">
-          <h2>${post.title}</h2>
-          <div class="date">${post.date}</div>
-          <p>${post.excerpt}</p>
-          <div class="card-meta">
-            <span id="views-${index}">0 views</span>
-            <button class="like-btn" type="button" id="like-btn-${index}">
-              ${isLiked(id) ? '❤️' : '♡'} <span id="likes-${index}">0</span>
+      const card = document.createElement("a"); // 建立 <a> 卡片
+      card.href = post.href; // 內頁連結
+      card.className = "card"; // 卡片樣式
+      card.setAttribute("data-tag", post.tag); // 存分類標籤供篩選
+      card.innerHTML = ` 
+        <img src="${post.img}" alt="${post.title}" loading="lazy"> <!-- 卡片首圖 -->
+        <div class="card-content"> <!-- 文字內容 -->
+          <h2>${post.title}</h2> <!-- 卡片標題 -->
+          <div class="date">${post.date}</div> <!-- 日期 -->
+          <p>${post.excerpt}</p> <!-- 摘要 -->
+          <div class="card-meta"> <!-- 底部統計區 -->
+            <span id="views-${index}">0 views</span> <!-- 先顯示 0，稍後覆蓋 -->
+            <button class="like-btn" type="button" id="like-btn-${index}"> <!-- 愛心按鈕 -->
+              ${isLiked(id) ? '❤️' : '♡'} <span id="likes-${index}">0</span> <!-- 用本機狀態決定圖示 -->
             </button>
           </div>
         </div>
-      `;
-      postList.appendChild(card);
+      `; // 卡片 HTML 結束
+      postList.appendChild(card); // 丟進卡片牆
 
-      // 從後端取回真實數字
-      getStats(id).then(resp => {
-        const v = document.getElementById(`views-${index}`);
-        const btn = document.getElementById(`like-btn-${index}`);
-        if (v) v.textContent = `${(resp && resp.ok && resp.views!=null) ? resp.views : 0} views`;
-        const likes = (resp && resp.ok && resp.likes!=null) ? resp.likes : 0;
-        if (btn) renderHeart(btn, id, likes, `likes-${index}`);
-      }).catch(console.error);
+      /* 綁定愛心點擊（樂觀更新 + GET like 呼叫） */
+      document.getElementById(`like-btn-${index}`).addEventListener('click', async (e) => { // 監聽點擊
+        e.preventDefault(); e.stopPropagation(); // 阻止連到內頁
+        if (isLiked(id)) return; // 已按過直接略過
 
-      // 愛心點擊：按過的使用者不可再按
-      document.getElementById(`like-btn-${index}`).addEventListener('click', async (e) => {
-        e.preventDefault(); e.stopPropagation();
-        if (isLiked(id)) return;
+        const btn = e.currentTarget; // 目前按鈕
+        const likesSpan = document.getElementById(`likes-${index}`); // 數字節點
+        let curLikes = parseInt(likesSpan.textContent || '0', 10); // 現在數
 
-        const btn = e.currentTarget;
-        const likesSpan = document.getElementById(`likes-${index}`);
-        let curLikes = parseInt(likesSpan.textContent || '0', 10);
+        renderHeart(btn, id, curLikes + 1, `likes-${index}`); // 樂觀 +1 並改成 ❤️
 
-        // 樂觀 +1
-        renderHeart(btn, id, curLikes + 1, `likes-${index}`);
-
-        const res = await likeAPI(id);
-        if (res && res.ok) {
-          setLiked(id, true);
-          renderHeart(btn, id, res.likes ?? (curLikes + 1), `likes-${index}`);
-        } else {
-          // 失敗復原
-          renderHeart(btn, id, curLikes, `likes-${index}`);
-          alert('按讚失敗，請稍後再試。');
+        const res = await likeAPI(id); // 呼叫後端累加
+        if (res && res.ok) { // 成功
+          setLiked(id, true); // 記錄本機已按讚
+          const newLikes =
+            (res.data && res.data.likes != null) ? res.data.likes : // 後端若回在 data 內
+            (res.likes != null ? res.likes : (curLikes + 1)); // 或頂層 / 或沿用樂觀值
+          renderHeart(btn, id, newLikes, `likes-${index}`); // 用後端值覆蓋
+        } else { // 失敗
+          renderHeart(btn, id, curLikes, `likes-${index}`); // 復原數字與外觀
+          alert('按讚失敗，請稍後再試。'); // 提示失敗
         }
       });
     });
 
-    // 篩選
-    function filterTag(tag){
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none';
+    /* === 第二步：批次向後端要 views/likes，再回填到每張卡片 === */
+    (async () => { // 立即執行的 async 區塊
+      try {
+        const r = await apiPost({ action:'get', ids }); // POST 批次取數（後端回 {ok:true,data:{id:{views,likes}}}）
+        if (r && r.ok && r.data) { // 有資料
+          posts.forEach((post, index) => { // 逐張卡片回填
+            const id = idFromHref(post.href); // 算出 id
+            const datum = r.data[id] || {}; // 拿到該篇的值
+            const v = document.getElementById(`views-${index}`); // 找 views 節點
+            const btn = document.getElementById(`like-btn-${index}`); // 找愛心按鈕
+            const likeCount = (datum.likes ?? 0); // 讚數
+            if (v) v.textContent = `${(datum.views ?? 0)} views`; // 回填觀看數
+            if (btn) renderHeart(btn, id, likeCount, `likes-${index}`); // 依本機 liked 狀態與伺服器數值渲染
+          });
+        } else { // 沒拿到批次資料（後援：維持 0，但仍正確顯示愛心狀態）
+          posts.forEach((post, index) => { // 逐張
+            const id = idFromHref(post.href); // id
+            const btn = document.getElementById(`like-btn-${index}`); // 按鈕
+            if (btn) renderHeart(btn, id, 0, `likes-${index}`); // 以 0 顯示
+          });
+        }
+      } catch (err) { // 例外處理
+        console.error('批次取數失敗：', err); // 印出錯誤
+      }
+    })(); // 立即執行
+
+    /* === 篩選：依 data-tag 顯示/隱藏 === */
+    function filterTag(tag){ // 篩選函式
+      const cards = document.querySelectorAll('.card'); // 取得所有卡片
+      cards.forEach(card => { // 逐張處理
+        card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none'; // 判斷是否顯示
       });
     }
   </script>
-</body>
-</html>
+</body> <!-- 主體結束 -->
+</html> <!-- 文件結束 -->
