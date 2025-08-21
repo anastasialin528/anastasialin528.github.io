@@ -7,43 +7,41 @@
   <style>
     :root{
       /* 調色盤：灰藍 + 灰 + 淺米 */
-      --bg: #f9f9f6;      /* 頁面底：淺灰米色 */
+      --bg: #f9f9f6;      /* 備用底色（卡片外緣若需要可用） */
       --panel: #ffffff;   /* 卡片/側欄底 */
       --ink: #2d3e50;     /* 主要文字深灰藍 */
       --muted:#55636d;    /* 次要文字灰藍 */
       --accent:#8cb5c4;   /* 淺青藍點綴 */
-      --header:#000000;   /* 頂部黑色（你前面指定） */
+      --header:#000000;   /* 頂部黑色 */
       --edge: 16px;
       --shadow: 0 10px 30px rgba(0,0,0,.08);
     }
     *{box-sizing:border-box}
+    html,body{margin:0;height:100%}
 
-    /* === 最底層背景放在整個頁面的底（html 元素） === */
-    html{
-      min-height:100%;
-      /* 植物照置底 + 視差固定（手機若不支援會自動退化） */
-      background: url("images/植物照.jpg") center / cover no-repeat fixed;
+    /* === 最底層全螢幕背景（直接放植物照.jpg） === */
+    .bg-hero{
+      position:fixed;           /* 固定在視窗，不隨捲動位移 */
+      inset:0;                  /* top/right/bottom/left 全為 0，填滿視窗 */
+      background: url("images/植物照.jpg") center / cover no-repeat; /* 置中等比滿版 */
+      z-index:0;                /* 疊層最低（但仍在內容後面顯示） */
+      pointer-events:none;      /* 不攔截滑鼠事件，避免干擾 */
     }
 
-    html,body{margin:0;height:100%}
     body{
       font-family:"Microsoft JhengHei",sans-serif;
       color:var(--ink);
-      /* 在最底層照片上加一層柔和半透明墊底，提升可讀性 */
-      background:
-        linear-gradient(
-          rgba(249,249,246,.90),
-          rgba(249,249,246,.90)
-        );
+      background: transparent;  /* 讓底層背景可見（不再用 body 底色蓋住） */
       line-height:1.7;
     }
 
-    /* 頂部導覽 */
+    /* 頂部導覽（疊在背景之上） */
     header{
       background:var(--header);
       color:#fff;
       padding:12px 20px;
-      position:sticky; top:0; z-index:1000;
+      position:sticky; top:0;
+      z-index:1000; /* 最高，確保蓋過背景與內容 */
       display:flex; align-items:center; justify-content:space-between;
     }
     header h1{margin:0; font-size:1.4rem}
@@ -52,8 +50,9 @@
     }
     header nav a:hover{ text-decoration:underline }
 
-    /* 主要版型：左側固定名片 + 右側內容 */
+    /* 主要版型：左側固定名片 + 右側內容（疊在背景之上） */
     .wrap{
+      position:relative; z-index:1; /* 明確疊在背景層上 */
       max-width:1200px; margin:32px auto; padding:0 16px;
       display:grid; grid-template-columns: 320px 1fr; gap:24px;
     }
@@ -150,6 +149,9 @@
   </style>
 </head>
 <body>
+  <!-- ✅ 最底層背景：直接鋪滿整個頁面 -->
+  <div class="bg-hero" aria-hidden="true"></div>
+
   <header>
     <h1>dEaR dIaRy</h1>
     <nav>
@@ -208,7 +210,7 @@
         </div>
       </section>
 
-      <!-- 照片牆（已移除文字標題） -->
+      <!-- 照片牆 -->
       <section class="photo-wall" aria-label="照片牆">
         <div class="grid">
           <img src="images/照片牆5.jpg" alt="旅程片段 1">
