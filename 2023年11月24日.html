@@ -5,153 +5,32 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>｜日本東北自助旅行-弘前城植物園｜</title>
   <style>
-    body { 
-      margin: 0; 
-      font-family: "Microsoft JhengHei", sans-serif; 
-      background: #fff; 
-      color: #333; 
-      line-height: 1.8; 
-    }
-    header { 
-      background: #212121; 
-      padding: 1rem 2rem; 
-      color: #fff; 
-    }
-    main { 
-      max-width: 800px; 
-      margin: 2rem auto; 
-      padding: 0 1rem; 
-    }
-    img { 
-      width: 100%; 
-      border-radius: 8px; 
-      margin: 1.5rem 0; 
-    }
-    h1 { 
-      color: #ff6f61; 
-      font-size: 2rem; 
-      margin-bottom: 0.5rem;
-    }
-    p:empty { 
-      display: block; 
-      height: 1.0rem; 
-    }
-    .date { 
-      color: #999; 
-      font-size: 0.9rem; 
-      margin-bottom: 1.5rem; 
-    }
+    body { margin: 0; font-family: "Microsoft JhengHei", sans-serif; background: #fff; color: #333; line-height: 1.8; }
+    header { background: #212121; padding: 1rem 2rem; color: #fff; }
+    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
+    p:empty { display: block; height: 1.0rem; }
+    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
 
-    .back-link { 
-      display: inline-block; 
-      margin-top: 2rem; 
-      color: #ff6f61; 
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid #ff6f61; 
-      padding: 0.4rem 1rem; 
-      border-radius: 25px; 
-      transition: all 0.3s ease; 
-    }
-    .back-link:hover { 
-      background: #ff6f61; 
-      color: #fff; 
-    }
+    .back-link { display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold; border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease; }
+    .back-link:hover { background: #ff6f61; color: #fff; }
 
-    .share-section { 
-      text-align: center; 
-      margin-top: 3rem; 
-    }
-    .line { 
-      height: 1px; 
-      background-color: rgba(0,0,0,0.2); 
-      margin: 1rem 0; 
-      width: 100%; 
-    }
-    .share-icons { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      gap: 1.5rem; 
-      margin: 1rem 0; 
-      position: relative; 
-    }
-    .icon { 
-      background: none; 
-      border: none; 
-      font-size: 1.5rem; 
-      cursor: pointer; 
-      text-decoration: none; 
-      color: #333; 
-      transition: transform 0.2s ease; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-    }
-    .icon:hover { 
-      transform: scale(1.2); 
-    }
-    .facebook-icon { 
-      font-size: 24px; 
-      font-weight: bold; 
-      color: #000; 
-      height: 40px; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center;
-    }
-    #copy-link { 
-      background: none; 
-      border: none; 
-      cursor: pointer; 
-      padding: 0; 
-      width: 40px; 
-      height: 40px; 
-    }
-    #copy-link img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-    }
-    #copied-msg { 
-      position: absolute; 
-      top: 120%; 
-      font-size: 0.9rem; 
-      color: #28a745; 
-      display: none; 
-      margin-top: 5px; 
-    }
+    .share-section { text-align: center; margin-top: 3rem; }
+    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
+    .share-icons { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative; }
+    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform 0.2s ease; display: flex; justify-content: center; align-items: center; }
+    .icon:hover { transform: scale(1.2); }
+    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
+    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
+    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
+    #copied-msg { position: absolute; top: 120%; font-size: 0.9rem; color: #28a745; display: none; margin-top: 5px; }
 
-    .stats { 
-      display: flex; 
-      justify-content: space-between;
-      align-items: center; 
-      margin-top: 1rem;
-      padding-left: 15px; 
-      padding-right: 15px; 
-      width: calc(100% - 30px); 
-      margin-left: auto; 
-      margin-right: auto; 
-    }
-    .like-btn { 
-      background: none; 
-      border: none; 
-      font-size: 1.2rem; 
-      color: red; 
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-    }
-    .like-btn:hover { 
-      color: #e04848; 
-    }
-    .like-btn span { 
-      margin-left: 5px; 
-    }
-    .like-btn.is-liked { 
-      opacity: .6; cursor: default; 
-      pointer-events: none; 
-    }
+    .stats { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto; }
+    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
+    .like-btn:hover { color: #e04848; }
+    .like-btn span { margin-left: 5px; }
+    .like-btn.is-liked { opacity: .6; cursor: default; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -161,15 +40,15 @@
 
     <img src="images/DSC0E8750.jpg" alt="｜日本東北自助旅行-弘前城植物園｜">
 
-    <p>之於火紅的楓葉🍁</p> <!-- 文章段落 -->
-    <p>其實我更愛銀杏的黃</p> <!-- 文章段落 -->
-    <p>好想讓整片銀杏佈滿底片啊～</p> <!-- 文章段落 -->
-    <p>這棵在弘前城植物園超巨大的樹🌲</p> <!-- 文章段落 -->
-    <p>是旅行中最接近我心目中最愛的顏色</p> <!-- 文章段落 -->
-    <p>雖然趕時間曝光沒調好，不過還是一個很好的回憶</p> <!-- 文章段落 -->
-    <p></p> <!-- 空段落 -->
-    <p>哈囉，大樹🌳</p> <!-- 文章段落 -->
-    <p>當時能夠見到你真的很感動呢！</p> <!-- 文章段落 -->
+    <p>之於火紅的楓葉🍁</p>
+    <p>其實我更愛銀杏的黃</p>
+    <p>好想讓整片銀杏佈滿底片啊～</p>
+    <p>這棵在弘前城植物園超巨大的樹🌲</p>
+    <p>是旅行中最接近我心目中最愛的顏色</p>
+    <p>雖然趕時間曝光沒調好，不過還是一個很好的回憶</p>
+    <p></p>
+    <p>哈囉，大樹🌳</p>
+    <p>當時能夠見到你真的很感動呢！</p>
 
     <a class="back-link" href="index.html">← 回到首頁</a>
 
@@ -197,24 +76,23 @@
     </div>
   </main>
 
+  <!-- 先載入共用 API 設定（一定要在用到 API_URL 的腳本之前） -->
+  <script src="/api.js?v=1"></script>
+
   <!-- 後端 API 與共用工具 -->
   <script>
-    // 與首頁一致
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyalOSHqfhnv6jG0q_MZ07cISdssvny0rqjFtyBGRlDD-wDBB8hjK9DTBahlFqB54Hc/exec';
+    // 從 api.js 取得共用 URL
+    const API_URL = window.API_URL;
+
+    // GET 呼叫（避免預檢）
     async function api(params) {
       const url = API_URL + '?' + new URLSearchParams(params).toString();
-      try {
-        const r = await fetch(url, { cache: 'no-store' });
-        return await r.json();
-      } catch (e) {
-        console.error('API error:', e);
-        return { ok:false, error: String(e) };
-      }
+      const r = await fetch(url, { cache: 'no-store' });
+      return r.json();
     }
     const getStats = (id) => api({ action:'get', id });
     const addView  = (id) => api({ action:'addView', id });
     const likeAPI  = (id) => api({ action:'like', id });
-    const unlikeAPI= (id) => api({ action:'unlike', id });
 
     // 本機 liked map（與首頁共用同一 key）
     const LIKE_KEY = 'blog_liked_map';
@@ -317,4 +195,3 @@
   </script>
 </body>
 </html>
-
