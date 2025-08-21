@@ -17,11 +17,24 @@
       --shadow: 0 10px 30px rgba(0,0,0,.08);
     }
     *{box-sizing:border-box}
+
+    /* === 最底層背景放在整個頁面的底（html 元素） === */
+    html{
+      min-height:100%;
+      /* 植物照置底 + 視差固定（手機若不支援會自動退化） */
+      background: url("images/植物照.jpg") center / cover no-repeat fixed;
+    }
+
     html,body{margin:0;height:100%}
     body{
       font-family:"Microsoft JhengHei",sans-serif;
       color:var(--ink);
-      background:var(--bg);
+      /* 在最底層照片上加一層柔和半透明墊底，提升可讀性 */
+      background:
+        linear-gradient(
+          rgba(249,249,246,.90),
+          rgba(249,249,246,.90)
+        );
       line-height:1.7;
     }
 
@@ -134,20 +147,6 @@
       .name, .role{ text-align:left }
       .chips{ justify-content:flex-start }
     }
-
-    /* ====== 底部全寬背景照片區（新增） ====== */
-    .bottom-hero{
-      width:100%;
-      height:45vh;                 /* 佔視窗高度 45% */
-      min-height:260px;            /* 手機至少 260px 高 */
-      margin-top:40px;             /* 與上方內容留白 */
-      background:
-        linear-gradient(to top, rgba(249,249,246,.95), rgba(249,249,246,.4) 40%, rgba(249,249,246,0)),
-        url("images/植物照.jpg") center / cover no-repeat; /* 背景圖 + 柔和漸層 */
-    }
-    @media (max-width: 600px){
-      .bottom-hero{ height:38vh; } /* 小螢幕略縮高度 */
-    }
   </style>
 </head>
 <body>
@@ -221,8 +220,5 @@
       </section>
     </article>
   </main>
-
-  <!-- 新增：底部全寬背景照片（裝飾用，不影響既有排版） -->
-  <section class="bottom-hero" aria-hidden="true"></section>
 </body>
 </html>
