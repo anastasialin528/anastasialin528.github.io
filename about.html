@@ -134,6 +134,20 @@
       .name, .role{ text-align:left }
       .chips{ justify-content:flex-start }
     }
+
+    /* ====== 底部全寬背景照片區（新增） ====== */
+    .bottom-hero{
+      width:100%;
+      height:45vh;                 /* 佔視窗高度 45% */
+      min-height:260px;            /* 手機至少 260px 高 */
+      margin-top:40px;             /* 與上方內容留白 */
+      background:
+        linear-gradient(to top, rgba(249,249,246,.95), rgba(249,249,246,.4) 40%, rgba(249,249,246,0)),
+        url("images/植物照.jpg") center / cover no-repeat; /* 背景圖 + 柔和漸層 */
+    }
+    @media (max-width: 600px){
+      .bottom-hero{ height:38vh; } /* 小螢幕略縮高度 */
+    }
   </style>
 </head>
 <body>
@@ -207,5 +221,8 @@
       </section>
     </article>
   </main>
+
+  <!-- 新增：底部全寬背景照片（裝飾用，不影響既有排版） -->
+  <section class="bottom-hero" aria-hidden="true"></section>
 </body>
 </html>
