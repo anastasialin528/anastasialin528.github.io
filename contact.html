@@ -1,4 +1,4 @@
-<!-- contact.html：聯絡表單頁面（已改用共用 api.js） -->
+<!-- contact.html：聯絡表單頁面 -->
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -7,62 +7,48 @@
   <title>Contact · dEaR dIaRy</title>
   <style>
     :root{
-      --bg:#f2f0f2; --panel:#ffffff; --ink:#2d3e50; --muted:#6a6a6a;
-      --accent:#d19bb3; --header:#000000; --edge:18px;
-      --shadow:0 12px 30px rgba(0,0,0,.07);
+      --bg:#f2f0f2; --panel:#ffffff; --ink:#2d3e50; --muted:#6a6a6a; --accent:#d19bb3; --header:#000000;
+      --edge:18px; --shadow:0 12px 30px rgba(0,0,0,.07);
     }
     *{box-sizing:border-box}
     html,body{margin:0}
     body{
       font-family:"Microsoft JhengHei",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:
-        linear-gradient(rgba(249,249,246,0.5), rgba(249,249,246,0.5)),
-        url("images/照片牆7.jpg") no-repeat center center / cover;
+      background:linear-gradient(rgba(249,249,246,0.5), rgba(249,249,246,0.5)), url("images/照片牆7.jpg") no-repeat center center / cover;
       color:var(--ink); line-height:1.7;
     }
-    header{
-      background:var(--header); color:#fff; padding:14px 20px; position:sticky; top:0; z-index:1000;
-      display:flex; align-items:center; justify-content:space-between;
-    }
+    header{background:var(--header); color:#fff; padding:14px 20px; position:sticky; top:0; z-index:1000;
+           display:flex; align-items:center; justify-content:space-between;}
     header h1{margin:0; font-size:1.2rem; letter-spacing:.3px}
     header nav a{ color:#fff; text-decoration:none; font-weight:600; margin-left:1rem; opacity:.9 }
     header nav a:hover{ opacity:1; text-decoration:underline }
-
     .hero{ padding:64px 20px 28px; text-align:center; max-width:800px; margin:0 auto; }
     .eyebrow{ text-transform:uppercase; letter-spacing:.18em; color:var(--muted); font-size:.85rem; margin-bottom:.3rem; }
     .title{ font-size:2.4rem; margin:.2rem 0 .5rem; letter-spacing:.02em; }
     .sub{ color:var(--muted); max-width:600px; margin:0 auto; }
-
     .card{ max-width:700px; margin:40px auto 80px; padding:26px 24px; background:var(--panel); border-radius:var(--edge); box-shadow:var(--shadow); }
     form{ display:grid; gap:14px }
     .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px }
     label{ font-weight:600; font-size:.95rem }
     input, textarea{
-      margin-top:6px; width:100%; border:1px solid #e2e8ec; background:#fff;
-      border-radius:12px; padding:12px 14px; font-size:1rem; color:var(--ink);
-      outline:none; transition:border .15s ease, box-shadow .15s ease;
+      margin-top:6px; width:100%; border:1px solid #e2e8ec; background:#fff; border-radius:12px; padding:12px 14px;
+      font-size:1rem; color:var(--ink); outline:none; transition:border .15s ease, box-shadow .15s ease;
     }
     input:focus, textarea:focus{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(209,155,179,.18); }
     textarea{ min-height:160px; resize:vertical }
-
     .actions{ display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      border:2px solid var(--accent); border-radius:999px; padding:.6rem 1.2rem;
-      color:var(--ink); background:#fff; font-weight:700; text-decoration:none; transition:.18s; cursor:pointer;
-    }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; border:2px solid var(--accent); border-radius:999px;
+          padding:.6rem 1.2rem; color:var(--ink); background:#fff; font-weight:700; text-decoration:none; transition:.18s; cursor:pointer; }
     .btn:hover{ background:var(--accent); color:#fff }
     .note{ color:var(--muted); font-size:.9rem }
-
     .msg{ display:none; margin-top:10px; font-weight:600; padding:10px 12px; border-radius:10px; }
     .msg.ok{ display:block; color:#0a6a4a; background:#e8f6ef; border:1px solid #cde9df }
     .msg.err{ display:block; color:#7a1d1d; background:#fdeeee; border:1px solid #f3d1d1 }
-
-    /* 隱藏的蜜罐欄位（機器人會填，人看不到） */
-    .hp{ position:absolute !important; left:-9999px !important; opacity:0 !important; pointer-events:none !important; height:0 !important; width:0 !important; }
-
     @media (max-width: 700px){ .row{ grid-template-columns:1fr; } }
   </style>
+
+  <!-- 共用 API 設定（集中在 /api.js） -->
+  <script src="/api.js?v=1"></script>
 </head>
 <body>
   <header>
@@ -100,10 +86,6 @@
       <label>訊息內容
         <textarea name="message" placeholder="想對我說的話…" required></textarea>
       </label>
-
-      <!-- 蜜罐欄位：正常使用者看不到，機器人可能會填 -->
-      <input type="text" name="website" class="hp" autocomplete="off" tabindex="-1" aria-hidden="true" />
-
       <div class="actions">
         <button class="btn" type="submit">送出訊息</button>
         <span class="note">留言將寫入 Google 試算表（不會寄 Email）。</span>
@@ -112,14 +94,17 @@
     </form>
   </section>
 
-  <!-- 先載入共用 API 設定（一定要在任何用到 API_URL 的 <script> 之前） -->
-  <script src="/api.js?v=1"></script>
-
   <script>
+    // 1) 從 /api.js 讀取共用 API_URL（集中管理）
+    const API_URL = window.API_URL;
+    if (!API_URL) console.error('找不到 window.API_URL，請確認已正確部署 /api.js');
+
+    // 2) 取得表單與訊息節點
     const form   = document.getElementById('contactForm');
     const msgBox = document.getElementById('formMsg');
     const submitBtn = form?.querySelector('button[type="submit"], input[type="submit"]');
 
+    // 3) UI 訊息顯示
     function showMsg(type, text){
       if(!msgBox) return;
       msgBox.className = 'msg ' + (type === 'ok' ? 'ok' : 'err');
@@ -127,23 +112,21 @@
       msgBox.style.display = 'block';
     }
 
+    // 4) 簡易 Email 驗證
     function isValidEmail(s){
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
     }
 
-    // 從共用檔拿 API URL
-    const API_URL = window.API_URL;
-    if (!API_URL) {
-      showMsg('err','API 設定未載入（找不到 api.js 或 API_URL 未設定）。');
-    }
-
+    // 5) 表單送出事件
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      // 5.1 讀取與前端驗證
       const data = Object.fromEntries(new FormData(form).entries());
       ['name','email','subject','message'].forEach(k => data[k] = (data[k]||'').trim());
 
       if(!data.name || !data.email || !data.subject || !data.message){
-        showMsg('err', '請完整填寫所有欄位。');
+        showMsg('err','請完整填寫所有欄位。');
         return;
       }
       if(!isValidEmail(data.email)){
@@ -151,13 +134,14 @@
         return;
       }
 
-      // 蜜罐命中：直接回報成功但不送出
-      if (data.website){
+      // 5.2 蜜罐（可選）：若保留，Bot 會觸發這段
+      if (data.website) {
         showMsg('ok','已送出！');
         form.reset();
         return;
       }
 
+      // 5.3 送出中的 UI
       const origText = submitBtn ? (submitBtn.textContent || submitBtn.value) : '';
       if (submitBtn){
         submitBtn.disabled = true;
@@ -166,11 +150,12 @@
       }
       showMsg('ok','資料傳送中...');
 
+      // 5.4 設定逾時控制（避免卡住）
       const controller = new AbortController();
       const t = setTimeout(() => controller.abort(), 15000);
 
       try{
-        // 不帶 headers，String body => CORS 安全（不觸發預檢）
+        // 注意：不送 content-type header，避免瀏覽器預檢（OPTIONS）
         const payload = JSON.stringify({
           action:  'contact',
           name:    data.name,
@@ -180,24 +165,29 @@
           ua:      navigator.userAgent
         });
 
-        const res = await fetch(API_URL, { method:'POST', body:payload, signal:controller.signal });
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          body: payload,
+          signal: controller.signal
+        });
+
         clearTimeout(t);
 
         let json;
         try { json = await res.json(); }
-        catch { throw new Error('伺服器回應不是 JSON（可能用了 /dev 或部署/權限不對）'); }
+        catch { throw new Error('伺服器回應不是 JSON（可能用了 /dev 或權限不對）'); }
 
         if (res.ok && json && json.ok){
           form.reset();
-          showMsg('ok', '已送出！留言已存到試算表。');
+          showMsg('ok', '已送出！留言已存到試算表。'); // 會建立/使用 contacts 分頁
         } else {
           throw new Error(json && (json.msg || json.error) || `HTTP ${res.status}`);
         }
-      }catch(err){
+      } catch(err){
         console.error(err);
         const hint = (err.name === 'AbortError') ? '連線逾時，請稍後再試。' : (err.message || '送出失敗，請稍後再試。');
         showMsg('err', hint);
-      }finally{
+      } finally {
         if (submitBtn){
           submitBtn.disabled = false;
           if('textContent' in submitBtn) submitBtn.textContent = origText;
