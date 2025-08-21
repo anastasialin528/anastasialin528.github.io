@@ -5,153 +5,32 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>｜日本東北自助旅行-みやぎけん鳴子峽｜</title>
   <style>
-    body { 
-      margin: 0; 
-      font-family: "Microsoft JhengHei", sans-serif; 
-      background: #fff; 
-      color: #333; 
-      line-height: 1.8; 
-    }
-    header { 
-      background: #212121; 
-      padding: 1rem 2rem; 
-      color: #fff; 
-    }
-    main { 
-      max-width: 800px; 
-      margin: 2rem auto; 
-      padding: 0 1rem; 
-    }
-    img { 
-      width: 100%; 
-      border-radius: 8px; 
-      margin: 1.5rem 0; 
-    }
-    h1 { 
-      color: #ff6f61; 
-      font-size: 2rem; 
-      margin-bottom: 0.5rem;
-    }
-    p:empty { 
-      display: block; 
-      height: 1.0rem; 
-    }
-    .date { 
-      color: #999; 
-      font-size: 0.9rem; 
-      margin-bottom: 1.5rem; 
-    }
+    body { margin: 0; font-family: "Microsoft JhengHei", sans-serif; background: #fff; color: #333; line-height: 1.8; }
+    header { background: #212121; padding: 1rem 2rem; color: #fff; }
+    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
+    p:empty { display: block; height: 1.0rem; }
+    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
 
-    .back-link { 
-      display: inline-block; 
-      margin-top: 2rem; 
-      color: #ff6f61; 
-      text-decoration: none;
-      font-weight: bold;
-      border: 2px solid #ff6f61; 
-      padding: 0.4rem 1rem; 
-      border-radius: 25px; 
-      transition: all 0.3s ease; 
-    }
-    .back-link:hover { 
-      background: #ff6f61; 
-      color: #fff; 
-    }
+    .back-link { display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold; border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease; }
+    .back-link:hover { background: #ff6f61; color: #fff; }
 
-    .share-section { 
-      text-align: center; 
-      margin-top: 3rem; 
-    }
-    .line { 
-      height: 1px; 
-      background-color: rgba(0,0,0,0.2); 
-      margin: 1rem 0; 
-      width: 100%; 
-    }
-    .share-icons { 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      gap: 1.5rem; 
-      margin: 1rem 0; 
-      position: relative; 
-    }
-    .icon { 
-      background: none; 
-      border: none; 
-      font-size: 1.5rem; 
-      cursor: pointer; 
-      text-decoration: none; 
-      color: #333; 
-      transition: transform 0.2s ease; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-    }
-    .icon:hover { 
-      transform: scale(1.2); 
-    }
-    .facebook-icon { 
-      font-size: 24px; 
-      font-weight: bold; 
-      color: #000; 
-      height: 40px; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center;
-    }
-    #copy-link { 
-      background: none; 
-      border: none; 
-      cursor: pointer; 
-      padding: 0; 
-      width: 40px; 
-      height: 40px; 
-    }
-    #copy-link img { 
-      width: 100%; 
-      height: 100%; 
-      object-fit: cover; 
-    }
-    #copied-msg { 
-      position: absolute; 
-      top: 120%; 
-      font-size: 0.9rem; 
-      color: #28a745; 
-      display: none; 
-      margin-top: 5px; 
-    }
+    .share-section { text-align: center; margin-top: 3rem; }
+    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
+    .share-icons { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative; }
+    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform 0.2s ease; display: flex; justify-content: center; align-items: center; }
+    .icon:hover { transform: scale(1.2); }
+    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
+    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
+    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
+    #copied-msg { position: absolute; top: 120%; font-size: 0.9rem; color: #28a745; display: none; margin-top: 5px; }
 
-    .stats { 
-      display: flex; 
-      justify-content: space-between;
-      align-items: center; 
-      margin-top: 1rem;
-      padding-left: 15px; 
-      padding-right: 15px; 
-      width: calc(100% - 30px); 
-      margin-left: auto; 
-      margin-right: auto; 
-    }
-    .like-btn { 
-      background: none; 
-      border: none; 
-      font-size: 1.2rem; 
-      color: red; 
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-    }
-    .like-btn:hover { 
-      color: #e04848; 
-    }
-    .like-btn span { 
-      margin-left: 5px; 
-    }
-    .like-btn.is-liked { 
-      opacity: .6; cursor: default; 
-      pointer-events: none; 
-    }
+    .stats { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto; }
+    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
+    .like-btn:hover { color: #e04848; }
+    .like-btn span { margin-left: 5px; }
+    .like-btn.is-liked { opacity: .6; cursor: default; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -169,16 +48,14 @@
 
     <p>不過我看錯車內的到站站名提示，看見「鳴子」兩個字就匆忙下車，結果在「鳴子溫泉」的前一站「鳴子御殿湯」就下車了😂。走出車站發現是個無人車站，也可能是因為太早到了，附近僅有一間賣名產的小店開著。沒吃早餐太飢餓的我們不小心買了一盒需要配飯才能下嚥的海苔捲，後來還因為太鹹吃不完😂。</p>
 
-
     <p>其實那個海苔捲味道很好，海苔酥脆，裡頭包裹著類似梅子之類酸鹹的東西，若是配稀飯肯定對味。另外也要謝謝好心的店員幫我們打電話叫計程車使我們順利到達鳴子峽(當時已過了紅葉季，巡迴巴士已停駛，僅能搭計程車前往)。</p>
 
-     <img src="images/DSC0E8288.jpg" alt="遊客服務中心">
+    <img src="images/DSC0E8288.jpg" alt="遊客服務中心">
 
-     <p>自助旅行得靠自己的力量前往想到達的地方，途中經常出現的小插曲都讓整段旅行更加豐富多彩。即便稍微辛苦了一些，可是和日本孩子一起追電車、體驗窗外6度但熱氣從雙腳後面無止盡冒出的溫暖列車、過程中得到當地人各種幫助的欣慰，深刻融入當地生活的感覺和成就感都會讓這些困難變成更甜美且與眾不同的旅行記憶。</p>
+    <p>自助旅行得靠自己的力量前往想到達的地方，途中經常出現的小插曲都讓整段旅行更加豐富多彩。即便稍微辛苦了一些，可是和日本孩子一起追電車、體驗窗外6度但熱氣從雙腳後面無止盡冒出的溫暖列車、過程中得到當地人各種幫助的欣慰，深刻融入當地生活的感覺和成就感都會讓這些困難變成更甜美且與眾不同的旅行記憶。</p>
 
     <img src="images/DSC0E8279.jpg" alt="鳴子峽">
     <img src="images/DSC0E8283.jpg" alt="鳴子峽">
-
 
     <p>鳴子峽的楓葉70%已經凋零，峽谷的風景還是讓我們驚艷，若是在楓葉見傾時過來肯定更使人難以忘懷吧！</p>
 
@@ -186,16 +63,13 @@
 
     <p>下去鳴子峽谷的步道看似陡峭，全程都有石階及欄杆，小心行走的話還是算安全的。單程二十分鐘美景不間斷，天氣晴朗的時候十分推薦下去走走，欣賞瀑布、峽谷、楓葉的三重奏。</p>
 
-
     <a class="back-link" href="index.html">← 回到首頁</a>
 
     <!-- 分享功能 -->
     <div class="share-section">
       <div class="line"></div>
       <div class="share-icons">
-        <a class="icon facebook-icon" id="fb-share"
-           href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/post.html"
-           target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
+        <a class="icon facebook-icon" id="fb-share" href="#" target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
         <button class="icon" id="copy-link" title="複製連結">
           <img src="images/share.jpg" alt="複製連結">
         </button>
@@ -213,24 +87,23 @@
     </div>
   </main>
 
+  <!-- 先載入共用 API 設定檔（一定要在用到 API_URL 的腳本之前） -->
+  <script src="./api.js?v=1"></script>
+
   <!-- 後端 API 與共用工具 -->
   <script>
-    // 與首頁一致
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyalOSHqfhnv6jG0q_MZ07cISdssvny0rqjFtyBGRlDD-wDBB8hjK9DTBahlFqB54Hc/exec';
+    // 從 api.js 拿共用 URL
+    const API_URL = window.API_URL;
+
+    // GET 呼叫（避免預檢）
     async function api(params) {
       const url = API_URL + '?' + new URLSearchParams(params).toString();
-      try {
-        const r = await fetch(url, { cache: 'no-store' });
-        return await r.json();
-      } catch (e) {
-        console.error('API error:', e);
-        return { ok:false, error: String(e) };
-      }
+      const r = await fetch(url, { cache: 'no-store' });
+      return r.json();
     }
     const getStats = (id) => api({ action:'get', id });
     const addView  = (id) => api({ action:'addView', id });
     const likeAPI  = (id) => api({ action:'like', id });
-    const unlikeAPI= (id) => api({ action:'unlike', id });
 
     // 本機 liked map（與首頁共用同一 key）
     const LIKE_KEY = 'blog_liked_map';
@@ -290,22 +163,25 @@
       const POST_ID = getPostIdFromLocation();
 
       // 開頁 +1 觀看
-      await addView(POST_ID);
+      try { await addView(POST_ID); } catch(e){ console.warn('addView fail', e); }
 
       // 取得最新數字
-      const statsResp = await getStats(POST_ID);
-      const views = (statsResp && statsResp.ok && statsResp.views != null) ? statsResp.views : 0;
-      const likes = (statsResp && statsResp.ok && statsResp.likes != null) ? statsResp.likes : 0;
+      let views = 0, likes = 0;
+      try {
+        const statsResp = await getStats(POST_ID);
+        views = (statsResp && statsResp.ok && statsResp.views != null) ? statsResp.views : 0;
+        likes = (statsResp && statsResp.ok && statsResp.likes != null) ? statsResp.likes : 0;
+      } catch(e){ console.warn('getStats fail', e); }
 
+      // 畫到頁面
       const viewEl = document.getElementById('post-views');
       const likesEl = document.getElementById('post-likes');
       const btn = document.getElementById('post-like-btn');
-
       if (viewEl) viewEl.textContent = views;
       if (likesEl) likesEl.textContent = likes;
       if (btn) renderHeart(btn, POST_ID, likes, 'post-likes');
 
-      // 愛心：同一使用者不可重複按
+      // 綁定愛心（同一使用者不可重複按）
       if (btn) {
         btn.addEventListener('click', async (e) => {
           e.preventDefault();
@@ -317,12 +193,18 @@
           // 樂觀 +1
           renderHeart(btn, POST_ID, curLikes + 1, 'post-likes');
 
-          const res = await likeAPI(POST_ID);
-          if (res && res.ok) {
-            setLiked(POST_ID, true);
-            renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
-          } else {
-            // 失敗復原
+          try{
+            const res = await likeAPI(POST_ID);
+            if (res && res.ok) {
+              setLiked(POST_ID, true);
+              renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
+            } else {
+              // 失敗復原
+              renderHeart(btn, POST_ID, curLikes, 'post-likes');
+              alert('按讚失敗，請稍後再試。');
+              btn.disabled = false;
+            }
+          }catch(err){
             renderHeart(btn, POST_ID, curLikes, 'post-likes');
             alert('按讚失敗，請稍後再試。');
             btn.disabled = false;
@@ -333,4 +215,3 @@
   </script>
 </body>
 </html>
-
