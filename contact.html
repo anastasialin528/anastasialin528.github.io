@@ -1,236 +1,210 @@
-<!-- contact.html：聯絡表單頁面（每行皆附註解） -->
-<!DOCTYPE html> <!-- HTML5 文件宣告 / HTML5 doctype -->
-<html lang="zh-Hant"> <!-- 指定文件語系為繁體中文 / set page language -->
-<head> <!-- 文件的標頭區 / document head -->
-  <meta charset="UTF-8" /> <!-- 字元編碼為 UTF-8 / set charset -->
-  <meta name="viewport" content="width=device-width,initial-scale=1" /> <!-- RWD 視窗設定 / responsive viewport -->
-  <title>Contact · dEaR dIaRy</title> <!-- 瀏覽器分頁標題 / page title -->
-  <style> /* 內嵌樣式表開始 / start of embedded CSS */
-    :root{ /* 全域 CSS 變數（主題色） / theme variables */
-      --bg:#f2f0f2;      /* 粉灰色背景 / soft gray background */
-      --panel:#ffffff;   /* 卡片底色 / panel background */
-      --ink:#2d3e50;     /* 主文字色（灰藍）/ primary text color */
-      --muted:#6a6a6a;   /* 次要文字色 / muted text color */
-      --accent:#d19bb3;  /* 點綴色（粉紫紅）/ accent color */
-      --header:#000000;  /* 頂部導覽背景色 / header color */
-      --edge:18px;       /* 圓角尺寸 / border radius */
-      --shadow:0 12px 30px rgba(0,0,0,.07); /* 陰影 / shadow */
+<!-- contact.html：聯絡表單頁面（已改用共用 api.js） -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact · dEaR dIaRy</title>
+  <style>
+    :root{
+      --bg:#f2f0f2; --panel:#ffffff; --ink:#2d3e50; --muted:#6a6a6a;
+      --accent:#d19bb3; --header:#000000; --edge:18px;
+      --shadow:0 12px 30px rgba(0,0,0,.07);
     }
-    *{box-sizing:border-box} /* 邊框計算模式 / border-box sizing */
-    html,body{margin:0} /* 取消預設邊距 / reset margins */
-    body{ /* 網頁主體樣式 / body styles */
-      font-family:"Microsoft JhengHei",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; /* 字型 / fonts */
-      background: /* 背景圖與半透明覆蓋 / bg image + overlay */
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{
+      font-family:"Microsoft JhengHei",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
         linear-gradient(rgba(249,249,246,0.5), rgba(249,249,246,0.5)),
-        url("images/照片牆7.jpg") no-repeat center center / cover; /* 圖片填滿 / cover image */
-      color:var(--ink); /* 文字顏色 / text color */
-      line-height:1.7; /* 行高 / line-height */
+        url("images/照片牆7.jpg") no-repeat center center / cover;
+      color:var(--ink); line-height:1.7;
     }
+    header{
+      background:var(--header); color:#fff; padding:14px 20px; position:sticky; top:0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    header h1{margin:0; font-size:1.2rem; letter-spacing:.3px}
+    header nav a{ color:#fff; text-decoration:none; font-weight:600; margin-left:1rem; opacity:.9 }
+    header nav a:hover{ opacity:1; text-decoration:underline }
 
-    header{ /* 頂部導覽列 / top navigation bar */
-      background:var(--header); color:#fff; /* 背景與字色 / colors */
-      padding:14px 20px; position:sticky; top:0; z-index:1000; /* 置頂 / sticky header */
-      display:flex; align-items:center; justify-content:space-between; /* 彈性布局 / flex layout */
-    }
-    header h1{margin:0; font-size:1.2rem; letter-spacing:.3px} /* 網站標題樣式 / site title */
-    header nav a{ color:#fff; text-decoration:none; font-weight:600; margin-left:1rem; opacity:.9 } /* 導覽連結 / nav links */
-    header nav a:hover{ opacity:1; text-decoration:underline } /* 滑過效果 / hover state */
+    .hero{ padding:64px 20px 28px; text-align:center; max-width:800px; margin:0 auto; }
+    .eyebrow{ text-transform:uppercase; letter-spacing:.18em; color:var(--muted); font-size:.85rem; margin-bottom:.3rem; }
+    .title{ font-size:2.4rem; margin:.2rem 0 .5rem; letter-spacing:.02em; }
+    .sub{ color:var(--muted); max-width:600px; margin:0 auto; }
 
-    .hero{ /* 頁首橫幅區 / hero section */
-      padding:64px 20px 28px; /* 內距 / padding */
-      text-align:center; /* 置中 / centered text */
-      max-width:800px; margin:0 auto; /* 最大寬度與置中 / width + center */
+    .card{ max-width:700px; margin:40px auto 80px; padding:26px 24px; background:var(--panel); border-radius:var(--edge); box-shadow:var(--shadow); }
+    form{ display:grid; gap:14px }
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px }
+    label{ font-weight:600; font-size:.95rem }
+    input, textarea{
+      margin-top:6px; width:100%; border:1px solid #e2e8ec; background:#fff;
+      border-radius:12px; padding:12px 14px; font-size:1rem; color:var(--ink);
+      outline:none; transition:border .15s ease, box-shadow .15s ease;
     }
-    .eyebrow{ /* 上方小標 / eyebrow label */
-      text-transform:uppercase; letter-spacing:.18em; color:var(--muted); /* 大寫與字距 / uppercase + tracking */
-      font-size:.85rem; margin-bottom:.3rem; /* 字級與間距 / size + spacing */
-    }
-    .title{ /* 主標題 / main title */
-      font-size:2.4rem; margin:.2rem 0 .5rem; /* 字級與間距 / size + margins */
-      letter-spacing:.02em; /* 微字距 / slight tracking */
-    }
-    .sub{ /* 副標文字 / subtitle */
-      color:var(--muted); max-width:600px; margin:0 auto; /* 色彩與寬度 / color + width */
-    }
+    input:focus, textarea:focus{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(209,155,179,.18); }
+    textarea{ min-height:160px; resize:vertical }
 
-    .card{ /* 表單卡片容器 / form card */
-      max-width:700px; margin:40px auto 80px; padding:26px 24px; /* 尺寸與間距 / sizing + spacing */
-      background:var(--panel); border-radius:var(--edge); box-shadow:var(--shadow); /* 外觀 / look */
+    .actions{ display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border:2px solid var(--accent); border-radius:999px; padding:.6rem 1.2rem;
+      color:var(--ink); background:#fff; font-weight:700; text-decoration:none; transition:.18s; cursor:pointer;
     }
-    form{ display:grid; gap:14px } /* 表單網格 / grid layout */
-    .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px } /* 兩欄排版 / two columns */
-    label{ font-weight:600; font-size:.95rem } /* 標籤字重與大小 / label fonts */
-    input, textarea{ /* 輸入與多行文字共用樣式 / inputs + textarea */
-      margin-top:6px; width:100%; border:1px solid #e2e8ec; background:#fff; /* 邊框背景 / border+bg */
-      border-radius:12px; padding:12px 14px; font-size:1rem; color:var(--ink); /* 內距與字型 / paddings + fonts */
-      outline:none; transition:border .15s ease, box-shadow .15s ease; /* 聚焦過渡 / transitions */
-    }
-    input:focus, textarea:focus{ /* 聚焦狀態 / focus styles */
-      border-color:var(--accent); /* 邊框點綴色 / accent border */
-      box-shadow:0 0 0 3px rgba(209,155,179,.18); /* 外陰影提示 / focus ring */
-    }
-    textarea{ min-height:160px; resize:vertical } /* 多行高度與可垂直調整 / textarea rules */
+    .btn:hover{ background:var(--accent); color:#fff }
+    .note{ color:var(--muted); font-size:.9rem }
 
-    .actions{ display:flex; gap:10px; align-items:center; margin-top:6px; flex-wrap:wrap } /* 按鈕列 / actions bar */
-    .btn{ /* 送出按鈕樣式 / submit button */
-      display:inline-flex; align-items:center; justify-content:center; gap:8px; /* 置中 / center */
-      border:2px solid var(--accent); border-radius:999px; padding:.6rem 1.2rem; /* 邊框圓角 / pill button */
-      color:var(--ink); background:#fff; font-weight:700; text-decoration:none; /* 文字樣式 / text */
-      transition:.18s; cursor:pointer; /* 動畫與游標 / transition + cursor */
-    }
-    .btn:hover{ background:var(--accent); color:#fff } /* 滑過反相 / hover invert */
-    .note{ color:var(--muted); font-size:.9rem } /* 說明文字 / note text */
+    .msg{ display:none; margin-top:10px; font-weight:600; padding:10px 12px; border-radius:10px; }
+    .msg.ok{ display:block; color:#0a6a4a; background:#e8f6ef; border:1px solid #cde9df }
+    .msg.err{ display:block; color:#7a1d1d; background:#fdeeee; border:1px solid #f3d1d1 }
 
-    .msg{ /* 訊息區塊基礎 / message box base */
-      display:none; margin-top:10px; font-weight:600; /* 先隱藏 / hidden initially */
-      padding:10px 12px; border-radius:10px; /* 內距與圓角 / padding + radius */
-    }
-    .msg.ok{ display:block; color:#0a6a4a; background:#e8f6ef; border:1px solid #cde9df } /* 成功樣式 / success style */
-    .msg.err{ display:block; color:#7a1d1d; background:#fdeeee; border:1px solid #f3d1d1 } /* 失敗樣式 / error style */
+    /* 隱藏的蜜罐欄位（機器人會填，人看不到） */
+    .hp{ position:absolute !important; left:-9999px !important; opacity:0 !important; pointer-events:none !important; height:0 !important; width:0 !important; }
 
-    @media (max-width: 700px){ .row{ grid-template-columns:1fr; } } /* 手機改單欄 / 1-column on mobile */
-  </style> <!-- 內嵌樣式表結束 / end CSS -->
+    @media (max-width: 700px){ .row{ grid-template-columns:1fr; } }
+  </style>
 </head>
-<body> <!-- 文件主體開始 / start body -->
-  <header> <!-- 頂部導覽列 / site header -->
-    <h1>dEaR dIaRy</h1> <!-- 網站名稱 / site name -->
-    <nav> <!-- 導覽連結 / nav -->
-      <a href="index.html">MAIN PAGE</a> <!-- 回首頁 / home -->
-      <a href="about.html">ABOUT ME</a> <!-- 關於我 / about -->
-      <a href="contact.html">CONTACT</a> <!-- 聯絡頁 / contact -->
+<body>
+  <header>
+    <h1>dEaR dIaRy</h1>
+    <nav>
+      <a href="index.html">MAIN PAGE</a>
+      <a href="about.html">ABOUT ME</a>
+      <a href="contact.html">CONTACT</a>
     </nav>
   </header>
 
-  <section class="hero"> <!-- Hero 區塊 / hero section -->
-    <div class="eyebrow">Contact</div> <!-- 上方眉標 / eyebrow -->
-    <h2 class="title">寫信給我吧</h2> <!-- 主標題 / title -->
-    <p class="sub">有合作想法、內容交流，或只是想說聲嗨，都非常歡迎。填寫下方表單，留言會儲存在我的 Google 試算表。</p> <!-- 說明文字 / subtitle -->
+  <section class="hero">
+    <div class="eyebrow">Contact</div>
+    <h2 class="title">寫信給我吧</h2>
+    <p class="sub">有合作想法、內容交流，或只是想說聲嗨，都非常歡迎。填寫下方表單，留言會儲存在我的 Google 試算表。</p>
   </section>
 
-  <section class="card" aria-label="聯絡表單"> <!-- 表單卡片 / contact form card -->
-    <form id="contactForm" novalidate> <!-- 表單本體，關閉瀏覽器預設驗證（自訂驗證）/ form with custom validation -->
-      <div class="row"> <!-- 兩欄容器 / two-column row -->
-        <div> <!-- 左欄 / left column -->
+  <section class="card" aria-label="聯絡表單">
+    <form id="contactForm" novalidate>
+      <div class="row">
+        <div>
           <label>你的稱呼
-            <input type="text" name="name" placeholder="例如：Anastasia" required /> <!-- 姓名輸入 / name input -->
+            <input type="text" name="name" placeholder="例如：Anastasia" required />
           </label>
         </div>
-        <div> <!-- 右欄 / right column -->
+        <div>
           <label>Email
-            <input type="email" name="email" placeholder="你的 Email" required /> <!-- Email 輸入 / email input -->
+            <input type="email" name="email" placeholder="你的 Email" required />
           </label>
         </div>
       </div>
       <label>主旨
-        <input type="text" name="subject" placeholder="想聊的主題" required /> <!-- 主旨輸入 / subject input -->
+        <input type="text" name="subject" placeholder="想聊的主題" required />
       </label>
       <label>訊息內容
-        <textarea name="message" placeholder="想對我說的話…" required></textarea> <!-- 內容輸入 / message textarea -->
+        <textarea name="message" placeholder="想對我說的話…" required></textarea>
       </label>
-      <div class="actions"> <!-- 按鈕區 / actions -->
-        <button class="btn" type="submit">送出訊息</button> <!-- 送出按鈕 / submit button -->
-        <span class="note">留言將寫入 Google 試算表（不會寄 Email）。</span> <!-- 備註 / note -->
+
+      <!-- 蜜罐欄位：正常使用者看不到，機器人可能會填 -->
+      <input type="text" name="website" class="hp" autocomplete="off" tabindex="-1" aria-hidden="true" />
+
+      <div class="actions">
+        <button class="btn" type="submit">送出訊息</button>
+        <span class="note">留言將寫入 Google 試算表（不會寄 Email）。</span>
       </div>
-      <div id="formMsg" class="msg"></div> <!-- 顯示成功/錯誤訊息的區塊 / message area -->
+      <div id="formMsg" class="msg"></div>
     </form>
   </section>
 
-  <script> /* 表單送出腳本 / form submit script */
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyalOSHqfhnv6jG0q_MZ07cISdssvny0rqjFtyBGRlDD-wDBB8hjK9DTBahlFqB54Hc/exec'; // 你的 GAS Web App /exec；部署後保持不變即可 / your GAS /exec URL
+  <!-- 先載入共用 API 設定（一定要在任何用到 API_URL 的 <script> 之前） -->
+  <script src="/api.js?v=1"></script>
 
-    const form   = document.getElementById('contactForm'); // 取得表單節點 / grab form node
-    const msgBox = document.getElementById('formMsg');     // 取得訊息節點 / message box node
-    const submitBtn = form?.querySelector('button[type="submit"], input[type="submit"]'); // 找送出按鈕 / submit button reference
+  <script>
+    const form   = document.getElementById('contactForm');
+    const msgBox = document.getElementById('formMsg');
+    const submitBtn = form?.querySelector('button[type="submit"], input[type="submit"]');
 
-    function showMsg(type, text){ // 顯示訊息（成功/失敗）/ show UI message
-      if(!msgBox) return; // 若沒有訊息容器就返回 / guard
-      msgBox.className = 'msg ' + (type === 'ok' ? 'ok' : 'err'); // 套用樣式類別 / set class
-      msgBox.textContent = text; // 設定文字 / set text
-      msgBox.style.display = 'block'; // 顯示區塊 / show
+    function showMsg(type, text){
+      if(!msgBox) return;
+      msgBox.className = 'msg ' + (type === 'ok' ? 'ok' : 'err');
+      msgBox.textContent = text;
+      msgBox.style.display = 'block';
     }
 
-    function isValidEmail(s){ // 簡易 Email 驗證 / simple email validation
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s); // 正規表達式檢查 / regex check
+    function isValidEmail(s){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
     }
 
-    form.addEventListener('submit', async (e) => { // 監聽表單送出事件 / handle submit
-      e.preventDefault(); // 阻止預設送出行為 / prevent default
+    // 從共用檔拿 API URL
+    const API_URL = window.API_URL;
+    if (!API_URL) {
+      showMsg('err','API 設定未載入（找不到 api.js 或 API_URL 未設定）。');
+    }
 
-      const data = Object.fromEntries(new FormData(form).entries()); // 讀取表單資料成物件 / read form into object
-      ['name','email','subject','message'].forEach(k => data[k] = (data[k]||'').trim()); // 去除前後空白 / trim values
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      ['name','email','subject','message'].forEach(k => data[k] = (data[k]||'').trim());
 
-      if(!data.name || !data.email || !data.subject || !data.message){ // 檢查必填 / required check
-        showMsg('err', '請完整填寫所有欄位。'); // 提示未填完整 / show error
-        return; // 中止流程 / stop
+      if(!data.name || !data.email || !data.subject || !data.message){
+        showMsg('err', '請完整填寫所有欄位。');
+        return;
       }
-      if(!isValidEmail(data.email)){ // 檢查 Email 格式 / email format check
-        showMsg('err','Email 格式好像不正確喔。'); // 提示錯誤 / show error
-        return; // 中止流程 / stop
+      if(!isValidEmail(data.email)){
+        showMsg('err','Email 格式好像不正確喔。');
+        return;
       }
 
-      if (data.website) { // 蜜罐欄位（機器人會填）/ honeypot field
-        showMsg('ok','已送出！'); // 假成功以降低濫用 / fake success
-        form.reset(); // 清空表單 / reset form
-        return; // 結束 / end
+      // 蜜罐命中：直接回報成功但不送出
+      if (data.website){
+        showMsg('ok','已送出！');
+        form.reset();
+        return;
       }
 
-      const origText = submitBtn ? (submitBtn.textContent || submitBtn.value) : ''; // 記錄原按鈕文字 / keep button label
-      if (submitBtn){ // 處理送出中的 UI / set loading UI
-        submitBtn.disabled = true; // 禁止連點 / disable button
-        if('textContent' in submitBtn) submitBtn.textContent = '送出中...'; // 改文字（button）/ change label
-        if('value' in submitBtn) submitBtn.value = '送出中...'; // 改文字（input[type=submit]）/ change value
+      const origText = submitBtn ? (submitBtn.textContent || submitBtn.value) : '';
+      if (submitBtn){
+        submitBtn.disabled = true;
+        if('textContent' in submitBtn) submitBtn.textContent = '送出中...';
+        if('value' in submitBtn) submitBtn.value = '送出中...';
       }
-      showMsg('ok','資料傳送中...'); // 提示進行中 / show progress
+      showMsg('ok','資料傳送中...');
 
-      const controller = new AbortController(); // 建立逾時控制器 / abort controller
-      const t = setTimeout(() => controller.abort(), 15000); // 15 秒逾時 / 15s timeout
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), 15000);
 
       try{
-        // ✅ 不帶任何 headers，瀏覽器就不會做預檢（OPTIONS）
-      const payload = JSON.stringify({
-      action:  'contact',
-      name:    data.name,
-      email:   data.email,
-      subject: data.subject,
-      message: data.message,
-      ua:      navigator.userAgent
-    });
-    
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      body: payload,
-      signal: controller.signal
-    });
+        // 不帶 headers，String body => CORS 安全（不觸發預檢）
+        const payload = JSON.stringify({
+          action:  'contact',
+          name:    data.name,
+          email:   data.email,
+          subject: data.subject,
+          message: data.message,
+          ua:      navigator.userAgent
+        });
 
-        clearTimeout(t); // 清除逾時計時器 / clear timeout
+        const res = await fetch(API_URL, { method:'POST', body:payload, signal:controller.signal });
+        clearTimeout(t);
 
-        let json; // 準備解析回應 JSON / response holder
-        try { json = await res.json(); } // 嘗試解析 JSON / parse JSON
-        catch { throw new Error('伺服器回應不是 JSON（可能用了 /dev 或權限不對）'); } // 非 JSON 直接報錯 / non-JSON error
+        let json;
+        try { json = await res.json(); }
+        catch { throw new Error('伺服器回應不是 JSON（可能用了 /dev 或部署/權限不對）'); }
 
-        if (res.ok && json && json.ok){ // 判斷成功 / success branch
-          form.reset(); // 清空表單 / reset
-          showMsg('ok', '已送出！留言已存到試算表。'); // 顯示成功訊息 / success message
-        } else { // 後端回傳錯誤 / server-side error
-          throw new Error(json && (json.msg || json.error) || `HTTP ${res.status}`); // 拋出錯誤給 catch / throw error
+        if (res.ok && json && json.ok){
+          form.reset();
+          showMsg('ok', '已送出！留言已存到試算表。');
+        } else {
+          throw new Error(json && (json.msg || json.error) || `HTTP ${res.status}`);
         }
-      } catch(err){ // 捕捉任何錯誤 / catch all errors
-        console.error(err); // 輸出到 Console 方便除錯 / log to console
-        const hint = (err.name === 'AbortError') // 若為逾時錯誤 / timeout case
-          ? '連線逾時，請稍後再試。' // 逾時訊息 / timeout msg
-          : (err.message || '送出失敗，請稍後再試。'); // 一般錯誤訊息 / generic error
-        showMsg('err', hint); // 顯示錯誤給使用者 / show error
-      } finally { // 無論成功失敗皆執行 / always
-        if (submitBtn){ // 還原按鈕狀態 / restore button
-          submitBtn.disabled = false; // 允許再次點擊 / enable
-          if('textContent' in submitBtn) submitBtn.textContent = origText; // 還原文字（button）/ restore label
-          if('value' in submitBtn) submitBtn.value = origText; // 還原文字（input）/ restore value
+      }catch(err){
+        console.error(err);
+        const hint = (err.name === 'AbortError') ? '連線逾時，請稍後再試。' : (err.message || '送出失敗，請稍後再試。');
+        showMsg('err', hint);
+      }finally{
+        if (submitBtn){
+          submitBtn.disabled = false;
+          if('textContent' in submitBtn) submitBtn.textContent = origText;
+          if('value' in submitBtn) submitBtn.value = origText;
         }
       }
     });
-  </script> <!-- 腳本結束 / end script -->
-</body> <!-- 主體結束 / end body -->
-</html> <!-- 文件結束 / end html -->
-
-
-
+  </script>
+</body>
+</html>
