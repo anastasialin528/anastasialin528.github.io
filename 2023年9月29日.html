@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>｜林口海邊｜</title>
+  <style>
+    body { margin: 0; font-family: "Microsoft JhengHei", sans-serif; background: #fff; color: #333; line-height: 1.8; }
+    header { background: #212121; padding: 1rem 2rem; color: #fff; }
+    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
+    p:empty { display: block; height: 1.0rem; }
+    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    .back-link { display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold; border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease; }
+    .back-link:hover { background: #ff6f61; color: #fff; }
+
+    .share-section { text-align: center; margin-top: 3rem; }
+    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
+    .share-icons { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative; }
+    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform 0.2s ease; display: flex; justify-content: center; align-items: center; }
+    .icon:hover { transform: scale(1.2); }
+    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
+    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
+    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
+    #copied-msg { position: absolute; top: 120%; font-size: 0.9rem; color: #28a745; display: none; margin-top: 5px; }
+
+    .stats { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto; }
+    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
+    .like-btn:hover { color: #e04848; }
+    .like-btn span { margin-left: 5px; }
+    .like-btn.is-liked { opacity: .6; cursor: default; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <header><h1>｜林口海邊｜</h1></header>
+  <main>
+    <div class="date">2023年9月29日</div>
+
+    <img src="images/林口海邊夕陽.jpg" alt="｜林口海邊｜">
+    <p>🥮月餅節林口海邊等夕陽🌞</p>
+    <p>放鬆的海岸線</p>
+    <p>鹹鹹的海風</p>
+    <p>懷念的阿Q桶麵</p>
+    <p>美味的抹茶冰淇淋🍦</p>
+    <p>有人一次喝完兩杯飲料🥤</p>
+    <p>詩意的剪影</p>
+    <p>金黃色晚霞</p>
+    <p>粉紅色雲朵☁️</p>
+    <p>被大自然療癒的午後</p>
+    <p>活著真好</p>
+
+
+    <a class="back-link" href="index.html">← 回到首頁</a>
+
+    <!-- 分享功能 -->
+    <div class="share-section">
+      <div class="line"></div>
+      <div class="share-icons">
+        <a class="icon facebook-icon" id="fb-share"
+           href="https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com/post.html"
+           target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
+        <button class="icon" id="copy-link" title="複製連結">
+          <img src="images/share.jpg" alt="複製連結">
+        </button>
+        <span id="copied-msg">Link Copied!</span>
+      </div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 觀看與按讚 -->
+    <div class="stats">
+      <div class="view"><span id="post-views">0</span> views</div>
+      <div class="like">
+        <button class="like-btn" id="post-like-btn">♡ <span id="post-likes">0</span></button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 先載入共用 API 設定（一定要放在用到 API_URL 的腳本之前） -->
+  <script src="/api.js?v=1"></script>
+
+  <!-- 後端 API 與共用工具 -->
+  <script>
+    // 與首頁一致：從 api.js 取得共用 URL
+    const API_URL = window.API_URL;
+
+    async function api(params) {
+      const url = API_URL + '?' + new URLSearchParams(params).toString();
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        return await r.json();
+      } catch (e) {
+        console.error('API error:', e);
+        return { ok:false, error: String(e) };
+      }
+    }
+    const getStats = (id) => api({ action:'get', id });
+    const addView  = (id) => api({ action:'addView', id });
+    const likeAPI  = (id) => api({ action:'like', id });
+
+    // 本機 liked map（與首頁共用同一 key）
+    const LIKE_KEY = 'blog_liked_map';
+    function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} }
+    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
+    function isLiked(id){ return !!loadLiked()[id]; }
+    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); }
+
+    function renderHeart(btnEl, id, likeCount, likesSpanId){
+      const liked = isLiked(id);
+      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`;
+      btnEl.classList.toggle('is-liked', liked);
+      btnEl.disabled = liked;
+    }
+
+    function getPostIdFromLocation(){
+      const last = location.pathname.split('/').pop();
+      return decodeURIComponent(last || 'index.html');
+    }
+
+    // storage 同步（當其他頁按了讚）
+    window.addEventListener('storage', (e) => {
+      if (e.key !== LIKE_KEY) return;
+      if (typeof syncCurrentHeart === 'function') syncCurrentHeart();
+    });
+  </script>
+
+  <!-- 內頁邏輯 -->
+  <script>
+    // 分享連結
+    const fbA = document.getElementById('fb-share');
+    if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
+    const copyBtn = document.getElementById("copy-link");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", function () {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          const msg = document.getElementById("copied-msg");
+          if (!msg) return;
+          msg.style.display = "inline";
+          setTimeout(() => { msg.style.display = "none"; }, 2000);
+        });
+      });
+    }
+
+    // 讓 storage 事件能同步這頁的愛心
+    function syncCurrentHeart(){
+      const id = getPostIdFromLocation();
+      const btn = document.getElementById('post-like-btn');
+      const likesSpan = document.getElementById('post-likes');
+      if (btn && likesSpan) {
+        const currentLikes = parseInt(likesSpan.textContent || '0', 10);
+        renderHeart(btn, id, currentLikes, 'post-likes');
+      }
+    }
+
+    (async () => {
+      const POST_ID = getPostIdFromLocation();
+
+      // 開頁 +1 觀看
+      await addView(POST_ID);
+
+      // 取得最新數字
+      const statsResp = await getStats(POST_ID);
+      const views = (statsResp && statsResp.ok && statsResp.views != null) ? statsResp.views : 0;
+      const likes = (statsResp && statsResp.ok && statsResp.likes != null) ? statsResp.likes : 0;
+
+      const viewEl = document.getElementById('post-views');
+      const likesEl = document.getElementById('post-likes');
+      const btn = document.getElementById('post-like-btn');
+
+      if (viewEl) viewEl.textContent = views;
+      if (likesEl) likesEl.textContent = likes;
+      if (btn) renderHeart(btn, POST_ID, likes, 'post-likes');
+
+      // 愛心：同一使用者不可重複按
+      if (btn) {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          if (isLiked(POST_ID)) return;
+
+          btn.disabled = true;
+          let curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
+
+          // 樂觀 +1
+          renderHeart(btn, POST_ID, curLikes + 1, 'post-likes');
+
+          const res = await likeAPI(POST_ID);
+          if (res && res.ok) {
+            setLiked(POST_ID, true);
+            renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
+          } else {
+            // 失敗復原
+            renderHeart(btn, POST_ID, curLikes, 'post-likes');
+            alert('按讚失敗，請稍後再試。');
+            btn.disabled = false;
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
+
