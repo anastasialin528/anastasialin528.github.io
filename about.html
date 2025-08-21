@@ -1,128 +1,127 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+<!DOCTYPE html> <!-- 宣告文件類型為 HTML5 -->
+<html lang="zh-Hant"> <!-- HTML 文件的根元素，語言設為繁體中文 -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About Me · dEaR dIaRy</title>
+  <meta charset="UTF-8" /> <!-- 設定網頁字元編碼為 UTF-8 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1" /> <!-- 行動裝置響應式設計 -->
+  <title>About Me · dEaR dIaRy</title> <!-- 瀏覽器分頁標題 -->
   <style>
-    :root{
-      /* 調色盤：灰藍 + 灰 + 淺米 */
-      --bg: #f9f9f6;      /* 備用底色（卡片外緣若需要可用） */
-      --panel: #ffffff;   /* 卡片/側欄底 */
-      --ink: #2d3e50;     /* 主要文字深灰藍 */
-      --muted:#55636d;    /* 次要文字灰藍 */
-      --accent:#8cb5c4;   /* 淺青藍點綴 */
-      --header:#000000;   /* 頂部黑色 */
-      --edge: 16px;
-      --shadow: 0 10px 30px rgba(0,0,0,.08);
+    :root{ /* 全域變數（CSS 自訂屬性） */
+      --bg: #f9f9f6;      /* 備用底色 */
+      --panel: #ffffff;   /* 卡片 / 側欄底色 */
+      --ink: #2d3e50;     /* 主要文字顏色 */
+      --muted:#55636d;    /* 次要文字顏色 */
+      --accent:#8cb5c4;   /* 點綴色（藍綠） */
+      --header:#000000;   /* 頂部導覽黑色底 */
+      --edge: 16px;       /* 卡片圓角 */
+      --shadow: 0 10px 30px rgba(0,0,0,.08); /* 投影效果 */
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;height:100%}
+    *{box-sizing:border-box} /* 所有元素的 box 計算包含 padding/border */
+    html,body{margin:0;height:100%} /* 取消預設邊距，滿版高度 */
 
     /* === 最底層全螢幕背景（合歡山.jpg） === */
     .bg-hero{
-      position:fixed;           /* 固定在視窗，不隨捲動位移 */
-      inset:0;                  /* top/right/bottom/left 全為 0，填滿視窗 */
-      background: url("images/合歡山.jpg") center / cover no-repeat; /* 置中等比滿版 */
-      z-index:0;                /* 疊層最低，內容會疊在上面 */
-      pointer-events:none;      /* 不攔截滑鼠事件，避免干擾 */
+      position:fixed;           /* 固定在視窗 */
+      inset:0;                  /* top/right/bottom/left = 0，填滿全螢幕 */
+      background: url("images/合歡山.jpg") center / cover no-repeat; /* 背景圖滿版置中 */
+      z-index:0;                /* 疊層最低 */
+      pointer-events:none;      /* 背景不擋住滑鼠操作 */
     }
-    /* 淡淡的柔光遮罩，避免底圖太搶眼（可調整透明度） */
+    /* 柔光遮罩（讓背景不會太搶眼） */
     .bg-hero::after{
-      content:"";
-      position:absolute; inset:0;
+      content:""; /* 必須要有 content 才能生成 */
+      position:absolute; inset:0; /* 填滿父層 */
       background:
         radial-gradient(60% 60% at 50% 20%, rgba(255,255,255,.18), rgba(255,255,255,.28) 60%, rgba(255,255,255,.32)),
-        linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,.18));
+        linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,.18)); /* 疊加漸層 */
     }
 
     body{
-      font-family:"Microsoft JhengHei",sans-serif;
-      color:var(--ink);
-      background: transparent;  /* 讓底層背景可見（不再用 body 底色蓋住） */
-      line-height:1.7;
+      font-family:"Microsoft JhengHei",sans-serif; /* 預設字體 */
+      color:var(--ink); /* 主要文字色 */
+      background: transparent; /* 透明，讓底圖透出 */
+      line-height:1.7; /* 行高 */
     }
 
-    /* 頂部導覽（疊在背景之上） */
+    /* 頂部導覽列 */
     header{
-      background:var(--header);
-      color:#fff;
-      padding:12px 20px;
-      position:sticky; top:0;
-      z-index:1000; /* 最高，確保蓋過背景與內容 */
-      display:flex; align-items:center; justify-content:space-between;
+      background:var(--header); /* 黑底 */
+      color:#fff; /* 白字 */
+      padding:12px 20px; /* 內距 */
+      position:sticky; top:0; /* 捲動時固定在上方 */
+      z-index:1000; /* 疊層最高 */
+      display:flex; align-items:center; justify-content:space-between; /* 左右排版 */
     }
-    header h1{margin:0; font-size:1.4rem}
+    header h1{margin:0; font-size:1.4rem} /* 標題樣式 */
     header nav a{
-      color:#fff; text-decoration:none; font-weight:bold; margin-left:1rem;
+      color:#fff; text-decoration:none; font-weight:bold; margin-left:1rem; /* 導覽連結樣式 */
     }
-    header nav a:hover{ text-decoration:underline }
+    header nav a:hover{ text-decoration:underline } /* 滑過有底線 */
 
-    /* 主要版型：左側固定名片 + 右側內容（疊在背景之上） */
+    /* 主要版型：左側 sidebar + 右側內容 */
     .wrap{
-      position:relative; z-index:1; /* 明確疊在背景層上 */
-      max-width:1200px; margin:32px auto; padding:0 16px;
-      display:grid; grid-template-columns: 320px 1fr; gap:24px;
+      position:relative; z-index:1; /* 疊在背景之上 */
+      max-width:1200px; margin:32px auto; padding:0 16px; /* 版心置中 */
+      display:grid; grid-template-columns: 320px 1fr; gap:24px; /* 左 320px，右自動撐滿 */
     }
 
     .sidebar{
-      position:sticky; top:88px;
-      background:var(--panel);
-      border-radius:var(--edge);
-      box-shadow:var(--shadow);
-      padding:24px;
-      height: fit-content;
+      position:sticky; top:88px; /* 捲動時固定位置 */
+      background:var(--panel); /* 白底卡片 */
+      border-radius:var(--edge); /* 圓角 */
+      box-shadow:var(--shadow); /* 投影 */
+      padding:24px; /* 內距 */
+      height: fit-content; /* 高度依內容 */
     }
     .avatar{
-      width:100%; max-width:220px; aspect-ratio:1/1; margin:0 auto 16px;
-      border-radius:50%;
-      background:#ddd url("images/我.jpg") center/cover no-repeat;
-      border:6px solid #fff;
-      box-shadow:0 8px 24px rgba(0,0,0,.12);
+      width:100%; max-width:220px; aspect-ratio:1/1; margin:0 auto 16px; /* 正方形頭像 */
+      border-radius:50%; /* 圓形 */
+      background:#ddd url("images/我.jpg") center/cover no-repeat; /* 背景頭像 */
+      border:6px solid #fff; /* 白邊 */
+      box-shadow:0 8px 24px rgba(0,0,0,.12); /* 投影 */
     }
-    .name{ text-align:center; margin:8px 0 4px; font-size:1.4rem }
-    .role{ text-align:center; color:var(--muted); font-size:.95rem; margin:0 0 12px }
-    .chips{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:8px 0 16px }
+    .name{ text-align:center; margin:8px 0 4px; font-size:1.4rem } /* 名字樣式 */
+    .role{ text-align:center; color:var(--muted); font-size:.95rem; margin:0 0 12px } /* 身分描述 */
+    .chips{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:8px 0 16px } /* 標籤區 */
     .chip{
       border:1px solid var(--accent); color:#2d3e50; background:#fff;
-      padding:.28rem .6rem; border-radius:999px; font-size:.85rem;
+      padding:.28rem .6rem; border-radius:999px; font-size:.85rem; /* 小圓角標籤 */
     }
 
     .content{
-      background:var(--panel);
-      border-radius:var(--edge);
-      box-shadow:var(--shadow);
-      padding:32px 24px;
+      background:var(--panel); /* 白底 */
+      border-radius:var(--edge); /* 圓角 */
+      box-shadow:var(--shadow); /* 投影 */
+      padding:32px 24px; /* 內距 */
     }
-    .section + .section{ margin-top:28px }
+    .section + .section{ margin-top:28px } /* 區塊之間間距 */
     h2{
       margin:0 0 10px; font-size:1.3rem; color:var(--ink);
-      border-left:6px solid var(--accent); padding-left:10px;
+      border-left:6px solid var(--accent); padding-left:10px; /* 左側藍色線條 */
     }
-    p{ margin:.4rem 0; color:var(--muted) }
+    p{ margin:.4rem 0; color:var(--muted) } /* 文字段落 */
 
-    .cta{ margin-top:18px; }
+    .cta{ margin-top:18px; } /* 呼叫動作區塊 */
     .btn{
       border:2px solid var(--accent); color:#2d3e50; background:#fff;
       border-radius:999px; padding:.5rem 1rem; text-decoration:none; font-weight:bold;
-      transition:.2s;
+      transition:.2s; /* 動畫過渡 */
     }
-    .btn:hover{ background:var(--accent); color:#fff; }
+    .btn:hover{ background:var(--accent); color:#fff; } /* 滑過變色 */
 
-    /* 小照片牆 */
+    /* 照片牆 */
     .photo-wall{
       margin-top:28px;
-      background: var(--panel);
-      border-radius: var(--edge);
-      box-shadow: var(--shadow);
-      padding: 20px;
+      background: var(--panel); /* 白底卡片 */
+      border-radius: var(--edge); /* 圓角 */
+      box-shadow: var(--shadow); /* 投影 */
+      padding: 20px; /* 內距 */
     }
     .grid{
       display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap:10px;
+      grid-template-columns: repeat(5, 1fr); /* 預設五欄 */
+      gap:10px; /* 間距 */
     }
-    /* RWD：縮小時自動減少欄數 */
+    /* 響應式調整欄數 */
     @media (max-width: 1000px){
       .grid{ grid-template-columns: repeat(4, 1fr); }
     }
@@ -134,49 +133,50 @@
     }
 
     .grid img{
-      width:100%;
-      aspect-ratio:1/1;           /* 統一方形縮圖 */
-      object-fit:cover;
-      border-radius:12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.08);
-      transition: transform .18s ease, box-shadow .18s ease;
+      width:100%; /* 填滿格子 */
+      aspect-ratio:1/1; /* 方形比例 */
+      object-fit:cover; /* 裁切填滿 */
+      border-radius:12px; /* 圓角 */
+      box-shadow: 0 4px 12px rgba(0,0,0,.08); /* 投影 */
+      transition: transform .18s ease, box-shadow .18s ease; /* 動畫 */
       display:block;
     }
     .grid img:hover{
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 10px 18px rgba(0,0,0,.12);
+      transform: translateY(-2px) scale(1.02); /* 滑過微浮起 */
+      box-shadow: 0 10px 18px rgba(0,0,0,.12); /* 陰影加深 */
     }
 
+    /* RWD：窄螢幕時，sidebar 改成水平排列 */
     @media (max-width: 900px){
-      .wrap{ grid-template-columns: 1fr; }
+      .wrap{ grid-template-columns: 1fr; } /* 改為單欄 */
       .sidebar{ position:static; display:flex; align-items:center; gap:16px; }
-      .avatar{ width:120px; max-width:none; margin:0; }
-      .name, .role{ text-align:left }
-      .chips{ justify-content:flex-start }
+      .avatar{ width:120px; max-width:none; margin:0; } /* 頭像縮小 */
+      .name, .role{ text-align:left } /* 名字靠左 */
+      .chips{ justify-content:flex-start } /* 標籤靠左 */
     }
   </style>
 </head>
 <body>
-  <!-- ✅ 最底層背景：直接鋪滿整個頁面（小葉子.jpg） -->
+  <!-- ✅ 最底層背景：小葉子.jpg -->
   <div class="bg-hero" aria-hidden="true"></div>
 
   <header>
-    <h1>dEaR dIaRy</h1>
-    <nav>
+    <h1>dEaR dIaRy</h1> <!-- 網站標題 -->
+    <nav> <!-- 導覽列 -->
       <a href="index.html">MAIN PAGE</a>
       <a href="about.html">ABOUT ME</a>
       <a href="contact.html">CONTACT</a>
     </nav>
   </header>
 
-  <main class="wrap">
-    <!-- 左：個人名片區（固定） -->
+  <main class="wrap"> <!-- 主內容區：左右兩欄 -->
+    <!-- 左：個人名片 -->
     <aside class="sidebar" aria-label="個人資訊">
-      <div class="avatar" aria-label="我的照片"></div>
-      <div class="name">Anastasia</div>
-      <div class="role">大數據／資料工程師</div>
+      <div class="avatar" aria-label="我的照片"></div> <!-- 頭像 -->
+      <div class="name">Anastasia</div> <!-- 名字 -->
+      <div class="role">大數據／資料工程師</div> <!-- 身份描述 -->
 
-      <div class="chips" aria-label="興趣標籤">
+      <div class="chips" aria-label="興趣標籤"> <!-- 興趣標籤區 -->
         <span class="chip">動物</span>
         <span class="chip">植物</span>
         <span class="chip">旅行</span>
@@ -186,35 +186,35 @@
       </div>
     </aside>
 
-    <!-- 右：自我介紹內容 + 照片牆 -->
+    <!-- 右：自我介紹 + 照片牆 -->
     <article class="content">
       <section class="section">
         <h2>關於我</h2>
         <p>嗨！歡迎來到我的小角落。</p>
-        <p>我是資料工程師，每天的工作和程式、資料為伍，拆解、整理、轉換，讓數據能真正發揮價值。</p>
-        <p>雖然我的專業領域是科技，但其實我的人生經歷並不是一路直直走到這裡的。</p>
-        <p>在進入這行之前，我曾經在飯店工作，也待過物流業。</p>
-        <p>這些不同產業的經驗，讓我學會換位思考，也讓我習慣去觀察「數字背後的人與故事」。</p>
-        <p>比起只專注在技術，我更享受把資料和生活連結起來的過程。</p>
+        <p>我是資料工程師，每天的工作和程式、資料為伍…</p>
+        <p>雖然我的專業領域是科技，但…</p>
+        <p>在進入這行之前，我曾經在飯店工作…</p>
+        <p>這些不同產業的經驗，讓我…</p>
+        <p>比起只專注在技術，我更享受…</p>
       </section>
 
       <section class="section">
         <h2>我喜歡</h2>
-        <p>工作之餘，我是個喜歡探索生活各種面向的人。</p>
-        <p>喜歡動物：和牠們相處總能感受到純粹的快樂。</p>
-        <p>喜歡植物與自然：從照顧小小的綠植，到旅行時接觸不同的風景，都是我療癒自己的方式。</p>
-        <p>喜歡旅行：走到新的地方，感受不同文化，讓我覺得生活更寬廣。</p>
+        <p>工作之餘，我是個喜歡探索生活的人。</p>
+        <p>喜歡動物…</p>
+        <p>喜歡植物與自然…</p>
+        <p>喜歡旅行…</p>
         <p>最近，我正挑戰自我，學習游泳與潛水。</p>
-        <p>水的世界很特別，學會放鬆、學會適應，甚至有點像在學另一種生活哲學。</p>
+        <p>水的世界很特別…</p>
       </section>
 
       <section class="section">
         <h2>為什麼寫這個網誌</h2>
-        <p>寫這個網誌，是想把我的經驗、觀察和小小的喜歡記錄下來。</p>
-        <p>如果你剛好也喜歡動物、植物、旅行，或正在學習什麼新東西，也許我們能在這裡找到共鳴。</p>
+        <p>寫這個網誌，是想把我的經驗…</p>
+        <p>如果你剛好也喜歡動物、植物、旅行…</p>
 
         <div class="cta">
-          <a class="btn" href="index.html">← 回首頁</a>
+          <a class="btn" href="index.html">← 回首頁</a> <!-- 回首頁按鈕 -->
         </div>
       </section>
 
@@ -232,14 +232,3 @@
   </main>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
