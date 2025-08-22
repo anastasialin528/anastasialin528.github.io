@@ -122,35 +122,40 @@ function setupLikeHandler() {
 }
 
 /** 主流程：自動執行 **/
-(async function main(){
-  // 收集頁面上所有 data-post-id
-  const ids = [...document.querySelectorAll('[data-post-id]')].map(el => el.dataset.postId);
-  if (!ids.length) return;
+// 將自執行函式改為具名函式
+async function initBlogStats() {
+  // 收集頁面上所有 data-post-id
+  const ids = [...document.querySelectorAll('[data-post-id]')].map(el => el.dataset.postId);
+  if (!ids.length) return;
 
-  // 先用本地快取填數字
-  hydrateFromCache(ids);
+  // 先用本地快取填數字
+  hydrateFromCache(ids);
 
-  // 再向後端批次拿最新數字（必要時分批）
-  for (let i = 0; i < ids.length; i += BATCH_MAX) {
-    const slice = ids.slice(i, i + BATCH_MAX);
-    try {
-      const data = await fetchStatsBatch(slice);
-      applyStatsToDomAndCache(data);
-    } catch (err) {
-      console.warn('fetchStatsBatch error:', err);
-    }
-  }
+  // 再向後端批次拿最新數字（必要時分批）
+  for (let i = 0; i < ids.length; i += BATCH_MAX) {
+    const slice = ids.slice(i, i + BATCH_MAX);
+    try {
+      const data = await fetchStatsBatch(slice);
+      applyStatsToDomAndCache(data);
+    } catch (err) {
+      console.warn('fetchStatsBatch error:', err);
+    }
+  }
 
-  
-  // 移除 if 判斷式，讓這段程式碼在所有頁面執行
-const primaryId = ids[0];
-if (primaryId) {
-  window.addEventListener('load', () => setTimeout(() => reportView(primaryId), 300));
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') reportView(primaryId);
-  });
+  // 回報瀏覽數
+  const primaryId = ids[0];
+  if (primaryId) {
+    window.addEventListener('load', () => setTimeout(() => reportView(primaryId), 300));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') reportView(primaryId);
+    });
+  }
+
+  // 啟用按讚事件監聽
+  setupLikeHandler();
 }
 
-  // 啟用按讚事件監聽
-  setupLikeHandler();
-})();
+ 
+
+  
+
