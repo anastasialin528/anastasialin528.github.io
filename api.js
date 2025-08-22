@@ -96,7 +96,14 @@ function setupLikeHandler() {
     btn.disabled = true;
 
     try {
-      const res = await fetch(window.API_URL + '?action=like&id=' + encodeURIComponent(id));
+      // **修改點 1：將 GET 請求改為 POST 請求，並將資料放入 body**
+      const payload = { action: 'like', id: id };
+      const res = await fetch(window.API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
       const json = await res.json();
       if (!json.ok) throw new Error(json.msg || 'like failed');
       // 成功：標記已按過讚 + 更新快取
@@ -134,14 +141,16 @@ function setupLikeHandler() {
     }
   }
 
-  // 回報瀏覽數（只挑第一個 id）
-  const primaryId = ids[0];
-  window.addEventListener('load', () => setTimeout(() => reportView(primaryId), 300));
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') reportView(primaryId);
-  });
+  // **修改點 2：回報瀏覽數的邏輯只在單篇文章頁面執行**
+  // 檢查是否為單篇文章頁面，如果是，才回報瀏覽數。
+  if (ids.length === 1) {
+    const primaryId = ids[0];
+    window.addEventListener('load', () => setTimeout(() => reportView(primaryId), 300));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') reportView(primaryId);
+    });
+  }
 
   // 啟用按讚事件監聽
   setupLikeHandler();
 })();
-
