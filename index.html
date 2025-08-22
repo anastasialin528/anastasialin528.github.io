@@ -165,7 +165,7 @@
         <button type="button" onclick="filterTag('日常')">日常</button> <!-- 日常按鈕 -->
         <button type="button" onclick="filterTag('潛水')">潛水</button> <!-- 潛水按鈕 -->
       </div>
-      <div class="posts" id="postList"></div> <!-- 卡片牆容器 -->
+      <div class="posts" id="postList"></div> <!-- 卡片牆容器（JS 會插入卡片） -->
     </main>
   </div>
 
@@ -184,55 +184,59 @@
     </div>
   </footer>
 
-  <!-- ====== 後端 API 與共用工具（批次取數版） ====== -->
+  <!-- ====== 後端 API 與共用工具（批次取數＋按讚） ====== -->
   <script>
-    /* === 你的 GAS Web App /exec（已通過 debug 測試）=== */
+    /* === 你的 GAS Web App /exec 端點 === */
     const API_URL =
-      'https://script.google.com/macros/s/AKfycbyTlpjl4rx60TElPIFNqnm7vNwk1GiP8M885Z_SWLsMtPgx2eCFTqA8fajErx6d9g9V/exec'; // Web App 端點
+      'https://script.google.com/macros/s/AKfycbyTlpjl4rx60TElPIFNqnm7vNwk1GiP8M885Z_SWLsMtPgx2eCFTqA8fajErx6d9g9V/exec'; // 後端 URL
 
-    /* === GET：給舊介面（like/unlike）或備援時使用 === */
+    /* === GET：相容舊介面（like/unlike 等）=== */
     async function apiGet(params){ // 用 GET 呼叫後端
-      const url = API_URL + '?' + new URLSearchParams(params).toString(); // 串 URL 查詢參數
-      const r = await fetch(url, { cache:'no-store' }); // 取資料（不快取）
-      return r.json(); // 解析 JSON
+      const url = API_URL + '?' + new URLSearchParams(params).toString(); // 串接查詢參數
+      const r = await fetch(url, { cache:'no-store' }); // 發出請求（避免瀏覽器快取）
+      return r.json(); // 回傳解析後的 JSON
     }
 
-    /* === POST：首頁批次取數用（一次拿多篇 views/likes）=== */
+    /* === POST：首頁批次取數（一次拿多篇 views/likes）=== */
     async function apiPost(body){ // 用 POST 呼叫後端
-      const r = await fetch(API_URL, { method:'POST', body:JSON.stringify(body) }); // 傳送 JSON
-      return r.json(); // 解析 JSON
+      const r = await fetch(API_URL, { // 指向同一個 /exec
+        method:'POST', // 使用 POST
+        headers:{'Content-Type':'application/json'}, // 告知送 JSON
+        body:JSON.stringify(body) // 將物件轉字串
+      });
+      return r.json(); // 回傳解析後的 JSON
     }
 
     /* === 舊款 API 包裝（保留相容性）=== */
-    const getStats = (id) => apiGet({ action:'get', id }); // 單篇查詢（備援用）
-    const likeAPI  = (id) => apiGet({ action:'like', id }); // 送出按讚（沿用 GET）
+    const getStats = (id) => apiGet({ action:'get', id }); // 單篇查詢（後援用）
+    const likeAPI  = (id) => apiGet({ action:'like', id }); // 送出按讚（簡單用 GET）
     const unlikeAPI= (id) => apiGet({ action:'unlike', id }); // 取消讚（目前未使用）
 
     /* === 本機紀錄是否按過讚（跨頁共用）=== */
-    const LIKE_KEY = 'blog_liked_map'; // localStorage 鍵名
+    const LIKE_KEY = 'blog_liked_map'; // localStorage 的鍵名
     function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} } // 取出 map
     function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); } // 存入 map
     function isLiked(id){ return !!loadLiked()[id]; } // 查某 id 是否已按讚
     function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); } // 設定某 id 按讚狀態
 
     /* === 統一渲染愛心按鈕 === */
-    function renderHeart(btnEl, id, likeCount, likesSpanId){ // 渲染愛心與數字
-      const liked = isLiked(id); // 讀本地是否按過讚
-      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`; // 內容
-      btnEl.classList.toggle('is-liked', liked); // 樣式切換
-      btnEl.disabled = liked; // 已按讚則停用按鈕
+    function renderHeart(btnEl, id, likeCount, likesSpanId){ // 渲染愛心＋讚數
+      const liked = isLiked(id); // 讀本機是否按過
+      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`; // 依狀態切換愛心
+      btnEl.classList.toggle('is-liked', liked); // 如果已按讚套用樣式
+      btnEl.disabled = liked; // 已按讚就停用按鈕
     }
 
-    /* === 跨分頁同步（其他分頁按讚，這頁跟著更新圖示）=== */
-    window.addEventListener('storage', (e) => { // 監聽 storage 事件
-      if (e.key !== LIKE_KEY) return; // 只處理喜歡鍵
-      if (typeof syncAllHearts === 'function') syncAllHearts(); // 重新渲染愛心
+    /* === 跨分頁同步（別的分頁按讚，這頁跟著更新）=== */
+    window.addEventListener('storage', (e) => { // 監聽其他分頁對 localStorage 的修改
+      if (e.key !== LIKE_KEY) return; // 只處理按讚 map 的變動
+      if (typeof syncAllHearts === 'function') syncAllHearts(); // 重新渲染所有卡片的愛心
     });
 
-    /* === 從連結 href 取得文章 ID（檔名）=== */
-    function idFromHref(href){ // 解析檔名作為文章 ID
+    /* === 從連結 href 取得文章 ID（以檔名作為 id）=== */
+    function idFromHref(href){ // 將 URL 轉為檔名
       const last = new URL(href, location.href).pathname.split('/').pop(); // 取最後一段
-      return decodeURIComponent(last || 'index.html'); // 還原編碼
+      return decodeURIComponent(last || 'index.html'); // 還原中文檔名
     }
   </script>
 
@@ -255,32 +259,32 @@
       { tag:"日常", href:"2025年3月5日.html",  img:"images/天空大鳥.jpg",   title:"｜美麗的天空｜",       date:"2025年3月5日",  excerpt:"天氣不好拍不到星，就地取材，仍能遇見上好風景。" },
       { tag:"日常", href:"2025年4月15日.html", img:"images/苔蘚.jpg",       title:"｜四月十五日｜",       date:"2025年4月15日", excerpt:"一首詩與一段自述，配色地獄後的日常療癒：新朋友苔蘚。" },
       { tag:"潛水", href:"2025年4月21日.html", img:"images/面鏡.jpg",       title:"｜面鏡開箱｜",         date:"2025年4月21日", excerpt:"週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。" }
-    ];
+    ]; // ← 以上為你的文章清單
 
     const postList = document.getElementById("postList"); // 取得卡片牆容器
 
     /* === storage 事件時重新渲染所有愛心（跨分頁同步）=== */
     function syncAllHearts(){ // 被 storage 事件呼叫
       posts.forEach((post, index) => { // 逐張卡片
-        const id = idFromHref(post.href); // 算出文章 id
+        const id = idFromHref(post.href); // 算出文章 id（用檔名）
         const btn = document.getElementById(`like-btn-${index}`); // 找按鈕
         const likesSpan = document.getElementById(`likes-${index}`); // 找數字
-        if (btn && likesSpan) { // 都在才處理
-          const currentLikes = parseInt(likesSpan.textContent || '0', 10); // 現值
-          renderHeart(btn, id, currentLikes, `likes-${index}`); // 依「本機是否按過」改外觀
+        if (btn && likesSpan) { // 確保元素存在
+          const currentLikes = parseInt(likesSpan.textContent || '0', 10); // 現有數字
+          renderHeart(btn, id, currentLikes, `likes-${index}`); // 依本機是否按過渲染樣式
         }
       });
     }
 
-    /* === 第一步：先畫卡片（用本機 liked 狀態渲染愛心）=== */
-    const ids = []; // 收集全部文章 id（供批次查詢）
-    posts.forEach((post, index) => { // 逐筆資料建立卡片
-      const id = idFromHref(post.href); // 取得文章 id（檔名）
-      ids.push(id); // 收集到陣列
+    /* === 第一步：先畫卡片（先顯示 0；愛心用本機狀態）=== */
+    const ids = []; // 收集全部文章 id（後面批次查用）
+    posts.forEach((post, index) => { // 逐筆生成卡片
+      const id = idFromHref(post.href); // 由 href 取得 id
+      ids.push(id); // 收進陣列
 
-      const card = document.createElement("a"); // 建立 <a> 卡片
-      card.href = post.href; // 內頁連結
-      card.className = "card"; // 卡片樣式
+      const card = document.createElement("a"); // 建立 <a> 作為卡片
+      card.href = post.href; // 指向內頁
+      card.className = "card"; // 套用卡片樣式
       card.setAttribute("data-tag", post.tag); // 存分類標籤供篩選
       card.innerHTML = ` 
         <img src="${post.img}" alt="${post.title}" loading="lazy"> <!-- 卡片首圖 -->
@@ -289,36 +293,36 @@
           <div class="date">${post.date}</div> <!-- 日期 -->
           <p>${post.excerpt}</p> <!-- 摘要 -->
           <div class="card-meta"> <!-- 底部統計區 -->
-            <span id="views-${index}">0 views</span> <!-- 先顯示 0，稍後覆蓋 -->
+            <span id="views-${index}">0 views</span> <!-- 先顯示 0，批次回填 -->
             <button class="like-btn" type="button" id="like-btn-${index}"> <!-- 愛心按鈕 -->
               ${isLiked(id) ? '❤️' : '♡'} <span id="likes-${index}">0</span> <!-- 用本機狀態決定圖示 -->
             </button>
           </div>
         </div>
-      `; // 卡片 HTML 結束
-      postList.appendChild(card); // 丟進卡片牆
+      `; // ← 卡片 HTML 結束
+      postList.appendChild(card); // 插入卡片牆
 
       /* 綁定愛心點擊（樂觀更新 + GET like 呼叫） */
       document.getElementById(`like-btn-${index}`).addEventListener('click', async (e) => { // 監聽點擊
-        e.preventDefault(); e.stopPropagation(); // 阻止連到內頁
-        if (isLiked(id)) return; // 已按過直接略過
+        e.preventDefault(); e.stopPropagation(); // 阻止跳到內頁
+        if (isLiked(id)) return; // 已按過就不處理
 
         const btn = e.currentTarget; // 目前按鈕
-        const likesSpan = document.getElementById(`likes-${index}`); // 數字節點
-        let curLikes = parseInt(likesSpan.textContent || '0', 10); // 現在數
+        const likesSpan = document.getElementById(`likes-${index}`); // 讚數元素
+        let curLikes = parseInt(likesSpan.textContent || '0', 10); // 目前讚數
 
-        renderHeart(btn, id, curLikes + 1, `likes-${index}`); // 樂觀 +1 並改成 ❤️
+        renderHeart(btn, id, curLikes + 1, `likes-${index}`); // 樂觀 +1 並換成 ❤️
 
         const res = await likeAPI(id); // 呼叫後端累加
         if (res && res.ok) { // 成功
           setLiked(id, true); // 記錄本機已按讚
           const newLikes =
-            (res.data && res.data.likes != null) ? res.data.likes : // 後端若回在 data 內
-            (res.likes != null ? res.likes : (curLikes + 1)); // 或頂層 / 或沿用樂觀值
+            (res.data && res.data.likes != null) ? res.data.likes : // 後端 data 內
+            (res.likes != null ? res.likes : (curLikes + 1)); // 或頂層 / 或用樂觀值
           renderHeart(btn, id, newLikes, `likes-${index}`); // 用後端值覆蓋
         } else { // 失敗
-          renderHeart(btn, id, curLikes, `likes-${index}`); // 復原數字與外觀
-          alert('按讚失敗，請稍後再試。'); // 提示失敗
+          renderHeart(btn, id, curLikes, `likes-${index}`); // 復原
+          alert('按讚失敗，請稍後再試。'); // 提示
         }
       });
     });
@@ -326,34 +330,34 @@
     /* === 第二步：批次向後端要 views/likes，再回填到每張卡片 === */
     (async () => { // 立即執行的 async 區塊
       try {
-        const r = await apiPost({ action:'get', ids }); // POST 批次取數（後端回 {ok:true,data:{id:{views,likes}}}）
-        if (r && r.ok && r.data) { // 有資料
-          posts.forEach((post, index) => { // 逐張卡片回填
-            const id = idFromHref(post.href); // 算出 id
-            const datum = r.data[id] || {}; // 拿到該篇的值
-            const v = document.getElementById(`views-${index}`); // 找 views 節點
-            const btn = document.getElementById(`like-btn-${index}`); // 找愛心按鈕
+        const r = await apiPost({ action:'get', ids }); // POST 批次取數
+        if (r && r.ok && r.data) { // 後端有回資料
+          posts.forEach((post, index) => { // 逐張回填
+            const id = idFromHref(post.href); // 計算 id
+            const datum = r.data[id] || {}; // 該篇的統計
+            const v = document.getElementById(`views-${index}`); // 觀看數元素
+            const btn = document.getElementById(`like-btn-${index}`); // 愛心按鈕
             const likeCount = (datum.likes ?? 0); // 讚數
-            if (v) v.textContent = `${(datum.views ?? 0)} views`; // 回填觀看數
-            if (btn) renderHeart(btn, id, likeCount, `likes-${index}`); // 依本機 liked 狀態與伺服器數值渲染
+            if (v) v.textContent = `${(datum.views ?? 0)} views`; // 顯示觀看數
+            if (btn) renderHeart(btn, id, likeCount, `likes-${index}`); // 依本機狀態渲染＋帶入讚數
           });
-        } else { // 沒拿到批次資料（後援：維持 0，但仍正確顯示愛心狀態）
+        } else { // 沒拿到批次資料（後援：維持 0，但渲染愛心）
           posts.forEach((post, index) => { // 逐張
             const id = idFromHref(post.href); // id
             const btn = document.getElementById(`like-btn-${index}`); // 按鈕
             if (btn) renderHeart(btn, id, 0, `likes-${index}`); // 以 0 顯示
           });
         }
-      } catch (err) { // 例外處理
-        console.error('批次取數失敗：', err); // 印出錯誤
+      } catch (err) { // 例外
+        console.error('批次取數失敗：', err); // 記錄錯誤
       }
-    })(); // 立即執行
+    })(); // 立即執行結束
 
     /* === 篩選：依 data-tag 顯示/隱藏 === */
     function filterTag(tag){ // 篩選函式
       const cards = document.querySelectorAll('.card'); // 取得所有卡片
       cards.forEach(card => { // 逐張處理
-        card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none'; // 判斷是否顯示
+        card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none'; // 判斷顯示
       });
     }
   </script>
