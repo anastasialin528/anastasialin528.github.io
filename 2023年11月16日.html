@@ -6,29 +6,151 @@
   <title>｜日本東北自助旅行-弘前城公園｜</title> <!-- 瀏覽器分頁標題 -->
 
   <style> /* 內嵌樣式開始（為了示例集中） */
-    body { margin:0; font-family:"Microsoft JhengHei",sans-serif; background:#fff; color:#333; line-height:1.8; } /* 全域排版 */
-    header { background:#212121; padding:1rem 2rem; color:#fff; } /* 頂部標題區 */
-    main { max-width:800px; margin:2rem auto; padding:0 1rem; } /* 主內容容器：置中、限制寬度 */
-    img { width:100%; border-radius:8px; margin:1.5rem 0; } /* 文章內圖片樣式 */
-    h1 { color:#ff6f61; font-size:2rem; margin-bottom:.5rem; } /* 大標題樣式 */
-    p:empty { display:block; height:1rem; } /* 空段落佔位（保留原排版節奏） */
-    .date { color:#999; font-size:.9rem; margin-bottom:1.5rem; } /* 日期樣式 */
-    .back-link { display:inline-block; margin-top:2rem; color:#ff6f61; text-decoration:none; font-weight:bold; border:2px solid #ff6f61; padding:.4rem 1rem; border-radius:25px; transition:.3s; } /* 返回首頁按鈕 */
-    .back-link:hover { background:#ff6f61; color:#fff; } /* 滑過返回首頁樣式 */
-    .share-section { text-align:center; margin-top:3rem; } /* 分享區塊外框 */
-    .line { height:1px; background-color:rgba(0,0,0,.2); margin:1rem 0; width:100%; } /* 分隔線 */
-    .share-icons { display:flex; justify-content:center; align-items:center; gap:1.5rem; margin:1rem 0; position:relative; } /* 分享按鈕群組 */
-    .icon { background:none; border:none; font-size:1.5rem; cursor:pointer; text-decoration:none; color:#333; transition:transform .2s; display:flex; justify-content:center; align-items:center; } /* 分享按鈕樣式 */
-    .icon:hover { transform:scale(1.2); } /* 分享按鈕 hover 動畫 */
-    .facebook-icon { font-size:24px; font-weight:bold; color:#000; height:40px; display:flex; justify-content:center; align-items:center; } /* 自製 FB 字樣 icon */
-    #copy-link { background:none; border:none; cursor:pointer; padding:0; width:40px; height:40px; } /* 複製連結按鈕 */
-    #copy-link img { width:100%; height:100%; object-fit:cover; } /* 複製按鈕圖片鋪滿 */
-    #copied-msg { position:absolute; top:120%; font-size:.9rem; color:#28a745; display:none; margin-top:5px; } /* 複製成功提示 */
-    .stats { display:flex; justify-content:space-between; align-items:center; margin-top:1rem; padding-left:15px; padding-right:15px; width:calc(100% - 30px); margin-left:auto; margin-right:auto; } /* 統計列：左右排版 */
-    .like-btn { background:none; border:none; font-size:1.2rem; color:red; cursor:pointer; display:flex; align-items:center; } /* 愛心按鈕 */
-    .like-btn:hover { color:#e04848; } /* 愛心 hover 色 */
-    .like-btn span { margin-left:5px; } /* 愛心與數字間距 */
-    .like-btn.is-liked { opacity:.6; cursor:default; pointer-events:none; } /* 已按讚狀態：半透明且不可點 */
+    body { 
+      margin:0; 
+      font-family:"Microsoft JhengHei",sans-serif; 
+      background:#fff; 
+      color:#333; 
+      line-height:1.8; 
+        } /* 全域排版 */
+    header { 
+      background:#212121; 
+      padding:1rem 2rem; 
+      color:#fff; 
+          } /* 頂部標題區 */
+    main { 
+      max-width:800px; 
+      margin:2rem auto; 
+      padding:0 1rem; 
+          } /* 主內容容器：置中、限制寬度 */
+    img { 
+      width:100%; 
+      border-radius:8px; 
+      margin:1.5rem 0; 
+        } /* 文章內圖片樣式 */
+    h1 { 
+      color:#ff6f61; 
+      font-size:2rem; 
+      margin-bottom:.5rem; 
+        } /* 大標題樣式 */
+    p:empty { 
+      display:block; 
+      height:1rem; 
+        } /* 空段落佔位（保留原排版節奏） */
+    .date { 
+      color:#999; 
+      font-size:.9rem; 
+      margin-bottom:1.5rem; 
+        } /* 日期樣式 */
+    .back-link { 
+      display:inline-block; 
+      margin-top:2rem; 
+      color:#ff6f61; 
+      text-decoration:none; 
+      font-weight:bold; 
+      border:2px solid #ff6f61; 
+      padding:.4rem 1rem; 
+      border-radius:25px; 
+      transition:.3s; 
+      } /* 返回首頁按鈕 */
+    .back-link:hover { 
+      background:#ff6f61;
+      color:#fff; 
+    } /* 滑過返回首頁樣式 */
+    .share-section { 
+      text-align:center; 
+      margin-top:3rem; 
+    } /* 分享區塊外框 */
+    .line { 
+      height:1px; 
+      background-color:rgba(0,0,0,.2); 
+      margin:1rem 0; 
+      width:100%; 
+    } /* 分隔線 */
+    .share-icons { 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+      gap:1.5rem; 
+      margin:1rem 0; 
+      position:relative; 
+    } /* 分享按鈕群組 */
+    .icon { 
+      background:none; 
+      border:none; 
+      font-size:1.5rem; 
+      cursor:pointer; 
+      text-decoration:none; 
+      color:#333; 
+      transition:transform .2s; 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+    } /* 分享按鈕樣式 */
+    .icon:hover { 
+      transform:scale(1.2); 
+    } /* 分享按鈕 hover 動畫 */
+    .facebook-icon { 
+      font-size:24px; 
+      font-weight:bold; 
+      color:#000;
+      height:40px; 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+    } /* 自製 FB 字樣 icon */
+    #copy-link { 
+      background:none; 
+      border:none; 
+      cursor:pointer; 
+      padding:0; 
+      width:40px; 
+      height:40px; 
+    } /* 複製連結按鈕 */
+    #copy-link img { 
+      width:100%; 
+      height:100%; 
+      object-fit:cover; 
+    } /* 複製按鈕圖片鋪滿 */
+    #copied-msg { 
+      position:absolute; 
+      top:120%; 
+      font-size:.9rem; 
+      color:#28a745; 
+      display:none; 
+      margin-top:5px; 
+    } /* 複製成功提示 */
+    .stats { 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      margin-top:1rem; 
+      padding-left:15px; 
+      padding-right:15px; 
+      width:calc(100% - 30px);
+      margin-left:auto; 
+      margin-right:auto; 
+    } /* 統計列：左右排版 */
+    .like-btn { 
+      background:none; 
+      border:none; 
+      font-size:1.2rem; 
+      color:red; 
+      cursor:pointer; 
+      display:flex; 
+      align-items:center; 
+    } /* 愛心按鈕 */
+    .like-btn:hover { 
+      color:#e04848; 
+    } /* 愛心 hover 色 */
+    .like-btn span { 
+      margin-left:5px; 
+    } /* 愛心與數字間距 */
+    .like-btn.is-liked { 
+      opacity:.6; 
+      cursor:default; 
+      pointer-events:none; 
+    } /* 已按讚狀態：半透明且不可點 */
   </style> <!-- 內嵌樣式結束 -->
 </head> <!-- 文件頭結束 -->
 
