@@ -1,33 +1,182 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+<!DOCTYPE html> <!-- HTML5 文件宣告 -->
+<html lang="zh-Hant"> <!-- 設定頁面語系為繁體中文 -->
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>｜日本東北自助旅行-弘前城公園｜</title>
+  <meta charset="UTF-8"> <!-- 設定字符編碼為 UTF-8，避免亂碼 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- 設定響應式設計，適應不同裝置螢幕大小 -->
+  <title>｜日本東北自助旅行-弘前城公園｜</title> <!-- 設定頁面標題 -->
   <style>
-    body { margin:0; font-family:"Microsoft JhengHei",sans-serif; background:#fff; color:#333; line-height:1.8; }
-    header { background:#212121; padding:1rem 2rem; color:#fff; }
-    main { max-width:800px; margin:2rem auto; padding:0 1rem; }
-    img { width:100%; border-radius:8px; margin:1.5rem 0; }
-    h1 { color:#ff6f61; font-size:2rem; margin-bottom:.5rem; }
-    p:empty { display:block; height:1rem; }
-    .date { color:#999; font-size:.9rem; margin-bottom:1.5rem; }
-    .back-link { display:inline-block; margin-top:2rem; color:#ff6f61; text-decoration:none; font-weight:bold; border:2px solid #ff6f61; padding:.4rem 1rem; border-radius:25px; transition:.3s; }
-    .back-link:hover { background:#ff6f61; color:#fff; }
-    .share-section { text-align:center; margin-top:3rem; }
-    .line { height:1px; background-color:rgba(0,0,0,.2); margin:1rem 0; width:100%; }
-    .share-icons { display:flex; justify-content:center; align-items:center; gap:1.5rem; margin:1rem 0; position:relative; }
-    .icon { background:none; border:none; font-size:1.5rem; cursor:pointer; text-decoration:none; color:#333; transition:transform .2s; display:flex; justify-content:center; align-items:center; }
-    .icon:hover { transform:scale(1.2); }
-    .facebook-icon { font-size:24px; font-weight:bold; color:#000; height:40px; display:flex; justify-content:center; align-items:center; }
-    #copy-link { background:none; border:none; cursor:pointer; padding:0; width:40px; height:40px; }
-    #copy-link img { width:100%; height:100%; object-fit:cover; }
-    #copied-msg { position:absolute; top:120%; font-size:.9rem; color:#28a745; display:none; margin-top:5px; }
-    .stats { display:flex; justify-content:space-between; align-items:center; margin-top:1rem; padding-left:15px; padding-right:15px; width:calc(100% - 30px); margin-left:auto; margin-right:auto; }
-    .like-btn { background:none; border:none; font-size:1.2rem; color:red; cursor:pointer; display:flex; align-items:center; }
-    .like-btn:hover { color:#e04848; }
-    .like-btn span { margin-left:5px; }
-    .like-btn.is-liked { opacity:.6; cursor:default; pointer-events:none; }
+    /* ====== 全站基本樣式 ====== */
+    body { 
+      margin:0;  /* 移除頁面外邊距 */
+      font-family:"Microsoft JhengHei",sans-serif;  /* 設定字型 */
+      background:#fff;  /* 設定頁面背景顏色為白色 */
+      color:#333;  /* 設定文字顏色為深灰色 */
+      line-height:1.8;  /* 設定行高為1.8，增加行間距 */
+    }
+
+    /* ====== 頁首樣式 ====== */
+    header { 
+      background:#212121;  /* 設定背景為深灰色 */
+      padding:1rem 2rem;  /* 設定內邊距 */
+      color:#fff;  /* 設定文字顏色為白色 */
+    }
+
+    /* ====== 主內容樣式 ====== */
+    main { 
+      max-width:800px;  /* 設定主內容區塊最大寬度 */
+      margin:2rem auto;  /* 設定上下間距為2rem，並置中 */
+      padding:0 1rem;  /* 設定左右內邊距 */
+    }
+
+    /* ====== 圖片樣式 ====== */
+    img { 
+      width:100%;  /* 設定圖片寬度為100% */
+      border-radius:8px;  /* 設定圖片圓角 */
+      margin:1.5rem 0;  /* 設定圖片上下間距 */
+    }
+
+    /* ====== 標題樣式 ====== */
+    h1 { 
+      color:#ff6f61;  /* 設定標題文字顏色為粉紅色 */
+      font-size:2rem;  /* 設定標題字體大小為2rem */
+      margin-bottom:.5rem;  /* 設定標題底部間距 */
+    }
+
+    /* ====== 讓空段落顯示空白的樣式 ====== */
+    p:empty { 
+      display:block;  /* 設定空段落顯示為區塊 */
+      height:1rem;  /* 設定高度為1rem */
+    }
+
+    /* ====== 日期樣式 ====== */
+    .date { 
+      color:#999;  /* 設定日期文字顏色為灰色 */
+      font-size:.9rem;  /* 設定字體大小為0.9rem */
+      margin-bottom:1.5rem;  /* 設定底部間距 */
+    }
+
+    /* ====== 返回首頁按鈕樣式 ====== */
+    .back-link { 
+      display:inline-block;  /* 設定為內聯塊元素 */
+      margin-top:2rem;  /* 設定上方間距 */
+      color:#ff6f61;  /* 設定文字顏色為粉紅色 */
+      text-decoration:none;  /* 移除文字底線 */
+      font-weight:bold;  /* 設定文字為粗體 */
+      border:2px solid #ff6f61;  /* 設定邊框為粉紅色 */
+      padding:.4rem 1rem;  /* 設定內邊距 */
+      border-radius:25px;  /* 設定圓角 */
+      transition:.3s;  /* 設定過渡時間 */
+    }
+
+    .back-link:hover { 
+      background:#ff6f61;  /* 設定滑鼠懸停時背景顏色為粉紅色 */
+      color:#fff;  /* 設定滑鼠懸停時文字顏色為白色 */
+    }
+
+    /* ====== 分享區塊樣式 ====== */
+    .share-section { 
+      text-align:center;  /* 設定文字置中 */
+      margin-top:3rem;  /* 設定上方間距 */
+    }
+
+    .line { 
+      height:1px;  /* 設定線條高度為1px */
+      background-color:rgba(0,0,0,.2);  /* 設定線條顏色為淡灰色 */
+      margin:1rem 0;  /* 設定上下間距 */
+      width:100%;  /* 設定線條寬度為100% */
+    }
+
+    .share-icons { 
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:center;  /* 設定容器內的項目居中對齊 */
+      align-items:center;  /* 設定容器內的項目垂直居中 */
+      gap:1.5rem;  /* 設定項目間距 */
+      margin:1rem 0;  /* 設定上下間距 */
+      position:relative;  /* 設定位置為相對定位 */
+    }
+
+    .icon { 
+      background:none;  /* 設定背景為透明 */
+      border:none;  /* 移除邊框 */
+      font-size:1.5rem;  /* 設定字體大小為1.5rem */
+      cursor:pointer;  /* 設定滑鼠樣式為指標 */
+      text-decoration:none;  /* 移除文字底線 */
+      color:#333;  /* 設定顏色為深灰色 */
+      transition:transform .2s;  /* 設定過渡效果 */
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:center;  /* 設定容器內的項目居中對齊 */
+      align-items:center;  /* 設定容器內的項目垂直居中 */
+    }
+
+    .icon:hover { 
+      transform:scale(1.2);  /* 設定滑鼠懸停時，按鈕放大 */
+    }
+
+    .facebook-icon { 
+      font-size:24px;  /* 設定字體大小 */
+      font-weight:bold;  /* 設定字體為粗體 */
+      color:#000;  /* 設定顏色為黑色 */
+      height:40px;  /* 設定高度 */
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:center;  /* 設定容器內的項目居中對齊 */
+      align-items:center;  /* 設定容器內的項目垂直居中 */
+    }
+
+    #copy-link { 
+      background:none;  /* 設定背景為透明 */
+      border:none;  /* 移除邊框 */
+      cursor:pointer;  /* 設定滑鼠樣式為指標 */
+      padding:0;  /* 移除內邊距 */
+      width:40px;  /* 設定寬度 */
+      height:40px;  /* 設定高度 */
+    }
+
+    #copy-link img { 
+      width:100%;  /* 設定圖片寬度為100% */
+      height:100%;  /* 設定圖片高度為100% */
+      object-fit:cover;  /* 設定圖片覆蓋顯示 */
+    }
+
+    #copied-msg { 
+      position:absolute;  /* 設定為絕對定位 */
+      top:120%;  /* 設定位置距離上方120% */
+      font-size:.9rem;  /* 設定字體大小 */
+      color:#28a745;  /* 設定顏色為綠色 */
+      display:none;  /* 設定為隱藏 */
+      margin-top:5px;  /* 設定上方間距 */
+    }
+
+    /* ====== 文章統計樣式 ====== */
+    .stats { 
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:space-between;  /* 讓項目兩端對齊 */
+      align-items:center;  /* 設定項目垂直居中 */
+      margin-top:1rem;  /* 設定上方間距 */
+      padding-left:15px;  /* 設定左側內邊距 */
+      padding-right:15px;  /* 設定右側內邊距 */
+      width:calc(100% - 30px);  /* 設定寬度，減去內邊距 */
+      margin-left:auto;  /* 設定自動外邊距，居中對齊 */
+      margin-right:auto;  /* 設定自動外邊距，居中對齊 */
+    }
+
+    /* ====== 愛心按鈕樣式 ====== */
+    .like-btn { 
+      background:none;  /* 設定背景為透明 */
+      border:none;  /* 移除邊框 */
+      font-size:1.2rem;  /* 設定字體大小為1.2rem */
+      color:red;  /* 設定文字顏色為紅色 */
+      cursor:pointer;  /* 設定滑鼠樣式為指標 */
+      display:flex;  /* 設定為彈性容器 */
+      align-items:center;  /* 設定項目垂直居中 */
+    }
+
+    .like-btn:hover { color:#e04848; }  /* 設定滑鼠懸停時顏色改為深紅色 */
+    .like-btn span { margin-left:5px; }  /* 設定愛心和數字之間的間距 */
+    .like-btn.is-liked { 
+      opacity:.6;  /* 設定已按讚時的透明度為0.6 */
+      cursor:default;  /* 設定滑鼠樣式為默認 */
+      pointer-events:none;  /* 禁止點擊事件 */
+    }
   </style>
 </head>
 <body>
@@ -37,10 +186,10 @@
     <div class="date">2023年11月16日</div>
 
     <img src="images/DSC0E8692.jpg" alt="｜日本東北自助旅行-弘前城公園｜">
-
     <p>旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城，早晨六點半在小而巧的青森日航都市飯店精美自助式早餐前隨意選了幾樣能快速完食的食物，十分鐘內解決晨間果腹的任務，引來餐廳經理關注的目光，深怕餐點口味不合我們胃口。不得不說這間飯店雖只是三星，但是對於客人是真心的關照到心坎，禮儀周到但又保持著親切。這裡的員工認真想讓每位客人在飯店裡擁有美好回憶的態度令我感到無比溫暖。</p>
     <p></p>
     <p>告別了飯店，搭乘奧羽本線從青森到弘前，再轉搭Taxi到弘前公園。由於這天必須趕下午的班機，因此能夠停留在這的時間並不長。而來到這之前就有聽聞紅葉已掉的差不多，原本我對這裡的紅葉已不抱太大希望。不過事實證明，弘城公園就算沒有密滿紅葉的加持，它也仍舊有獨特的魅力。所幸最後還是有趕來看幾眼，才能捕捉到美麗的護城河一隅，看它在小小的觀景窗裡，美的像幅畫。</p>
+    
 
     <a class="back-link" href="index.html">← 回到首頁</a>
 
@@ -109,7 +258,7 @@
       const copyBtn = document.getElementById('copy-link');
       if (copyBtn){
         copyBtn.addEventListener('click', () => {
-          navigator.clipboard.writeText(location.href).then(()=>{
+          navigator.clipboard.writeText(location.href).then(()=>{ 
             const msg = document.getElementById('copied-msg');
             if (!msg) return;
             msg.style.display = 'inline';
