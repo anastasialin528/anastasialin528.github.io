@@ -1,11 +1,11 @@
-<!DOCTYPE html> <!-- HTML5 文件宣告 -->
-<html lang="zh-Hant"> <!-- 頁面語系：繁體中文 -->
+<!DOCTYPE html>
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8"> <!-- 編碼 UTF-8，避免亂碼 -->
-  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- RWD 視窗設定 -->
-  <title>Anastasia</title> <!-- 瀏覽器分頁標題 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dEaR dIaRy</title>
 
-  <style> 
+  <style>
     body{margin:0;font-family:"Microsoft JhengHei",sans-serif;background:#f9f9f6;color:#333}
     header{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#212121;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
     header h1{margin:0;font-size:2rem;color:#fff;white-space:nowrap;flex-shrink:0}
@@ -96,40 +96,52 @@
   <script src="/api.js?v=1"></script>
 
   <script>
-    // 讀取本地存儲的愛心數據
-    const loadLiked = () => JSON.parse(localStorage.getItem('blog_liked_map') || '{}');
-    const saveLiked = (id, status) => {
-      const likedMap = loadLiked();
-      likedMap[id] = status;
-      localStorage.setItem('blog_liked_map', JSON.stringify(likedMap));
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const postList = document.getElementById("postList");
-      if (!postList) {
-        console.error('找不到 #postList，請確認 HTML 是否存在該容器');
-        return;
+    async function fetchPostData() {
+      try {
+        const response = await fetch(window.API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'get', ids: ['post-1', 'post-2', 'post-3', 'post-4', 'post-5', 'post-6', 'post-7', 'post-8', 'post-9', 'post-10'] }) // 假設有固定的文章 ID
+        });
+        const data = await response.json();
+        return data.data;
+      } catch (error) {
+        console.error("無法獲取文章資料", error);
+        return [];
       }
+    }
 
-      const posts = [
-        { tag:"旅遊", href:"2023年6月25日.html", img:"images/九份.jpg", title:"｜九份｜", date:"2023年6月25日", excerpt:"收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️", id:"post-1", views: 2, likes: 13 },
-        { tag:"旅遊", href:"2023年7月2日.html",  img:"images/BLUE.jpg", title:"｜台中老家三日遊｜", date:"2023年7月2日",  excerpt:"LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳", id:"post-2", views: 2, likes: 13 },
-        { tag:"旅遊", href:"2023年9月29日.html", img:"images/林口海邊夕陽.jpg", title:"｜林口海邊｜", date:"2023年9月29日", excerpt:"放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋", id:"post-3", views: 5, likes: 4 },
-        // 更多文章數據...
-      ];
+    async function updateLikes(postId) {
+      try {
+        const response = await fetch(`${window.API_URL}?action=like&id=${encodeURIComponent(postId)}`, { method: 'POST' });
+        const data = await response.json();
+        if (!data.ok) throw new Error('按讚失敗');
+        return data.likes; // 返回更新後的愛心數
+      } catch (error) {
+        console.error("更新按讚數失敗", error);
+      }
+    }
 
-      // 排序：根據日期（date）排序
-      posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    async function updateView(postId) {
+      try {
+        const payload = { action: 'view', id: postId };
+        const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+        navigator.sendBeacon(window.API_URL, blob);
+      } catch (error) {
+        console.error("無法回報瀏覽次數", error);
+      }
+    }
 
-      // 渲染每篇文章
+    document.addEventListener('DOMContentLoaded', async () => {
+      const posts = await fetchPostData();
+      const postList = document.getElementById('postList');
+
       posts.forEach(post => {
         const { id, img, title, date, excerpt, views, likes } = post;
-        const liked = loadLiked()[id] || false;
-
-        const card = document.createElement("a");
+        const card = document.createElement('a');
         card.href = post.href;
-        card.className = "card";
-        card.setAttribute("data-tag", post.tag);
+        card.className = 'card';
+        card.setAttribute('data-post-id', id);
         card.innerHTML = `
           <img src="${img}" alt="${title}" loading="lazy">
           <div class="card-content">
@@ -138,31 +150,31 @@
             <p>${excerpt}</p>
           </div>
           <div class="card-meta">
-            <span id="views-${id}">${views} views</span>
-            <button class="like-btn" type="button" id="like-btn-${id}">
-              ${liked ? '❤️' : '♡'} <span id="likes-${id}">${likes}</span>
+            <span class="views">${views} views</span>
+            <button class="like-btn" type="button" data-post-id="${id}">
+              ${likes > 0 ? '❤️' : '♡'} <span class="likes">${likes}</span>
             </button>
           </div>
         `;
         postList.appendChild(card);
 
-        // 點擊愛心事件處理
-        document.getElementById(`like-btn-${id}`).addEventListener('click', () => {
-          if (liked) return;  // 如果已經點過，則不再重複點擊
-          saveLiked(id, true); // 儲存愛心狀態
-          const likesCount = document.getElementById(`likes-${id}`);
-          likesCount.textContent = parseInt(likesCount.textContent) + 1; // 更新愛心數
-          document.getElementById(`like-btn-${id}`).innerHTML = '❤️ <span>' + likesCount.textContent + '</span>';  // 顯示紅心
+        const likeButton = card.querySelector('.like-btn');
+        likeButton.addEventListener('click', async () => {
+          const updatedLikes = await updateLikes(id);
+          likeButton.innerHTML = `❤️ <span class="likes">${updatedLikes}</span>`;
         });
-      });
 
-      window.filterTag = function(tag) {
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-          card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'block' : 'none';
-        });
-      };
+        // 更新瀏覽次數
+        updateView(id);
+      });
     });
+
+    window.filterTag = function(tag) {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'block' : 'none';
+      });
+    };
   </script>
 </body>
 </html>
