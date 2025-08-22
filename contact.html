@@ -1,4 +1,4 @@
-<!-- contact.html：聯絡表單頁面（每行已附註解） -->
+<!-- contact.html：聯絡表單頁面（每行已附註解，可直接覆蓋） -->
 <!DOCTYPE html> <!-- HTML5 文件宣告，讓瀏覽器以標準模式解析 -->
 <html lang="zh-Hant"> <!-- 設定網頁語系為繁體中文 -->
 <head> <!-- 文件頭部開始：包含中繼資料、樣式、標題等 -->
@@ -76,10 +76,8 @@
     .msg.err{ display:block; color:#7a1d1d; background:#fdeeee; border:1px solid #f3d1d1 } /* 失敗訊息樣式 */
     @media (max-width: 700px){ .row{ grid-template-columns:1fr; } } /* 手機尺寸時改為單欄 */
   </style> <!-- 內嵌 CSS 結束 -->
-
-  <!-- 共用 API 設定（集中在 /api.js） -->
-  <script src="/api.js?v=1"></script> <!-- 載入共用設定檔，內含 window.API_URL 指向 GAS /exec -->
 </head> <!-- 文件頭部結束 -->
+
 <body> <!-- 主體開始 -->
   <header> <!-- 頂部導覽列 -->
     <h1>dEaR dIaRy</h1> <!-- 網站 Logo/名稱 -->
@@ -101,21 +99,31 @@
       <div class="row"> <!-- 上方兩欄（稱呼/Email） -->
         <div> <!-- 左欄 -->
           <label>你的稱呼 <!-- 欄位標籤 -->
-            <input type="text" name="name" placeholder="例如：Anastasia" required /> <!-- 稱呼：必填 -->
+            <input type="text" name="name" placeholder="例如：Anastasia" required
+                   autocomplete="name" maxlength="60" /> <!-- 加上 autocomplete / maxlength -->
           </label>
         </div>
         <div> <!-- 右欄 -->
           <label>Email <!-- 欄位標籤 -->
-            <input type="email" name="email" placeholder="你的 Email" required /> <!-- Email：HTML5 格式檢查、必填 -->
+            <input type="email" name="email" placeholder="你的 Email" required
+                   autocomplete="email" inputmode="email" maxlength="120" /> <!-- 格式化輸入體驗 -->
           </label>
         </div>
       </div>
       <label>主旨 <!-- 主旨欄位標籤 -->
-        <input type="text" name="subject" placeholder="想聊的主題" required /> <!-- 主旨：必填 -->
+        <input type="text" name="subject" placeholder="想聊的主題" required
+               autocomplete="on" maxlength="120" /> <!-- 加上 maxlength -->
       </label>
       <label>訊息內容 <!-- 內容欄位標籤 -->
-        <textarea name="message" placeholder="想對我說的話…" required></textarea> <!-- 多行訊息：必填 -->
+        <textarea name="message" placeholder="想對我說的話…" required
+                  maxlength="4000" spellcheck="true"></textarea> <!-- 加上 maxlength 與拼字檢查 -->
       </label>
+
+      <!-- 蜜罐欄位：人看不到、機器人可能會填；若被填就當成功處理，前端不發往後端 -->
+      <label style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+        如果你是人類請不要填：<input type="text" name="website" tabindex="-1" autocomplete="off">
+      </label>
+
       <div class="actions"> <!-- 送出區：按鈕 + 說明 -->
         <button class="btn" type="submit">送出訊息</button> <!-- 送出按鈕 -->
         <span class="note">看到留言後，會盡快回覆！</span> <!-- 備註說明：不會發信，只寫入表 -->
@@ -124,7 +132,10 @@
     </form>
   </section>
 
-  <script> /* 表單送出邏輯（前端）開始 */
+  <!-- 先載入共用 API 設定：這行會定義 window.API_URL 指向 GAS Web App /exec -->
+  <script src="/api.js?v=1"></script> <!-- 必須在主腳本前載入，否則取不到 API_URL -->
+
+  <script> /* 前端表單送出邏輯（最佳化版）開始 */
     const API_URL = window.API_URL; // 從 /api.js 取得共用 GAS /exec URL
     if (!API_URL) console.error('找不到 window.API_URL，請確認已正確部署 /api.js'); // 防呆：若沒載到 api.js 給出錯誤
 
@@ -146,6 +157,15 @@
     form.addEventListener('submit', async (e) => { // 監聽表單送出事件
       e.preventDefault(); // 阻止預設提交，改用 fetch
 
+      // —— 30 秒節流：避免短時間重複送出（前端友善防護） ——
+      const THROTTLE_KEY = 'contact:lastSentAt'; // localStorage 鍵名
+      const nowTs = Date.now(); // 現在時間戳
+      const lastTs = Number(localStorage.getItem(THROTTLE_KEY) || 0); // 上次送出時間
+      if (nowTs - lastTs < 30 * 1000) { // 若 30 秒內重複送出
+        showMsg('err','送出太頻繁，請稍後再試。'); // 顯示提示
+        return; // 結束流程
+      }
+
       const data = Object.fromEntries(new FormData(form).entries()); // 將表單資料轉為物件
       ['name','email','subject','message'].forEach(k => data[k] = (data[k]||'').trim()); // 去除四欄位前後空白
 
@@ -161,7 +181,8 @@
       if (data.website) { // 蜜罐欄位：若機器人填了（或你未來加了隱藏欄位），這裡直接當成功處理
         showMsg('ok','已送出！'); // 假成功，降低濫用
         form.reset(); // 清空表單
-        return; // 結束流程
+        localStorage.setItem('contact:lastSentAt', String(nowTs)); // 仍記錄一次，避免機器人連打
+        return; // 結束流程（不發往後端）
       }
 
       const origText = submitBtn ? (submitBtn.textContent || submitBtn.value) : ''; // 記錄原始按鈕文字
@@ -200,7 +221,8 @@
 
         if (res.ok && json && json.ok){ // 成功情境（HTTP OK 且回傳 ok:true）
           form.reset(); // 清空表單欄位
-          showMsg('ok', '已送出！留言已存到試算表。'); // 顯示成功訊息（會自動建立/使用 contacts 分頁）
+          localStorage.setItem(THROTTLE_KEY, String(nowTs)); // 成功才記錄節流時間點
+          showMsg('ok', '已送出！留言已存到試算表。'); // 顯示成功訊息（GAS 會自動建立/使用 contacts 分頁）
         } else { // 伺服器邏輯錯誤（ok:false 或 HTTP 非 200）
           throw new Error(json && (json.msg || json.error) || `HTTP ${res.status}`); // 拋出具體錯誤訊息
         }
@@ -221,5 +243,3 @@
   </script> <!-- 前端表單送出邏輯結束 -->
 </body> <!-- 主體結束 -->
 </html> <!-- 文件結束 -->
-
-
