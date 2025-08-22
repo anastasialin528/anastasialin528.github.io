@@ -1,243 +1,248 @@
-<!DOCTYPE html> <html lang="zh-Hant"> <head>
-    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <title>Anastasia</title> <style>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Anastasia</title>
+    <style>
         /* ====== 全站基本樣式 ====== */
         body {
-            margin: 0; /* 移除預設外距 */
-            font-family: "Microsoft JhengHei", sans-serif; /* 預設字型 */
-            background: #f9f9f6; /* 背景色 */
-            color: #333; /* 文字色 */
+            margin: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f9f9f6;
+            color: #333;
         }
-        
+
         /* ====== Header（固定在頂端） ====== */
         header {
-            position: fixed; /* 固定定位 */
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%; /* 置頂且滿寬 */
-            z-index: 1000; /* 讓 header 蓋住內容 */
-            background: #212121; /* 深色底 */
-            padding: 1rem 2rem; /* 內距 */
+            width: 100%;
+            z-index: 1000;
+            background: #212121;
+            padding: 1rem 2rem;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* 彈性置中排列 */
-            box-sizing: border-box; /* 包含邊框計算 */
+            justify-content: space-between;
+            box-sizing: border-box;
         }
-        
+
         header h1 {
-            margin: 0; /* 移除外距 */
-            font-size: 2rem; /* 標題大小 */
-            color: #fff; /* 白字 */
-            white-space: nowrap; /* 不換行 */
-            flex-shrink: 0; /* 不縮 */
+            margin: 0;
+            font-size: 2rem;
+            color: #fff;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
-        
+
         nav {
-            display: flex; /* 導覽橫排 */
-            gap: 1.5rem; /* 選單間距 */
+            display: flex;
+            gap: 1.5rem;
             margin-left: auto;
-            margin-right: 1rem; /* 靠右 */
-            flex-shrink: 0; /* 不縮 */
+            margin-right: 1rem;
+            flex-shrink: 0;
         }
-        
+
         nav a {
-            color: #fff; /* 白字 */
-            text-decoration: none; /* 移除底線 */
-            font-weight: bold; /* 粗體 */
-            white-space: nowrap; /* 不換行 */
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            white-space: nowrap;
         }
-        
+
         nav a:hover {
-            text-decoration: underline; /* 滑過加底線 */
+            text-decoration: underline;
         }
 
         /* ====== Hero 區塊 ====== */
         .hero-gallery {
-            display: grid; /* 用 grid 製作 hero 容器 */
-            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)); /* 單張滿版 */
-            grid-auto-rows: 50vh; /* 高度 50vh */
-            width: 100vw; /* 滿寬 */
-            margin-top: 64px; /* 騰出 header 高度 */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+            grid-auto-rows: 50vh;
+            width: 100vw;
+            margin-top: 64px;
         }
-        
+
         .hero-gallery img {
             width: 100%;
-            height: 100%; /* 佔滿容器 */
-            object-fit: cover; /* 覆蓋裁切 */
-            display: block; /* 消除下方間隙 */
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
-        
+
         .hero-title {
-            text-align: center; /* 置中 */
-            padding: 2rem 1rem; /* 內距 */
-            font-size: 3rem; /* 大字 */
-            color: #6fb1a0; /* 主題綠 */
-            font-weight: bold; /* 粗體 */
-            font-family: 'Segoe Script', cursive; /* 手寫風格字型 */
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 3rem;
+            color: #6fb1a0;
+            font-weight: bold;
+            font-family: 'Segoe Script', cursive;
         }
 
         /* ====== 版面容器 ====== */
         .content-wrapper {
-            background: #f9f9f6; /* 背景 */
-            padding: 2rem 1rem; /* 內距 */
+            background: #f9f9f6;
+            padding: 2rem 1rem;
             display: flex;
-            justify-content: center; /* 內容置中 */
+            justify-content: center;
         }
-        
+
         main {
-            max-width: 1000px; /* 主欄最大寬度 */
-            width: 100%; /* 滿主欄寬 */
+            max-width: 1000px;
+            width: 100%;
         }
 
         /* ====== 標籤（篩選） ====== */
         .tags {
-            text-align: center; /* 置中 */
-            margin-bottom: 2rem; /* 與下方間距 */
+            text-align: center;
+            margin-bottom: 2rem;
         }
-        
+
         .tags button {
-            background: #fff; /* 白底 */
-            border: 2px solid #6fb1a0; /* 主題綠框 */
-            color: #6fb1a0; /* 字色綠 */
-            padding: .5rem 1.2rem; /* 內距 */
-            margin: .4rem; /* 外距 */
-            border-radius: 25px; /* 膠囊圓角 */
-            cursor: pointer; /* 滑鼠指標 */
-            font-size: 1rem; /* 字級 */
-            transition: all .3s ease; /* 動畫 */
+            background: #fff;
+            border: 2px solid #6fb1a0;
+            color: #6fb1a0;
+            padding: .5rem 1.2rem;
+            margin: .4rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all .3s ease;
         }
 
         .tags button:hover {
             background: #6fb1a0;
-            color: #fff; /* 滑過反相 */
+            color: #fff;
         }
 
         /* ====== 卡片牆（Masonry 模擬） ====== */
         .posts {
-            column-count: 3; /* 三欄 */
-            column-gap: 1.5rem; /* 欄間距 */
+            column-count: 3;
+            column-gap: 1.5rem;
         }
-        
+
         @media (max-width: 1024px) {
             .posts {
-                column-count: 2; /* 平板二欄 */
+                column-count: 2;
             }
         }
-        
+
         @media (max-width: 600px) {
             .posts {
-                column-count: 1; /* 手機一欄 */
+                column-count: 1;
             }
         }
 
         /* ====== 卡片樣式 ====== */
         .card {
-            background: #fff; /* 白底 */
-            border-radius: 12px; /* 圓角 */
-            overflow: hidden; /* 超出裁切 */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .1); /* 陰影 */
-            text-decoration: none; /* 連結無底線 */
-            color: inherit; /* 承襲文字色 */
-            transition: transform .3s ease; /* 浮起動畫 */
-            display: inline-block; /* 讓 column-count 生效 */
-            width: 100%; /* 滿寬 */
-            margin-bottom: 1.5rem; /* 卡片間距 */
-            break-inside: avoid; /* 避免跨欄截斷 */
-            position: relative; /* 便於放絕對元素 */
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+            text-decoration: none;
+            color: inherit;
+            transition: transform .3s ease;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            break-inside: avoid;
+            position: relative;
         }
-        
+
         .card:hover {
-            transform: translateY(-5px); /* 滑過微浮起 */
+            transform: translateY(-5px);
         }
-        
+
         .card img {
             width: 100%;
-            height: 320px; /* 固定高 */
-            object-fit: cover; /* 覆蓋裁切 */
-            display: block; /* 去除縫隙 */
+            height: 320px;
+            object-fit: cover;
+            display: block;
         }
-        
+
         .card-content {
-            padding: 1rem; /* 內距 */
+            padding: 1rem;
         }
 
         .card-content h2 {
-            margin: 0 0 .5rem; /* 與日期距離 */
-            color: #6fb1a0; /* 標題綠 */
-            font-size: 1.4rem; /* 標題大小 */
+            margin: 0 0 .5rem;
+            color: #6fb1a0;
+            font-size: 1.4rem;
         }
 
         .card-content .date {
-            font-size: .9rem; /* 日期小字 */
-            color: #999; /* 灰字 */
-            margin-bottom: .5rem; /* 與摘要距離 */
+            font-size: .9rem;
+            color: #999;
+            margin-bottom: .5rem;
         }
-        
+
         .card-content p {
-            margin: 0; /* 移除外距 */
-            line-height: 1.6; /* 行高 */
-            color: #555; /* 文字色 */
+            margin: 0;
+            line-height: 1.6;
+            color: #555;
         }
-        
+
         .card-meta {
-            border-top: 1px solid #ccc; /* 上方分隔線 */
-            margin-top: 1rem; /* 與摘要距離 */
-            padding-top: .8rem; /* 與分隔線距離 */
+            border-top: 1px solid #ccc;
+            margin-top: 1rem;
+            padding-top: .8rem;
             padding-left: .5rem;
-            padding-right: .5rem; /* 左右內距 */
+            padding-right: .5rem;
             display: flex;
             justify-content: space-between;
-            align-items: center; /* 兩側對齊 */
+            align-items: center;
             font-size: .9rem;
-            color: #999; /* 小字灰色 */
+            color: #999;
         }
-        
+
         .like-btn {
-            background: none; /* 透明底 */
-            border: none; /* 無邊框 */
-            color: red; /* 紅色愛心 */
-            cursor: pointer; /* 游標 */
-            font-size: 1rem; /* 字級 */
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+            font-size: 1rem;
             display: flex;
             align-items: center;
         }
 
         .like-btn span {
-            margin-left: 5px; /* 愛心與數字間距 */
+            margin-left: 5px;
         }
 
         .like-btn.is-liked {
             opacity: .6;
             cursor: default;
-            pointer-events: none; /* 已按讚：半透明且不能再按 */
+            pointer-events: none;
         }
 
         /* ====== 頁尾 ====== */
         .site-footer {
-            background: #f1f0ed; /* 底色 */
-            padding: 3rem 1rem; /* 內距 */
+            background: #f1f0ed;
+            padding: 3rem 1rem;
         }
-        
+
         .footer-inner {
-            max-width: 1000px; /* 與主欄同寬 */
-            margin: 0 auto; /* 置中 */
-            position: relative; /* 可放絕對元素 */
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
         }
-        
+
         .footer-social {
-            display: flex; /* 橫排 */
-            gap: 3rem; /* 間距 */
-            justify-content: flex-end; /* 置右 */
-            margin-bottom: 1.25rem; /* 與下分隔線距離 */
-            font-style: italic; /* 斜體風格 */
+            display: flex;
+            gap: 3rem;
+            justify-content: flex-end;
+            margin-bottom: 1.25rem;
+            font-style: italic;
         }
-        
+
         .footer-social a {
-            color: #133d33; /* 深綠字 */
-            text-decoration: none; /* 無底線 */
+            color: #133d33;
+            text-decoration: none;
         }
-        
+
         .footer-social a:hover {
-            text-decoration: underline; /* 滑過加底線 */
+            text-decoration: underline;
         }
 
         .footer-line {
@@ -245,49 +250,67 @@
             background: #133d33;
             border: none;
             width: 100%;
-            margin: 1rem auto 1.25rem; /* 分隔線 */
+            margin: 1rem auto 1.25rem;
         }
 
         .footer-copy {
             text-align: center;
             font-size: .9rem;
-            color: #6b7b74; /* 版權文字 */
+            color: #6b7b74;
         }
-        
+
         @media (max-width: 768px) {
             .footer-social {
                 justify-content: center;
-                gap: 2rem; /* 手機置中社群連結 */
+                gap: 2rem;
             }
         }
     </style>
 </head>
 
 <body>
-    <header> <h1>dEaR dIaRy</h1> <nav> <a href="index.html">MAIN PAGE</a> <a href="about.html">ABOUT ME</a> <a href="contact.html">CONTACT</a> </nav>
+    <header>
+        <h1>dEaR dIaRy</h1>
+        <nav>
+            <a href="index.html">MAIN PAGE</a>
+            <a href="about.html">ABOUT ME</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
     </header>
 
-    <div class="hero-gallery"> <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy"> </div>
-    <div class="hero-title">Beautiful Little Things</div> <div class="content-wrapper"> <main> <div class="tags" aria-label="文章分類篩選"> <button type="button" onclick="filterTag('all')">全部</button>
+    <div class="hero-gallery">
+        <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy">
+    </div>
+    <div class="hero-title">Beautiful Little Things</div>
+    <div class="content-wrapper">
+        <main>
+            <div class="tags" aria-label="文章分類篩選">
+                <button type="button" onclick="filterTag('all')">全部</button>
                 <button type="button" onclick="filterTag('旅遊')">旅遊</button>
                 <button type="button" onclick="filterTag('星空')">星空</button>
                 <button type="button" onclick="filterTag('日常')">日常</button>
                 <button type="button" onclick="filterTag('潛水')">潛水</button>
             </div>
 
-            <div class="posts" id="postList"></div> </main>
+            <div class="posts" id="postList"></div>
+        </main>
     </div>
 
-    <footer class="site-footer"> <div class="footer-inner"> <nav class="footer-social" aria-label="Social links"> <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <nav class="footer-social" aria-label="Social links">
+                <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a>
                 <a href="https://www.instagram.com/anastasialin528/" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a>
                 <a href="https://www.youtube.com/" target="_blank" rel="noopener">Youtube</a>
                 <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
             </nav>
-            <hr class="footer-line"> <div class="footer-copy">© 2025 我的日記部落格</div> </div>
+            <hr class="footer-line">
+            <div class="footer-copy">© 2025 我的日記部落格</div>
+        </div>
     </footer>
 
-    <script src="api.js"></script> <script>
+    <script>
         const posts = [
             {
                 tag: "旅遊",
@@ -425,27 +448,30 @@
                 excerpt: "週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。"
             }
         ];
-        
-        // 修正點：移除 idFromHref 和 isLiked 函式，因為它們屬於 api.js
-        
-        const postList = document.getElementById("postList"); // 取得卡片牆容器
 
-        posts.forEach((post, index) => {
-            const card = document.createElement("a"); // 建立 <a> 卡片
-            // **修正點 1：添加 data-post-id 屬性，讓 api.js 能夠找到卡片**
-            card.setAttribute("data-post-id", post.id);
+        const postList = document.getElementById("postList");
 
-            card.href = post.href; // 內頁連結
-            card.className = "card"; // 卡片樣式
-            card.setAttribute("data-tag", post.tag); // 存分類標籤供篩選
-            
+        posts.forEach((post) => {
+            const card = document.createElement("a");
+            card.href = post.href;
+            card.className = "card";
+            card.setAttribute("data-post-id", post.id); // **這行是正確的，保留**
+            card.setAttribute("data-tag", post.tag);
             card.innerHTML = `
-                <img src="${post.img}" alt="${post.title}" loading="lazy"> <div class="card-content"> <h2>${post.title}</h2> <div class="date">${post.date}</div> <p>${post.excerpt}</p> <div class="card-meta"> <span><span class="views">0</span> views</span> <button class="like-btn" type="button" data-post-id="${post.id}"> <span>♡</span> <span class="likes">0</span> </button>
+                <img src="${post.img}" alt="${post.title}" loading="lazy">
+                <div class="card-content">
+                    <h2>${post.title}</h2>
+                    <div class="date">${post.date}</div>
+                    <p>${post.excerpt}</p>
+                    <div class="card-meta">
+                        <span><span class="views">0</span> views</span>
+                        <button class="like-btn" type="button" data-post-id="${post.id}" aria-label="按讚">
+                            <span>♡</span> <span class="likes">0</span>
+                        </button>
                     </div>
                 </div>
             `;
-
-            postList.appendChild(card); // 丟進卡片牆
+            postList.appendChild(card);
         });
 
         // 篩選功能，保持不變
@@ -459,6 +485,17 @@
                 }
             });
         }
+    </script>
+
+    <script src="api.js"></script>
+    <script>
+      // 確保 document 載入完畢，並在 `posts` 陣列渲染完畢後再執行
+      document.addEventListener('DOMContentLoaded', () => {
+        // 呼叫 api.js 中的主要函式，自動處理所有卡片的統計數據和按讚功能。
+        // getElementsByClassName 會回傳一個 "動態" 的節點列表，
+        // 即使頁面在後來新增了卡片，這個列表也會自動更新。
+        window.initBlogStats(document.getElementsByClassName('card'));
+      });
     </script>
 </body>
 
