@@ -487,17 +487,52 @@
         }
     </script>
 
+   
+<script>
+        const posts = [
+            //... 你的文章陣列
+        ];
+        const postList = document.getElementById("postList");
+        posts.forEach((post) => {
+            const card = document.createElement("a");
+            card.href = post.href;
+            card.className = "card";
+            card.setAttribute("data-post-id", post.id);
+            card.setAttribute("data-tag", post.tag);
+            card.innerHTML = `
+                <img src="${post.img}" alt="${post.title}" loading="lazy">
+                <div class="card-content">
+                    <h2>${post.title}</h2>
+                    <div class="date">${post.date}</div>
+                    <p>${post.excerpt}</p>
+                    <div class="card-meta">
+                        <span><span class="views">0</span> views</span>
+                        <button class="like-btn" type="button" data-post-id="${post.id}" aria-label="按讚">
+                            <span>♡</span> <span class="likes">0</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            postList.appendChild(card);
+        });
+
+        // 篩選功能，保持不變
+        function filterTag(tag) {
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                if (tag === 'all' || card.dataset.tag === tag) {
+                    card.style.display = 'inline-block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
     <script src="api.js"></script>
     <script>
-      // 確保 document 載入完畢，並在 `posts` 陣列渲染完畢後再執行
-      document.addEventListener('DOMContentLoaded', () => {
-        // 呼叫 api.js 中的主要函式，自動處理所有卡片的統計數據和按讚功能。
-        // getElementsByClassName 會回傳一個 "動態" 的節點列表，
-        // 即使頁面在後來新增了卡片，這個列表也會自動更新。
-        window.initBlogStats(document.getElementsByClassName('card'));
-      });
+      // 在所有卡片都建立完成後，才呼叫統計函式
+      initBlogStats();
     </script>
 </body>
-
 </html>
 
