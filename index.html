@@ -71,7 +71,7 @@
       </div>
 
       <div class="posts" id="postList">
-        <!-- 在這裡列出所有文章卡片 -->
+        <!-- 文章清單 -->
         <a href="2023年6月25日.html" class="card">
           <img src="images/九份.jpg" alt="｜九份｜">
           <div class="card-content">
@@ -142,7 +142,6 @@
             </div>
           </div>
         </a>
-        <!-- 這裡可以繼續添加更多文章卡片 -->
       </div>
     </main>
   </div>
@@ -167,96 +166,42 @@
 
     const postList = document.getElementById("postList"); 
 
-    function syncAllHearts(){ 
-      posts.forEach((post, index) => { 
-        const id = idFromHref(post.href); 
-        const btn = document.getElementById(`like-btn-${index}`); 
-        const likesSpan = document.getElementById(`likes-${index}`); 
-        if (btn && likesSpan) {
-          const currentLikes = parseInt(likesSpan.textContent || '0', 10); 
-          renderHeart(btn, id, currentLikes, `likes-${index}`); 
-        } 
-      }); 
-    }
-
-    const ids = [];
-    posts.forEach((post, index) => {
-      const id = idFromHref(post.href); 
-      ids.push(id); 
-      
-      const card = document.createElement("a"); 
-      card.href = post.href; 
-      card.className = "card"; 
-      card.setAttribute("data-tag", post.tag); 
-      card.innerHTML = `
-        <img src="${post.img}" alt="${post.title}" loading="lazy">
-        <div class="card-content">
-          <h2>${post.title}</h2>
-          <div class="date">${post.date}</div>
-          <p>${post.excerpt}</p>
-          <div class="card-meta">
-            <span id="views-${index}">0 views</span>
-            <button class="like-btn" type="button" id="like-btn-${index}">
-              ${isLiked(id) ? '❤️' : '♡'} <span id="likes-${index}">0</span>
-            </button>
-          </div>
-        </div>
-      `;
-      postList.appendChild(card); 
-
-      document.getElementById(`like-btn-${index}`).addEventListener('click', async (e) => { 
-        e.preventDefault(); e.stopPropagation();
-        if (isLiked(id)) return;
-
-        const btn = e.currentTarget; 
-        const likesSpan = document.getElementById(`likes-${index}`);
-        let curLikes = parseInt(likesSpan.textContent || '0', 10); 
-        renderHeart(btn, id, curLikes + 1, `likes-${index}`);
-
-        const res = await likeAPI(id); 
-        if (res && res.ok) { 
-          setLiked(id, true); 
-          const newLikes = (res.data && res.data.likes != null) ? res.data.likes : 
-                           (res.likes != null ? res.likes : (curLikes + 1)); 
-          renderHeart(btn, id, newLikes, `likes-${index}`); 
-        } else { 
-          renderHeart(btn, id, curLikes, `likes-${index}`); 
-          alert('按讚失敗，請稍後再試。');
-        }
-      });
-    });
-
-    (async () => {
+    async function fetchStats(ids) {
       try {
-        const r = await apiPost({ action:'get', ids });
-        if (r && r.ok && r.data) { 
-          posts.forEach((post, index) => { 
-            const id = idFromHref(post.href); 
-            const datum = r.data[id] || {}; 
-            const v = document.getElementById(`views-${index}`);
-            const btn = document.getElementById(`like-btn-${index}`);
-            const likeCount = (datum.likes ?? 0); 
-            if (v) v.textContent = `${(datum.views ?? 0)} views`; 
-            if (btn) renderHeart(btn, id, likeCount, `likes-${index}`); 
-          });
-        } else { 
-          posts.forEach((post, index) => { 
-            const id = idFromHref(post.href); 
-            const btn = document.getElementById(`like-btn-${index}`); 
-            if (btn) renderHeart(btn, id, 0, `likes-${index}`); 
-          });
-        }
-      } catch (err) { 
-        console.error('批次取數失敗：', err); 
+        const r = await apiPost({ action: 'get', ids });
+        return r && r.ok && r.data ? r.data : {};
+      } catch (err) {
+        console.error('批次取數失敗：', err);
+        return {};
       }
-    })(); 
+    }
 
-    function filterTag(tag){
-      const cards = document.querySelectorAll('.card'); 
-      cards.forEach(card => {
-        card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none';
+    async function updatePostStats() {
+      const ids = Array.from(postList.querySelectorAll('.card')).map(card => {
+        return idFromHref(card.href); // 假設 idFromHref 是用來解析 URL 得到文章 ID 的方法
+      });
+
+      const statsData = await fetchStats(ids);
+
+      Array.from(postList.querySelectorAll('.card')).forEach((card, index) => {
+        const id = idFromHref(card.href);
+        const datum = statsData[id] || {};
+        const viewsSpan = card.querySelector('.card-meta span[id^="views-"]');
+        const likeBtn = card.querySelector('.like-btn');
+        const likesSpan = card.querySelector('.card-meta span[id^="likes-"]');
+
+        if (viewsSpan) {
+          viewsSpan.textContent = `${datum.views ?? 0} views`;
+        }
+
+        if (likeBtn && likesSpan) {
+          renderHeart(likeBtn, id, datum.likes ?? 0, likesSpan.id); 
+        }
       });
     }
+
+    // 呼叫更新函式
+    updatePostStats();
   </script>
 </body>
 </html>
