@@ -1,13 +1,5 @@
-<!DOCTYPE html> <!-- HTML5 文件宣告 -->
-<html lang="zh-Hant"> <!-- 頁面語系：繁體中文 -->
-
-<head>
-    <!-- 文件頭開始 -->
-    <meta charset="UTF-8"> <!-- 編碼 UTF-8，避免亂碼 -->
-    <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- RWD 視窗設定 -->
-    <title>Anastasia</title> <!-- 瀏覽器分頁標題 -->
-    
-    <style>
+<!DOCTYPE html> <html lang="zh-Hant"> <head>
+    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <title>Anastasia</title> <style>
         /* ====== 全站基本樣式 ====== */
         body {
             margin: 0; /* 移除預設外距 */
@@ -272,54 +264,34 @@
 </head>
 
 <body>
-    <!-- 主體開始 -->
-    <header> <!-- 固定導覽列 -->
-        <h1>dEaR dIaRy</h1> <!-- 網站標題 -->
-        <nav> <!-- 主選單 -->
-            <a href="index.html">MAIN PAGE</a> <!-- 回首頁 -->
-            <a href="about.html">ABOUT ME</a> <!-- 關於我 -->
-            <a href="contact.html">CONTACT</a> <!-- 聯絡我 -->
-        </nav>
+    <header> <h1>dEaR dIaRy</h1> <nav> <a href="index.html">MAIN PAGE</a> <a href="about.html">ABOUT ME</a> <a href="contact.html">CONTACT</a> </nav>
     </header>
 
-    <div class="hero-gallery"> <!-- 首屏大圖容器 -->
-        <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy"> <!-- Hero 圖片 -->
-    </div>
-    <div class="hero-title">Beautiful Little Things</div> <!-- Hero 標語 -->
-
-    <div class="content-wrapper"> <!-- 包住主欄做置中 -->
-        <main> <!-- 主欄 -->
-            <div class="tags" aria-label="文章分類篩選"> <!-- 篩選區 -->
-                <button type="button" onclick="filterTag('all')">全部</button>
+    <div class="hero-gallery"> <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy"> </div>
+    <div class="hero-title">Beautiful Little Things</div> <div class="content-wrapper"> <main> <div class="tags" aria-label="文章分類篩選"> <button type="button" onclick="filterTag('all')">全部</button>
                 <button type="button" onclick="filterTag('旅遊')">旅遊</button>
                 <button type="button" onclick="filterTag('星空')">星空</button>
                 <button type="button" onclick="filterTag('日常')">日常</button>
                 <button type="button" onclick="filterTag('潛水')">潛水</button>
             </div>
 
-            <div class="posts" id="postList"></div> <!-- 卡片牆容器 -->
-        </main>
+            <div class="posts" id="postList"></div> </main>
     </div>
 
-    <footer class="site-footer"> <!-- 頁尾 -->
-        <div class="footer-inner"> <!-- 頁尾內框 -->
-            <nav class="footer-social" aria-label="Social links"> <!-- 社群連結 -->
-                <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a>
+    <footer class="site-footer"> <div class="footer-inner"> <nav class="footer-social" aria-label="Social links"> <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a>
                 <a href="https://www.instagram.com/anastasialin528/" target="_blank" rel="noopener">Instagram</a>
                 <a href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a>
                 <a href="https://www.youtube.com/" target="_blank" rel="noopener">Youtube</a>
                 <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
             </nav>
-            <hr class="footer-line"> <!-- 裝飾分隔線 -->
-            <div class="footer-copy">© 2025 我的日記部落格</div> <!-- 版權文字 -->
-        </div>
+            <hr class="footer-line"> <div class="footer-copy">© 2025 我的日記部落格</div> </div>
     </footer>
 
-    <!-- 後端 API 與共用工具（批次取數版） -->
-    <script>
+    <script src="api.js"></script> <script>
         const posts = [
             {
                 tag: "旅遊",
+                id: "2023年6月25日", // 使用一個唯一的 ID，例如檔名
                 href: "2023年6月25日.html",
                 img: "images/九份.jpg",
                 title: "｜九份｜",
@@ -328,6 +300,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年7月2日",
                 href: "2023年7月2日.html",
                 img: "images/BLUE.jpg",
                 title: "｜台中老家三日遊｜",
@@ -336,6 +309,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年9月29日",
                 href: "2023年9月29日.html",
                 img: "images/林口海邊夕陽.jpg",
                 title: "｜林口海邊｜",
@@ -344,6 +318,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年11月16日",
                 href: "2023年11月16日.html",
                 img: "images/DSC0E8692.jpg",
                 title: "｜弘前城公園｜",
@@ -352,6 +327,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年11月18日",
                 href: "2023年11月18日.html",
                 img: "images/街貓.jpg",
                 title: "｜街貓｜",
@@ -360,6 +336,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年11月19日",
                 href: "2023年11月19日.html",
                 img: "images/楓樹.jpg",
                 title: "｜毛越寺的楓樹｜",
@@ -368,6 +345,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年11月24日",
                 href: "2023年11月24日.html",
                 img: "images/DSC0E8750.jpg",
                 title: "｜弘前城植物園｜",
@@ -376,6 +354,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年11月26日",
                 href: "2023年11月26日.html",
                 img: "images/DSC0E8282.jpg",
                 title: "｜標準鏡｜",
@@ -384,6 +363,7 @@
             },
             {
                 tag: "旅遊",
+                id: "2023年11月28日",
                 href: "2023年11月28日.html",
                 img: "images/DSC08289.jpg",
                 title: "｜鳴子峽火車站｜",
@@ -392,6 +372,7 @@
             },
             {
                 tag: "星空",
+                id: "2024年12月3日",
                 href: "2024年12月3日.html",
                 img: "images/1.jpg",
                 title: "｜晨曦前的星空｜",
@@ -400,6 +381,7 @@
             },
             {
                 tag: "星空",
+                id: "2025年3月2日",
                 href: "2025年3月2日.html",
                 img: "images/DSC09815.jpg",
                 title: "｜溫馨的夜｜",
@@ -408,6 +390,7 @@
             },
             {
                 tag: "日常",
+                id: "2024年10月23日",
                 href: "2024年10月23日.html",
                 img: "images/聖誕樹.jpg",
                 title: "｜聖誕樹｜",
@@ -416,6 +399,7 @@
             },
             {
                 tag: "日常",
+                id: "2025年3月5日",
                 href: "2025年3月5日.html",
                 img: "images/天空大鳥.jpg",
                 title: "｜美麗的天空｜",
@@ -424,6 +408,7 @@
             },
             {
                 tag: "日常",
+                id: "2025年4月15日",
                 href: "2025年4月15日.html",
                 img: "images/苔蘚.jpg",
                 title: "｜四月十五日｜",
@@ -432,6 +417,7 @@
             },
             {
                 tag: "潛水",
+                id: "2025年4月21日",
                 href: "2025年4月21日.html",
                 img: "images/面鏡.jpg",
                 title: "｜面鏡開箱｜",
@@ -439,34 +425,40 @@
                 excerpt: "週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。"
             }
         ];
-
+        
+        // 修正點：移除 idFromHref 和 isLiked 函式，因為它們屬於 api.js
+        
         const postList = document.getElementById("postList"); // 取得卡片牆容器
 
         posts.forEach((post, index) => {
             const card = document.createElement("a"); // 建立 <a> 卡片
-            const id = idFromHref(post.href); // 取得文章 ID（檔名）
+            // **修正點 1：添加 data-post-id 屬性，讓 api.js 能夠找到卡片**
+            card.setAttribute("data-post-id", post.id);
 
             card.href = post.href; // 內頁連結
             card.className = "card"; // 卡片樣式
             card.setAttribute("data-tag", post.tag); // 存分類標籤供篩選
             
             card.innerHTML = `
-                <img src="${post.img}" alt="${post.title}" loading="lazy"> <!-- 卡片首圖 -->
-                <div class="card-content"> <!-- 文字內容 -->
-                    <h2>${post.title}</h2> <!-- 卡片標題 -->
-                    <div class="date">${post.date}</div> <!-- 日期 -->
-                    <p>${post.excerpt}</p> <!-- 摘要 -->
-                    <div class="card-meta"> <!-- 底部統計區 -->
-                        <span id="views-${index}">0 views</span> <!-- 先顯示 0，稍後覆蓋 -->
-                        <button class="like-btn" type="button" id="like-btn-${index}"> <!-- 愛心按鈕 -->
-                            ${isLiked(id) ? '❤️' : '♡'} <span id="likes-${index}">0</span> <!-- 用本機狀態決定圖示 -->
-                        </button>
+                <img src="${post.img}" alt="${post.title}" loading="lazy"> <div class="card-content"> <h2>${post.title}</h2> <div class="date">${post.date}</div> <p>${post.excerpt}</p> <div class="card-meta"> <span><span class="views">0</span> views</span> <button class="like-btn" type="button" data-post-id="${post.id}"> <span>♡</span> <span class="likes">0</span> </button>
                     </div>
                 </div>
             `;
 
             postList.appendChild(card); // 丟進卡片牆
         });
+
+        // 篩選功能，保持不變
+        function filterTag(tag) {
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                if (tag === 'all' || card.dataset.tag === tag) {
+                    card.style.display = 'inline-block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
     </script>
 </body>
 
