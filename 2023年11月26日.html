@@ -1,192 +1,317 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>｜標準鏡｜</title>
-  <style>
-    body { margin: 0; font-family: "Microsoft JhengHei", sans-serif; background: #fff; color: #333; line-height: 1.8; }
-    header { background: #212121; padding: 1rem 2rem; color: #fff; }
-    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-    img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
-    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
-    p:empty { display: block; height: 1.0rem; }
-    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
+<!DOCTYPE html> <!-- HTML5 文件宣告 -->
+<html lang="zh-Hant"> <!-- 頁面語系：繁體中文 -->
+<head> <!-- 文件頭開始 -->
+  <meta charset="UTF-8"> <!-- 頁面編碼 UTF-8，避免亂碼 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- RWD：寬度隨裝置、初始倍率 1 -->
+  <title>｜標準鏡｜</title> <!-- 瀏覽器分頁標題 -->
 
-    .back-link { display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold; border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease; }
-    .back-link:hover { background: #ff6f61; color: #fff; }
+  <style> /* 內嵌樣式開始（為了示例集中） */
+    body { 
+      margin:0; 
+      font-family:"Microsoft JhengHei",sans-serif; 
+      background:#fff; 
+      color:#333; 
+      line-height:1.8; 
+        } /* 全域排版 */
+    header { 
+      background:#212121; 
+      padding:1rem 2rem; 
+      color:#fff; 
+          } /* 頂部標題區 */
+    main { 
+      max-width:800px; 
+      margin:2rem auto; 
+      padding:0 1rem; 
+          } /* 主內容容器：置中、限制寬度 */
+    img { 
+      width:100%; 
+      border-radius:8px; 
+      margin:1.5rem 0; 
+        } /* 文章內圖片樣式 */
+    h1 { 
+      color:#ff6f61; 
+      font-size:2rem; 
+      margin-bottom:.5rem; 
+        } /* 大標題樣式 */
+    p:empty { 
+      display:block; 
+      height:1rem; 
+        } /* 空段落佔位（保留原排版節奏） */
+    .date { 
+      color:#999; 
+      font-size:.9rem; 
+      margin-bottom:1.5rem; 
+        } /* 日期樣式 */
+    .back-link { 
+      display:inline-block; 
+      margin-top:2rem; 
+      color:#ff6f61; 
+      text-decoration:none; 
+      font-weight:bold; 
+      border:2px solid #ff6f61; 
+      padding:.4rem 1rem; 
+      border-radius:25px; 
+      transition:.3s; 
+      } /* 返回首頁按鈕 */
+    .back-link:hover { 
+      background:#ff6f61;
+      color:#fff; 
+    } /* 滑過返回首頁樣式 */
+    .share-section { 
+      text-align:center; 
+      margin-top:3rem; 
+    } /* 分享區塊外框 */
+    .line { 
+      height:1px; 
+      background-color:rgba(0,0,0,.2); 
+      margin:1rem 0; 
+      width:100%; 
+    } /* 分隔線 */
+    .share-icons { 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+      gap:1.5rem; 
+      margin:1rem 0; 
+      position:relative; 
+    } /* 分享按鈕群組 */
+    .icon { 
+      background:none; 
+      border:none; 
+      font-size:1.5rem; 
+      cursor:pointer; 
+      text-decoration:none; 
+      color:#333; 
+      transition:transform .2s; 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+    } /* 分享按鈕樣式 */
+    .icon:hover { 
+      transform:scale(1.2); 
+    } /* 分享按鈕 hover 動畫 */
+    .facebook-icon { 
+      font-size:24px; 
+      font-weight:bold; 
+      color:#000;
+      height:40px; 
+      display:flex; 
+      justify-content:center; 
+      align-items:center; 
+    } /* 自製 FB 字樣 icon */
+    #copy-link { 
+      background:none; 
+      border:none; 
+      cursor:pointer; 
+      padding:0; 
+      width:40px; 
+      height:40px; 
+    } /* 複製連結按鈕 */
+    #copy-link img { 
+      width:100%; 
+      height:100%; 
+      object-fit:cover; 
+    } /* 複製按鈕圖片鋪滿 */
+    #copied-msg { 
+      position:absolute; 
+      top:120%; 
+      font-size:.9rem; 
+      color:#28a745; 
+      display:none; 
+      margin-top:5px; 
+    } /* 複製成功提示 */
+    .stats { 
+      display:flex; 
+      justify-content:space-between; 
+      align-items:center; 
+      margin-top:1rem; 
+      padding-left:15px; 
+      padding-right:15px; 
+      width:calc(100% - 30px);
+      margin-left:auto; 
+      margin-right:auto; 
+    } /* 統計列：左右排版 */
+    .like-btn { 
+      background:none; 
+      border:none; 
+      font-size:1.2rem; 
+      color:red; 
+      cursor:pointer; 
+      display:flex; 
+      align-items:center; 
+    } /* 愛心按鈕 */
+    .like-btn:hover { 
+      color:#e04848; 
+    } /* 愛心 hover 色 */
+    .like-btn span { 
+      margin-left:5px; 
+    } /* 愛心與數字間距 */
+    .like-btn.is-liked { 
+      opacity:.6; 
+      cursor:default; 
+      pointer-events:none; 
+    } /* 已按讚狀態：半透明且不可點 */
+  </style> <!-- 內嵌樣式結束 -->
+</head> <!-- 文件頭結束 -->
 
-    .share-section { text-align: center; margin-top: 3rem; }
-    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
-    .share-icons { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative; }
-    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform .2s ease; display: flex; justify-content: center; align-items: center; }
-    .icon:hover { transform: scale(1.2); }
-    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
-    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
-    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
-    #copied-msg { position: absolute; top: 120%; font-size: .9rem; color: #28a745; display: none; margin-top: 5px; }
+<body> <!-- 網頁主體開始 -->
+  <header><h1>｜標準鏡｜</h1></header> <!-- 頁首：文章標題 -->
 
-    .stats { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto; }
-    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
-    .like-btn:hover { color: #e04848; }
-    .like-btn span { margin-left: 5px; }
-    .like-btn.is-liked { opacity: .6; cursor: default; pointer-events: none; }
-  </style>
-</head>
-<body>
-  <header><h1>｜標準鏡｜</h1></header>
-  <main>
-    <div class="date">2023年11月26日</div>
+  <main> <!-- 主內容開始 -->
+    <div class="date">2023年11月26日</div> <!-- 發佈日期 -->
 
-    <img src="images/DSC0E8282.jpg" alt="｜標準鏡｜">
+    <img src="images/DSC0E8282.jpg" alt="｜標準鏡｜"> <!-- 文章主圖 -->
 
     <p>旅行的時候，我最常用使用的是標準鏡。它不只在拍中、遠景時，搭配小光圈就可以讓遠近畫面都很清晰，達到偽廣角的效果之外。最喜歡它在拍攝這種小花小草特寫的時候能夠有最自然的呈現，完整保留當時我看見它們的樣貌。</p>
     <p></p>
     <p>這兩張照片是在位於中平溫泉站及鳴子溫泉站之間的著名景點-鳴子峽拍攝的。知名景點的大景照已經看太多，旅行途中我更喜歡緩慢步行留意沿途腳邊及小小的角落，總能發現不間斷的小美景，留下小品集似的記憶點，豐富整段旅程。</p>
 
-    <a class="back-link" href="index.html">← 回到首頁</a>
 
-    <!-- 分享功能 -->
-    <div class="share-section">
-      <div class="line"></div>
-      <div class="share-icons">
-        <a class="icon facebook-icon" id="fb-share" href="#" target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
-        <button class="icon" id="copy-link" title="複製連結">
-          <img src="images/share.jpg" alt="複製連結">
-        </button>
-        <span id="copied-msg">Link Copied!</span>
-      </div>
-      <div class="line"></div>
-    </div>
+    <a class="back-link" href="index.html">← 回到首頁</a> <!-- 回首頁按鈕 -->
 
-    <!-- 觀看與按讚 -->
-    <div class="stats">
-      <div class="view"><span id="post-views">0</span> views</div>
-      <div class="like">
-        <button class="like-btn" id="post-like-btn">♡ <span id="post-likes">0</span></button>
-      </div>
-    </div>
-  </main>
+    <div class="share-section"> <!-- 分享功能區塊 -->
+      <div class="line"></div> <!-- 上分隔線 -->
+      <div class="share-icons"> <!-- 分享按鈕列 -->
+        <a class="icon facebook-icon" id="fb-share" href="#" target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a> <!-- FB 分享 -->
+        <button class="icon" id="copy-link" title="複製連結"> <!-- 複製連結按鈕 -->
+          <img src="images/share.jpg" alt="複製連結"> <!-- 複製圖示 -->
+        </button> <!-- 複製連結按鈕結束 -->
+        <span id="copied-msg">Link Copied!</span> <!-- 複製成功提示文字 -->
+      </div> <!-- 分享按鈕列結束 -->
+      <div class="line"></div> <!-- 下分隔線 -->
+    </div> <!-- 分享功能區塊結束 -->
 
-  <!-- 先載入共用 API 設定（一定要在用到 API_URL 的腳本之前） -->
-  <script src="/api.js?v=1"></script>
+    <div class="stats"> <!-- 統計列（觀看數＋按讚） -->
+      <div class="view"><span id="post-views">0</span> views</div> <!-- 觀看數文字（稍後灌入數字） -->
+      <div class="like"> <!-- 愛心容器 -->
+        <!-- ✨ 新增 ARIA：螢幕閱讀器可讀；aria-pressed 會在 JS 中同步 -->
+        <button class="like-btn" id="post-like-btn" aria-label="按讚" aria-pressed="false">♡ <span id="post-likes">0</span></button>
+      </div> <!-- 愛心容器結束 -->
+    </div> <!-- 統計列結束 -->
+  </main> <!-- 主內容結束 -->
 
-  <!-- 後端 API 與共用工具 -->
-  <script>
-    // 從 api.js 取得共用 URL
-    const API_URL = window.API_URL;
+  <script src="/api.js?v=1"></script> <!-- 先載入共用 API 設定（提供 window.API_URL） -->
 
-    // GET 呼叫（避免預檢）
-    async function api(params) {
-      const url = API_URL + '?' + new URLSearchParams(params).toString();
-      const r = await fetch(url, { cache: 'no-store' });
-      return r.json();
-    }
-    const getStats = (id) => api({ action:'get', id });
-    const addView  = (id) => api({ action:'addView', id });
-    const likeAPI  = (id) => api({ action:'like', id });
-
-    // 本機 liked map（與首頁共用同一 key）
-    const LIKE_KEY = 'blog_liked_map';
-    function loadLiked(){ try{return JSON.parse(localStorage.getItem(LIKE_KEY)||'{}')}catch{return{}} }
-    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
-    function isLiked(id){ return !!loadLiked()[id]; }
-    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); }
-
-    function renderHeart(btnEl, id, likeCount, likesSpanId){
-      const liked = isLiked(id);
-      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`;
-      btnEl.classList.toggle('is-liked', liked);
-      btnEl.disabled = liked;
+  <script> /* 內文頁專用腳本：sendBeacon + 讀統計 + 愛心 + 補丁 */
+    const API_URL = window.API_URL; /* 從 api.js 取得後端 Web App /exec 端點 */
+    if (!API_URL) { /* ✅ 防呆：避免忘了引用 api.js 時整頁壞掉 */
+      console.error('API_URL 未設定：請確認已在 </body> 前引入 /api.js');
+      // 可選：友善提示
+      // alert('後端設定未載入，請稍後再試或聯絡站長。');
     }
 
-    function getPostIdFromLocation(){
-      const last = location.pathname.split('/').pop();
-      return decodeURIComponent(last || 'index.html');
+    const POST_ID = decodeURIComponent(location.pathname.split('/').pop() || 'index.html'); /* 以檔名作為文章 ID（和首頁一致） */
+
+    async function apiGet(params){ /* 小工具：用 GET 呼叫 GAS（相容你現有介面） */
+      const url = API_URL + '?' + new URLSearchParams(params).toString(); /* 把物件轉成查詢字串 */
+      const r = await fetch(url, { cache:'no-store' }); /* 直接取用，不走瀏覽器快取 */
+      return r.json(); /* 解析 JSON 回傳 */
     }
 
-    // storage 同步（當其他頁按了讚）
-    window.addEventListener('storage', (e) => {
-      if (e.key !== LIKE_KEY) return;
-      if (typeof syncCurrentHeart === 'function') syncCurrentHeart();
-    });
-  </script>
+    const getStats = (id) => apiGet({ action:'get', id }); /* 包裝：取得單篇統計（views/likes） */
+    const likeAPI  = (id) => apiGet({ action:'like', id }); /* 包裝：按讚（沿用 GET 接口） */
 
-  <!-- 內頁邏輯 -->
-  <script>
-    // 分享連結
-    const fbA = document.getElementById('fb-share');
-    if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
-    const copyBtn = document.getElementById("copy-link");
-    if (copyBtn) {
-      copyBtn.addEventListener("click", function () {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          const msg = document.getElementById("copied-msg");
-          if (!msg) return;
-          msg.style.display = "inline";
-          setTimeout(() => { msg.style.display = "none"; }, 2000);
-        });
-      });
+    const LIKE_KEY = 'blog_liked_map'; /* localStorage 的鍵名：記錄哪些文章已按過讚 */
+    function loadLiked(){ try { return JSON.parse(localStorage.getItem(LIKE_KEY) || '{}'); } catch { return {}; } } /* 讀取 liked 映射表 */
+    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); } /* 儲存 liked 映射表 */
+    function isLiked(id){ return !!loadLiked()[id]; } /* 判斷該 id 是否已按讚 */
+    function setLiked(id,v){ const m = loadLiked(); m[id] = !!v; saveLiked(m); } /* 設定該 id 的按讚狀態 */
+
+    function renderHeart(btnEl, id, likeCount, likesSpanId){ /* 渲染愛心外觀與數字 */
+      const liked = isLiked(id); /* 讀取本機是否已按讚 */
+      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`; /* 依狀態顯示 ❤️ / ♡ */
+      btnEl.classList.toggle('is-liked', liked); /* 已按讚加上樣式 */
+      btnEl.disabled = liked; /* 已按讚就鎖定按鈕 */
+      btnEl.setAttribute('aria-pressed', liked ? 'true' : 'false'); /* ✅ 新增：同步 ARIA 狀態 */
     }
 
-    // 讓 storage 事件能同步這頁的愛心
-    function syncCurrentHeart(){
-      const id = getPostIdFromLocation();
-      const btn = document.getElementById('post-like-btn');
-      const likesSpan = document.getElementById('post-likes');
-      if (btn && likesSpan) {
-        const currentLikes = parseInt(likesSpan.textContent || '0', 10);
-        renderHeart(btn, id, currentLikes, 'post-likes');
+    function reportViewWithBeacon(id){ /* 用 sendBeacon 回報瀏覽（不阻塞頁面） */
+      const payload = { action:'view', id }; /* 後端 POST 介面：{action:'view', id} */
+      const blob = new Blob([JSON.stringify(payload)], {type:'application/json'}); /* 轉成 Blob 供 beacon 傳送 */
+      const ok = navigator.sendBeacon(API_URL, blob); /* 嘗試透過 sendBeacon 送出（背景傳輸） */
+      if (!ok) { /* 如果瀏覽器或情境不支援 sendBeacon，就改用 keepalive fetch 當後援 */
+        fetch(API_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload), keepalive:true }).catch(()=>{}); /* 後援傳送，不理會回應 */
       }
     }
 
-    (async () => {
-      const POST_ID = getPostIdFromLocation();
+    (function setupShare(){ /* 分享功能初始化（FB 連結、複製網址） */
+      const fbA = document.getElementById('fb-share'); /* 取得 FB 分享元素 */
+      if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href); /* 設定分享 URL */
+      const copyBtn = document.getElementById('copy-link'); /* 取得複製按鈕 */
+      if (copyBtn){ /* 若存在則綁定事件 */
+        copyBtn.addEventListener('click', () => { /* 監聽點擊複製 */
+          navigator.clipboard.writeText(location.href).then(()=>{ /* 使用剪貼簿 API */
+            const msg = document.getElementById('copied-msg'); /* 取得提示文字 */
+            if (!msg) return; /* 沒有元素直接返回 */
+            msg.style.display = 'inline'; /* 顯示「已複製」 */
+            setTimeout(()=>{ msg.style.display = 'none'; }, 2000); /* 2 秒後隱藏 */
+          });
+        });
+      }
+    })(); /* 立刻執行分享初始化 */
 
-      // 開頁 +1 觀看（即使失敗也不擋後續）
-      try { await addView(POST_ID); } catch {}
+    (async () => { /* 主流程（立即執行的 async 函式） */
 
-      // 取得最新數字
-      let views = 0, likes = 0;
+      /* ✅ 新增：Session 去重（同一分頁/重整在一定時間內只記一次 view） */
+      const VIEW_KEY = `viewed:${POST_ID}`;                 /* sessionStorage 鍵名 */
+      const expireHours = 8;                                 /* 幾小時內視為已看過（可自行調整） */
+      const now = Date.now();                                /* 現在時間戳 */
+      const last = Number(sessionStorage.getItem(VIEW_KEY) || 0); /* 上次記錄時間 */
+      const isExpired = !last || (now - last > expireHours * 3600 * 1000); /* 是否過期 */
+      if (isExpired) {
+        reportViewWithBeacon(POST_ID);                       /* 未記錄或過期 → 回報 view */
+        sessionStorage.setItem(VIEW_KEY, String(now));       /* 記下這次時間 */
+      }
+
+      let views = 0, likes = 0; /* 預設統計為 0 */
       try {
-        const statsResp = await getStats(POST_ID);
-        views = (statsResp && statsResp.ok && statsResp.views != null) ? statsResp.views : 0;
-        likes = (statsResp && statsResp.ok && statsResp.likes != null) ? statsResp.likes : 0;
-      } catch {}
+        const s = await getStats(POST_ID); /* 向後端取得此篇最新統計 */
+        views = (s && s.ok && s.views != null) ? s.views : 0; /* 解析後端回傳的瀏覽數 */
+        likes = (s && s.ok && s.likes != null) ? s.likes : 0; /* 解析後端回傳的讚數 */
+      } catch(e) {
+        console.warn('getStats 取得統計失敗：', e); /* 取得失敗時在 Console 提示，不中斷畫面 */
+      }
 
-      // 畫到頁面
-      const viewEl = document.getElementById('post-views');
-      const likesEl = document.getElementById('post-likes');
-      const btn = document.getElementById('post-like-btn');
-      if (viewEl) viewEl.textContent = views;
-      if (likesEl) likesEl.textContent = likes;
-      if (btn) renderHeart(btn, POST_ID, likes, 'post-likes');
+      const viewEl  = document.getElementById('post-views'); /* 取得瀏覽數元素 */
+      const likesEl = document.getElementById('post-likes'); /* 取得讚數元素 */
+      const btn     = document.getElementById('post-like-btn'); /* 取得愛心按鈕 */
+      if (viewEl)  viewEl.textContent = views; /* 將瀏覽數寫入畫面 */
+      if (likesEl) likesEl.textContent = likes; /* 將讚數寫入畫面 */
+      if (btn)     renderHeart(btn, POST_ID, likes, 'post-likes'); /* 依本機是否按過讚渲染愛心 */
 
-      // 綁定愛心（同一使用者不可重複按）
-      if (btn) {
-        btn.addEventListener('click', async (e) => {
-          e.preventDefault();
-          if (isLiked(POST_ID)) return;
+      if (btn){ /* 綁定愛心點擊事件（樂觀更新） */
+        btn.addEventListener('click', async (e) => { /* 點擊愛心 */
+          e.preventDefault(); /* 阻止預設行為（避免跳轉） */
+          if (isLiked(POST_ID)) return; /* 若本機已按過讚就不再送 */
 
-          let curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
-          renderHeart(btn, POST_ID, curLikes + 1, 'post-likes'); // 樂觀 +1
+          const curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10); /* 取得目前畫面上的讚數 */
+          renderHeart(btn, POST_ID, curLikes + 1, 'post-likes'); /* 樂觀更新：先 +1 並切換成 ❤️ */
 
-          try {
-            const res = await likeAPI(POST_ID);
-            if (res && res.ok) {
-              setLiked(POST_ID, true);
-              renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
-            } else {
-              renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
-              alert('按讚失敗，請稍後再試。');
+          try{
+            const res = await likeAPI(POST_ID); /* 呼叫後端 like 介面（+1） */
+            if (res && res.ok){ /* 成功 */
+              setLiked(POST_ID, true); /* 本機標記：此篇已按讚 */
+              renderHeart(btn, POST_ID, (res.likes ?? (curLikes + 1)), 'post-likes'); /* 以後端回值覆蓋（沒有就沿用樂觀值） */
+            }else{ /* 失敗（後端回 not ok） */
+              renderHeart(btn, POST_ID, curLikes, 'post-likes'); /* 復原為原值 */
+              alert('按讚失敗，請稍後再試。'); /* 友善提示 */
             }
-          } catch {
-            renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
-            alert('按讚失敗，請稍後再試。');
+          }catch(err){ /* 例外（網路或其他問題） */
+            renderHeart(btn, POST_ID, curLikes, 'post-likes'); /* 復原為原值 */
+            alert('按讚失敗，請稍後再試。'); /* 友善提示 */
           }
         });
       }
-    })();
-  </script>
-</body>
-</html>
+    })(); /* 主流程結束並立即執行 */
+
+    window.addEventListener('storage', () => { /* 跨分頁同步：別的分頁按讚，這頁跟著換圖示 */
+      const btn = document.getElementById('post-like-btn'); /* 抓愛心按鈕 */
+      const likesSpan = document.getElementById('post-likes'); /* 抓讚數 */
+      if (btn && likesSpan){ /* 確認元素存在 */
+        const curLikes = parseInt(likesSpan.textContent || '0', 10); /* 取目前畫面讚數 */
+        renderHeart(btn, POST_ID, curLikes, 'post-likes'); /* 依本機 liked 狀態重新渲染外觀（含 aria-pressed） */
+      }
+    }); /* storage 事件監聽結束 */
+  </script> <!-- 內文頁專用腳本結束 -->
+</body> <!-- 網頁主體結束 -->
+</html> <!-- 文件結束 -->
