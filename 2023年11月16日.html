@@ -1,208 +1,183 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>｜日本東北自助旅行-弘前城公園｜</title>
-    <style>
-        /* 內嵌樣式開始（為了示例集中） */
-        body {
-            margin: 0;
-            font-family: "Microsoft JhengHei", sans-serif;
-            background: #fff;
-            color: #333;
-            line-height: 1.8;
-        } /* 全域排版 */
-        header {
-            background: #212121;
-            padding: 1rem 2rem;
-            color: #fff;
-        } /* 頂部標題區 */
-        main {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        } /* 主內容容器：置中、限制寬度 */
-        img {
-            width: 100%;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        } /* 文章內圖片樣式 */
-        h1 {
-            color: #ff6f61;
-            font-size: 2rem;
-            margin-bottom: .5rem;
-        } /* 大標題樣式 */
-        p:empty {
-            display: block;
-            height: 1rem;
-        } /* 空段落佔位（保留原排版節奏） */
-        .date {
-            color: #999;
-            font-size: .9rem;
-            margin-bottom: 1.5rem;
-        } /* 日期樣式 */
-        .back-link {
-            display: inline-block;
-            margin-top: 2rem;
-            color: #ff6f61;
-            text-decoration: none;
-            font-weight: bold;
-            border: 2px solid #ff6f61;
-            padding: .4rem 1rem;
-            border-radius: 25px;
-            transition: .3s;
-        } /* 返回首頁按鈕 */
-        .back-link:hover {
-            background: #ff6f61;
-            color: #fff;
-        } /* 滑過返回首頁樣式 */
-        .share-section {
-            text-align: center;
-            margin-top: 3rem;
-        } /* 分享區塊外框 */
-        .line {
-            height: 1px;
-            background-color: rgba(0, 0, 0, .2);
-            margin: 1rem 0;
-            width: 100%;
-        } /* 分隔線 */
-        .share-icons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            margin: 1rem 0;
-            position: relative;
-        } /* 分享按鈕群組 */
-        .icon {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            text-decoration: none;
-            color: #333;
-            transition: transform .2s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        } /* 分享按鈕樣式 */
-        .icon:hover {
-            transform: scale(1.2);
-        } /* 分享按鈕 hover 動畫 */
-        .facebook-icon {
-            font-size: 24px;
-            font-weight: bold;
-            color: #000;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        } /* 自製 FB 字樣 icon */
-        #copy-link {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-        } /* 複製連結按鈕 */
-        #copy-link img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        } /* 複製按鈕圖片鋪滿 */
-        #copied-msg {
-            position: absolute;
-            top: 120%;
-            font-size: .9rem;
-            color: #28a745;
-            display: none;
-            margin-top: 5px;
-        } /* 複製成功提示 */
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-left: 15px;
-            padding-right: 15px;
-            width: calc(100% - 30px);
-            margin-left: auto;
-            margin-right: auto;
-        } /* 統計列：左右排版 */
-        .like-btn {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            color: red;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        } /* 愛心按鈕 */
-        .like-btn:hover {
-            color: #e04848;
-        } /* 愛心 hover 色 */
-        .like-btn span {
-            margin-left: 5px;
-        } /* 愛心與數字間距 */
-        .like-btn.is-liked {
-            opacity: .6;
-            cursor: default;
-            pointer-events: none;
-        } /* 已按讚狀態：半透明且不可點 */
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>｜日本東北自助旅行-弘前城公園｜</title>
+  <style>
+    body { margin:0; font-family:"Microsoft JhengHei",sans-serif; background:#fff; color:#333; line-height:1.8; }
+    header { background:#212121; padding:1rem 2rem; color:#fff; }
+    main { max-width:800px; margin:2rem auto; padding:0 1rem; }
+    img { width:100%; border-radius:8px; margin:1.5rem 0; }
+    h1 { color:#ff6f61; font-size:2rem; margin-bottom:.5rem; }
+    p:empty { display:block; height:1rem; }
+    .date { color:#999; font-size:.9rem; margin-bottom:1.5rem; }
+    .back-link { display:inline-block; margin-top:2rem; color:#ff6f61; text-decoration:none; font-weight:bold; border:2px solid #ff6f61; padding:.4rem 1rem; border-radius:25px; transition:.3s; }
+    .back-link:hover { background:#ff6f61; color:#fff; }
+    .share-section { text-align:center; margin-top:3rem; }
+    .line { height:1px; background-color:rgba(0,0,0,.2); margin:1rem 0; width:100%; }
+    .share-icons { display:flex; justify-content:center; align-items:center; gap:1.5rem; margin:1rem 0; position:relative; }
+    .icon { background:none; border:none; font-size:1.5rem; cursor:pointer; text-decoration:none; color:#333; transition:transform .2s; display:flex; justify-content:center; align-items:center; }
+    .icon:hover { transform:scale(1.2); }
+    .facebook-icon { font-size:24px; font-weight:bold; color:#000; height:40px; display:flex; justify-content:center; align-items:center; }
+    #copy-link { background:none; border:none; cursor:pointer; padding:0; width:40px; height:40px; }
+    #copy-link img { width:100%; height:100%; object-fit:cover; }
+    #copied-msg { position:absolute; top:120%; font-size:.9rem; color:#28a745; display:none; margin-top:5px; }
+    .stats { display:flex; justify-content:space-between; align-items:center; margin-top:1rem; padding-left:15px; padding-right:15px; width:calc(100% - 30px); margin-left:auto; margin-right:auto; }
+    .like-btn { background:none; border:none; font-size:1.2rem; color:red; cursor:pointer; display:flex; align-items:center; }
+    .like-btn:hover { color:#e04848; }
+    .like-btn span { margin-left:5px; }
+    .like-btn.is-liked { opacity:.6; cursor:default; pointer-events:none; }
+  </style>
 </head>
+<body>
+  <header><h1>日本東北自助旅行-弘前城公園</h1></header>
 
-<body data-post-id="2023年11月16日">
-    <header>
-        <h1>日本東北自助旅行-弘前城公園</h1>
-    </header>
-    <main>
-        <div class="date">2023年11月16日</div>
-        <img src="images/DSC0E8692.jpg" alt="｜日本東北自助旅行-弘前城公園｜">
-        <p>旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城，早晨六點半在小而巧的青森日航都市飯店精美自助式早餐前隨意選了幾樣能快速完食的食物，十分鐘內解決晨間果腹的任務，引來餐廳經理關注的目光，深怕餐點口味不合我們胃口。不得不說這間飯店雖只是三星，但是對於客人是真心的關照到心坎，禮儀周到但又保持著親切。這裡的員工認真想讓每位客人在飯店裡擁有美好回憶的態度令我感到無比溫暖。</p>
-        <p></p>
-        <p>告別了飯店，搭乘奧羽本線從青森到弘前，再轉搭Taxi到弘前公園。由於這天必須趕下午的班機，因此能夠停留在這的時間並不長。而來到這之前就有聽聞紅葉已掉的差不多，原本我對這裡的紅葉已不抱太大希望。不過事實證明，弘城公園就算沒有密滿紅葉的加持，它也仍舊有獨特的魅力。所幸最後還是有趕來看幾眼，才能捕捉到美麗的護城河一隅，看它在小小的觀景窗裡，美的像幅畫。</p>
-        <a class="back-link" href="index.html">← 回到首頁</a>
-        <div class="share-section">
-            <div class="line"></div>
-            <div class="share-icons">
-                <a class="icon facebook-icon" id="fb-share" href="#" target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
-                <button class="icon" id="copy-link" title="複製連結">
-                    <img src="images/share.jpg" alt="複製連結">
-                </button>
-                <span id="copied-msg">Link Copied!</span>
-            </div>
-            <div class="line"></div>
-        </div>
-        <div class="stats" data-post-id="2023年11月16日">
-            <span><span class="views">0</span> views</span>
-            <button class="like-btn" type="button" data-post-id="2023年11月16日" aria-label="按讚">
-                <span>♡</span> <span class="likes">0</span>
-            </button>
-        </div>
-    </main>
+  <main>
+    <div class="date">2023年11月16日</div>
 
-    <script src="api.js"></script>
-    <script>
-        initBlogStats();
-        // 原有的分享功能腳本，保持不變
-        (function setupShare(){
-          const fbA = document.getElementById('fb-share');
-          if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
-          const copyBtn = document.getElementById('copy-link');
-          if (copyBtn){
-            copyBtn.addEventListener('click', () => {
-              navigator.clipboard.writeText(location.href).then(()=>{
-                const msg = document.getElementById('copied-msg');
-                if (!msg) return;
-                msg.style.display = 'inline';
-                setTimeout(()=>{ msg.style.display = 'none'; }, 2000);
-              });
-            });
-          }
-        })();
-    </script>
+    <img src="images/DSC0E8692.jpg" alt="｜日本東北自助旅行-弘前城公園｜">
+
+    <p>旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城，早晨六點半在小而巧的青森日航都市飯店精美自助式早餐前隨意選了幾樣能快速完食的食物，十分鐘內解決晨間果腹的任務，引來餐廳經理關注的目光，深怕餐點口味不合我們胃口。不得不說這間飯店雖只是三星，但是對於客人是真心的關照到心坎，禮儀周到但又保持著親切。這裡的員工認真想讓每位客人在飯店裡擁有美好回憶的態度令我感到無比溫暖。</p>
+    <p></p>
+    <p>告別了飯店，搭乘奧羽本線從青森到弘前，再轉搭Taxi到弘前公園。由於這天必須趕下午的班機，因此能夠停留在這的時間並不長。而來到這之前就有聽聞紅葉已掉的差不多，原本我對這裡的紅葉已不抱太大希望。不過事實證明，弘城公園就算沒有密滿紅葉的加持，它也仍舊有獨特的魅力。所幸最後還是有趕來看幾眼，才能捕捉到美麗的護城河一隅，看它在小小的觀景窗裡，美的像幅畫。</p>
+
+    <a class="back-link" href="index.html">← 回到首頁</a>
+
+    <!-- 分享功能 -->
+    <div class="share-section">
+      <div class="line"></div>
+      <div class="share-icons">
+        <a class="icon facebook-icon" id="fb-share" href="#" target="_blank" rel="noopener noreferrer" title="分享到 Facebook">f</a>
+        <button class="icon" id="copy-link" title="複製連結">
+          <img src="images/share.jpg" alt="複製連結">
+        </button>
+        <span id="copied-msg">Link Copied!</span>
+      </div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 觀看與按讚 -->
+    <div class="stats">
+      <div class="view"><span id="post-views">0</span> views</div>
+      <div class="like">
+        <button class="like-btn" id="post-like-btn">♡ <span id="post-likes">0</span></button>
+      </div>
+    </div>
+  </main>
+
+  <!-- 先載入共用 API 設定（一定要放在用到 API_URL 的腳本之前） -->
+  <script src="/api.js?v=1"></script>
+
+  <!-- 單一腳本：addView + 讀取最新數字 + 愛心 -->
+  <script>
+    // 從 api.js 取得共用 URL
+    const API_URL = window.API_URL;
+
+    // —— 共用工具（GET 呼叫，避免預檢）——
+    async function api(params){
+      const url = API_URL + '?' + new URLSearchParams(params).toString();
+      const r = await fetch(url, { cache:'no-store' });
+      return r.json();
+    }
+    const getStats = (id) => api({ action:'get', id });
+    const addView  = (id) => api({ action:'addView', id });
+    const likeAPI  = (id) => api({ action:'like', id });
+
+    // 這篇文章的 id（用檔名）
+    const POST_ID = decodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+
+    // 本機 liked map（和首頁共用）
+    const LIKE_KEY = 'blog_liked_map';
+    function loadLiked(){ try { return JSON.parse(localStorage.getItem(LIKE_KEY) || '{}'); } catch { return {}; } }
+    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
+    function isLiked(id){ return !!loadLiked()[id]; }
+    function setLiked(id,v){ const m = loadLiked(); m[id] = !!v; saveLiked(m); }
+
+    // 渲染愛心
+    function renderHeart(btnEl, id, likeCount, likesSpanId){
+      const liked = isLiked(id);
+      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`;
+      btnEl.classList.toggle('is-liked', liked);
+      btnEl.disabled = liked;
+    }
+
+    // 分享按鈕
+    (function setupShare(){
+      const fbA = document.getElementById('fb-share');
+      if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
+      const copyBtn = document.getElementById('copy-link');
+      if (copyBtn){
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(location.href).then(()=>{
+            const msg = document.getElementById('copied-msg');
+            if (!msg) return;
+            msg.style.display = 'inline';
+            setTimeout(()=>{ msg.style.display = 'none'; }, 2000);
+          });
+        });
+      }
+    })();
+
+    // 主流程：開頁 +1、讀數字、綁愛心
+    (async () => {
+      // 進頁 +1（即使失敗也不擋後續）
+      try { await addView(POST_ID); } catch(e){ console.warn('addView fail', e); }
+
+      // 抓最新數字
+      let views = 0, likes = 0;
+      try {
+        const s = await getStats(POST_ID);
+        views = (s && s.ok && s.views != null) ? s.views : 0;
+        likes = (s && s.ok && s.likes != null) ? s.likes : 0;
+      } catch(e) {
+        console.warn('getStats fail', e);
+      }
+
+      // 畫到頁面
+      const viewEl  = document.getElementById('post-views');
+      const likesEl = document.getElementById('post-likes');
+      const btn     = document.getElementById('post-like-btn');
+      if (viewEl)  viewEl.textContent = views;
+      if (likesEl) likesEl.textContent = likes;
+      if (btn)     renderHeart(btn, POST_ID, likes, 'post-likes');
+
+      // 綁定愛心（同一使用者不可重複按）
+      if (btn){
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          if (isLiked(POST_ID)) return;
+
+          let curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
+          renderHeart(btn, POST_ID, curLikes + 1, 'post-likes'); // 樂觀 +1
+
+          try{
+            const res = await likeAPI(POST_ID);
+            if (res && res.ok){
+              setLiked(POST_ID, true);
+              renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
+            }else{
+              renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
+              alert('按讚失敗，請稍後再試。');
+            }
+          }catch(err){
+            renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
+            alert('按讚失敗，請稍後再試。');
+          }
+        });
+      }
+    })();
+
+    // 跨分頁同步愛心外觀
+    window.addEventListener('storage', (e) => {
+      if (e.key !== LIKE_KEY) return;
+      const btn = document.getElementById('post-like-btn');
+      const likesSpan = document.getElementById('post-likes');
+      if (btn && likesSpan){
+        const curLikes = parseInt(likesSpan.textContent || '0', 10);
+        renderHeart(btn, POST_ID, curLikes, 'post-likes');
+      }
+    });
+  </script>
 </body>
 </html>
