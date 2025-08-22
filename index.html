@@ -171,38 +171,42 @@
       });
     }
 
-    // 繪製卡片，並將統計功能委派給 api.js 處理
-    const postList = document.getElementById("postList");
-    posts.forEach((post, index) => {
-      const id = decodeURIComponent(new URL(post.href, location.href).pathname.split('/').pop() || 'index.html');
-      
-      const card = document.createElement("a");
-      card.href = post.href;
-      card.className = "card";
-      card.setAttribute("data-tag", post.tag);
-      card.innerHTML = `
-        <img src="${post.img}" alt="${post.title}" loading="lazy">
-        <div class="card-content">
-          <h2>${post.title}</h2>
-          <div class="date">${post.date}</div>
-          <p>${post.excerpt}</p>
-          <div class="card-meta">
-            <div class="stats" data-post-id="${id}">
-              <span><span class="views">0</span> views</span>
-              <button class="like-btn" type="button" data-post-id="${id}" aria-label="按讚">
-                <span>♡</span> <span class="likes">0</span>
-              </button>
+    // 載入完畢後，執行所有腳本
+    document.addEventListener('DOMContentLoaded', () => {
+      // 繪製卡片
+      const postList = document.getElementById("postList");
+      posts.forEach((post) => {
+        const id = decodeURIComponent(new URL(post.href, location.href).pathname.split('/').pop() || 'index.html');
+        
+        const card = document.createElement("a");
+        card.href = post.href;
+        card.className = "card";
+        card.setAttribute("data-tag", post.tag);
+        card.innerHTML = `
+          <img src="${post.img}" alt="${post.title}" loading="lazy">
+          <div class="card-content">
+            <h2>${post.title}</h2>
+            <div class="date">${post.date}</div>
+            <p>${post.excerpt}</p>
+            <div class="card-meta">
+              <div class="stats" data-post-id="${id}">
+                <span><span class="views">0</span> views</span>
+                <button class="like-btn" type="button" data-post-id="${id}" aria-label="按讚">
+                  <span>♡</span> <span class="likes">0</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-      postList.appendChild(card);
-    });
-
-    // 載入完畢後，執行 api.js 中的主要函式
-    document.addEventListener('DOMContentLoaded', () => {
-      // 這裡直接呼叫 api.js 提供的 initBlogStats 函式，它會自動處理頁面上所有 data-post-id 的元素
+        `;
+        postList.appendChild(card);
+      });
+      
+      // 呼叫 api.js 提供的函式來處理所有統計數據
       initBlogStats();
     });
   </script>
 </body> </html> ```
+
+請你用這段新程式碼覆蓋 `index.html`，並上傳到你的網站。這次，瀏覽數和按讚數應該會正確地顯示出來了。
+
+如果還有任何問題，請隨時告訴我！
