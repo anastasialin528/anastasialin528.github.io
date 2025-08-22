@@ -1,40 +1,187 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+<!DOCTYPE html> <!-- HTML5 文件宣告 -->
+<html lang="zh-Hant"> <!-- 設定頁面語系為繁體中文 -->
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>｜毛越寺的楓樹｜</title>
+  <meta charset="UTF-8"> <!-- 設定字符編碼為 UTF-8，避免亂碼 -->
+  <meta name="viewport" content="width=device-width,initial-scale=1"> <!-- 設定響應式設計，適應不同裝置螢幕大小 -->
+  <title>｜毛越寺的楓樹｜</title> <!-- 設定頁面標題 -->
   <style>
-    body { margin: 0; font-family: "Microsoft JhengHei", sans-serif; background: #fff; color: #333; line-height: 1.8; }
-    header { background: #212121; padding: 1rem 2rem; color: #fff; }
-    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-    img { width: 100%; border-radius: 8px; margin: 1.5rem 0; }
-    h1 { color: #ff6f61; font-size: 2rem; margin-bottom: 0.5rem; }
-    p:empty { display: block; height: 1.0rem; }
-    .date { color: #999; font-size: 0.9rem; margin-bottom: 1.5rem; }
+    /* ====== 全站基本樣式 ====== */
+    body { 
+      margin:0;  /* 移除頁面外邊距 */
+      font-family:"Microsoft JhengHei",sans-serif;  /* 設定字型 */
+      background:#fff;  /* 設定頁面背景顏色為白色 */
+      color:#333;  /* 設定文字顏色為深灰色 */
+      line-height:1.8;  /* 設定行高為1.8，增加行間距 */
+    }
 
-    .back-link { display: inline-block; margin-top: 2rem; color: #ff6f61; text-decoration: none; font-weight: bold; border: 2px solid #ff6f61; padding: 0.4rem 1rem; border-radius: 25px; transition: all 0.3s ease; }
-    .back-link:hover { background: #ff6f61; color: #fff; }
+    /* ====== 頁首樣式 ====== */
+    header { 
+      background:#212121;  /* 設定背景為深灰色 */
+      padding:1rem 2rem;  /* 設定內邊距 */
+      color:#fff;  /* 設定文字顏色為白色 */
+    }
 
-    .share-section { text-align: center; margin-top: 3rem; }
-    .line { height: 1px; background-color: rgba(0,0,0,0.2); margin: 1rem 0; width: 100%; }
-    .share-icons { display: flex; justify-content: center; align-items: center; gap: 1.5rem; margin: 1rem 0; position: relative; }
-    .icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; text-decoration: none; color: #333; transition: transform 0.2s ease; display: flex; justify-content: center; align-items: center; }
-    .icon:hover { transform: scale(1.2); }
-    .facebook-icon { font-size: 24px; font-weight: bold; color: #000; height: 40px; display: flex; justify-content: center; align-items: center; }
-    #copy-link { background: none; border: none; cursor: pointer; padding: 0; width: 40px; height: 40px; }
-    #copy-link img { width: 100%; height: 100%; object-fit: cover; }
-    #copied-msg { position: absolute; top: 120%; font-size: 0.9rem; color: #28a745; display: none; margin-top: 5px; }
+    /* ====== 主內容樣式 ====== */
+    main { 
+      max-width:800px;  /* 設定主內容區塊最大寬度 */
+      margin:2rem auto;  /* 設定上下間距為2rem，並置中 */
+      padding:0 1rem;  /* 設定左右內邊距 */
+    }
 
-    .stats { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-left: 15px; padding-right: 15px; width: calc(100% - 30px); margin-left: auto; margin-right: auto; }
-    .like-btn { background: none; border: none; font-size: 1.2rem; color: red; cursor: pointer; display: flex; align-items: center; }
-    .like-btn:hover { color: #e04848; }
-    .like-btn span { margin-left: 5px; }
-    .like-btn.is-liked { opacity: .6; cursor: default; pointer-events: none; }
+    /* ====== 圖片樣式 ====== */
+    img { 
+      width:100%;  /* 設定圖片寬度為100% */
+      border-radius:8px;  /* 設定圖片圓角 */
+      margin:1.5rem 0;  /* 設定圖片上下間距 */
+    }
+
+    /* ====== 標題樣式 ====== */
+    h1 { 
+      color:#ff6f61;  /* 設定標題文字顏色為粉紅色 */
+      font-size:2rem;  /* 設定標題字體大小為2rem */
+      margin-bottom:.5rem;  /* 設定標題底部間距 */
+    }
+
+    /* ====== 讓空段落顯示空白的樣式 ====== */
+    p:empty { 
+      display:block;  /* 設定空段落顯示為區塊 */
+      height:1rem;  /* 設定高度為1rem */
+    }
+
+    /* ====== 日期樣式 ====== */
+    .date { 
+      color:#999;  /* 設定日期文字顏色為灰色 */
+      font-size:.9rem;  /* 設定字體大小為0.9rem */
+      margin-bottom:1.5rem;  /* 設定底部間距 */
+    }
+
+    /* ====== 返回首頁按鈕樣式 ====== */
+    .back-link { 
+      display:inline-block;  /* 設定為內聯塊元素 */
+      margin-top:2rem;  /* 設定上方間距 */
+      color:#ff6f61;  /* 設定文字顏色為粉紅色 */
+      text-decoration:none;  /* 移除文字底線 */
+      font-weight:bold;  /* 設定文字為粗體 */
+      border:2px solid #ff6f61;  /* 設定邊框為粉紅色 */
+      padding:.4rem 1rem;  /* 設定內邊距 */
+      border-radius:25px;  /* 設定圓角 */
+      transition:.3s;  /* 設定過渡時間 */
+    }
+
+    .back-link:hover { 
+      background:#ff6f61;  /* 設定滑鼠懸停時背景顏色為粉紅色 */
+      color:#fff;  /* 設定滑鼠懸停時文字顏色為白色 */
+    }
+
+    /* ====== 分享區塊樣式 ====== */
+    .share-section { 
+      text-align:center;  /* 設定文字置中 */
+      margin-top:3rem;  /* 設定上方間距 */
+    }
+
+    .line { 
+      height:1px;  /* 設定線條高度為1px */
+      background-color:rgba(0,0,0,.2);  /* 設定線條顏色為淡灰色 */
+      margin:1rem 0;  /* 設定上下間距 */
+      width:100%;  /* 設定線條寬度為100% */
+    }
+
+    .share-icons { 
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:center;  /* 設定容器內的項目居中對齊 */
+      align-items:center;  /* 設定容器內的項目垂直居中 */
+      gap:1.5rem;  /* 設定項目間距 */
+      margin:1rem 0;  /* 設定上下間距 */
+      position:relative;  /* 設定位置為相對定位 */
+    }
+
+    .icon { 
+      background:none;  /* 設定背景為透明 */
+      border:none;  /* 移除邊框 */
+      font-size:1.5rem;  /* 設定字體大小為1.5rem */
+      cursor:pointer;  /* 設定滑鼠樣式為指標 */
+      text-decoration:none;  /* 移除文字底線 */
+      color:#333;  /* 設定顏色為深灰色 */
+      transition:transform .2s;  /* 設定過渡效果 */
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:center;  /* 設定容器內的項目居中對齊 */
+      align-items:center;  /* 設定容器內的項目垂直居中 */
+    }
+
+    .icon:hover { 
+      transform:scale(1.2);  /* 設定滑鼠懸停時，按鈕放大 */
+    }
+
+    .facebook-icon { 
+      font-size:24px;  /* 設定字體大小 */
+      font-weight:bold;  /* 設定字體為粗體 */
+      color:#000;  /* 設定顏色為黑色 */
+      height:40px;  /* 設定高度 */
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:center;  /* 設定容器內的項目居中對齊 */
+      align-items:center;  /* 設定容器內的項目垂直居中 */
+    }
+
+    #copy-link { 
+      background:none;  /* 設定背景為透明 */
+      border:none;  /* 移除邊框 */
+      cursor:pointer;  /* 設定滑鼠樣式為指標 */
+      padding:0;  /* 移除內邊距 */
+      width:40px;  /* 設定寬度 */
+      height:40px;  /* 設定高度 */
+    }
+
+    #copy-link img { 
+      width:100%;  /* 設定圖片寬度為100% */
+      height:100%;  /* 設定圖片高度為100% */
+      object-fit:cover;  /* 設定圖片覆蓋顯示 */
+    }
+
+    #copied-msg { 
+      position:absolute;  /* 設定為絕對定位 */
+      top:120%;  /* 設定位置距離上方120% */
+      font-size:.9rem;  /* 設定字體大小 */
+      color:#28a745;  /* 設定顏色為綠色 */
+      display:none;  /* 設定為隱藏 */
+      margin-top:5px;  /* 設定上方間距 */
+    }
+
+    /* ====== 文章統計樣式 ====== */
+    .stats { 
+      display:flex;  /* 設定為彈性容器 */
+      justify-content:space-between;  /* 讓項目兩端對齊 */
+      align-items:center;  /* 設定項目垂直居中 */
+      margin-top:1rem;  /* 設定上方間距 */
+      padding-left:15px;  /* 設定左側內邊距 */
+      padding-right:15px;  /* 設定右側內邊距 */
+      width:calc(100% - 30px);  /* 設定寬度，減去內邊距 */
+      margin-left:auto;  /* 設定自動外邊距，居中對齊 */
+      margin-right:auto;  /* 設定自動外邊距，居中對齊 */
+    }
+
+    /* ====== 愛心按鈕樣式 ====== */
+    .like-btn { 
+      background:none;  /* 設定背景為透明 */
+      border:none;  /* 移除邊框 */
+      font-size:1.2rem;  /* 設定字體大小為1.2rem */
+      color:red;  /* 設定文字顏色為紅色 */
+      cursor:pointer;  /* 設定滑鼠樣式為指標 */
+      display:flex;  /* 設定為彈性容器 */
+      align-items:center;  /* 設定項目垂直居中 */
+    }
+
+    .like-btn:hover { color:#e04848; }  /* 設定滑鼠懸停時顏色改為深紅色 */
+    .like-btn span { margin-left:5px; }  /* 設定愛心和數字之間的間距 */
+    .like-btn.is-liked { 
+      opacity:.6;  /* 設定已按讚時的透明度為0.6 */
+      cursor:default;  /* 設定滑鼠樣式為默認 */
+      pointer-events:none;  /* 禁止點擊事件 */
+    }
   </style>
 </head>
 <body>
-  <header><h1>｜毛越寺的楓樹｜</h1></header>
+  <header><h1>毛越寺的楓樹</h1></header>
+
   <main>
     <div class="date">2023年11月19日</div>
 
@@ -42,6 +189,7 @@
     <p>很喜歡這顆未全部見傾的楓樹。</p>
     <p>光影從葉子上頭打下來，或穿透或產生暗部陰影的效果，加上楓葉原先漸層的色彩令人著迷。</p>
     <p>那天氣溫八度左右，我們無畏寒冷地在毛越寺狂按快門，直到雙手再也忍受不了寒風而凍僵才收起相機📷，到附近的蕎麥麵店取暖果腹。</p>
+    
 
     <a class="back-link" href="index.html">← 回到首頁</a>
 
@@ -67,24 +215,28 @@
     </div>
   </main>
 
-  <!-- 先載入共用 API 設定檔（務必放在任何用到 API_URL 的 <script> 前） -->
-  <script src="./api.js?v=1"></script>
+  <!-- 先載入共用 API 設定（一定要放在用到 API_URL 的腳本之前） -->
+  <script src="/api.js?v=1"></script>
 
-  <!-- 後端 API 與共用工具 -->
+  <!-- 單一腳本：addView + 讀取最新數字 + 愛心 -->
   <script>
-    const API_URL = window.API_URL; // 由 api.js 提供
+    // 從 api.js 取得共用 URL
+    const API_URL = window.API_URL;
 
-    // —— GET 呼叫（避免預檢）——
+    // —— 共用工具（GET 呼叫，避免預檢）——
     async function api(params){
       const url = API_URL + '?' + new URLSearchParams(params).toString();
-      const r = await fetch(url, { cache: 'no-store' });
+      const r = await fetch(url, { cache:'no-store' });
       return r.json();
     }
     const getStats = (id) => api({ action:'get', id });
     const addView  = (id) => api({ action:'addView', id });
     const likeAPI  = (id) => api({ action:'like', id });
 
-    // 本機 liked map（與首頁共用）
+    // 這篇文章的 id（用檔名）
+    const POST_ID = decodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+
+    // 本機 liked map（和首頁共用）
     const LIKE_KEY = 'blog_liked_map';
     function loadLiked(){ try { return JSON.parse(localStorage.getItem(LIKE_KEY) || '{}'); } catch { return {}; } }
     function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); }
@@ -99,54 +251,29 @@
       btnEl.disabled = liked;
     }
 
-    // 文章 id（用檔名）
-    function getPostIdFromLocation(){
-      const last = location.pathname.split('/').pop();
-      return decodeURIComponent(last || 'index.html');
-    }
-
-    // 跨分頁同步（別頁按讚時，這頁更新樣式）
-    window.addEventListener('storage', (e) => {
-      if (e.key !== LIKE_KEY) return;
-      syncCurrentHeart();
-    });
-  </script>
-
-  <!-- 內頁邏輯 -->
-  <script>
-    // 分享：動態塞目前網址
-    const fbA = document.getElementById('fb-share');
-    if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
-    const copyBtn = document.getElementById("copy-link");
-    if (copyBtn) {
-      copyBtn.addEventListener("click", () => {
-        navigator.clipboard.writeText(location.href).then(() => {
-          const msg = document.getElementById("copied-msg");
-          if (!msg) return;
-          msg.style.display = "inline";
-          setTimeout(() => { msg.style.display = "none"; }, 2000);
+    // 分享按鈕
+    (function setupShare(){
+      const fbA = document.getElementById('fb-share');
+      if (fbA) fbA.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(location.href);
+      const copyBtn = document.getElementById('copy-link');
+      if (copyBtn){
+        copyBtn.addEventListener('click', () => {
+          navigator.clipboard.writeText(location.href).then(()=>{ 
+            const msg = document.getElementById('copied-msg');
+            if (!msg) return;
+            msg.style.display = 'inline';
+            setTimeout(()=>{ msg.style.display = 'none'; }, 2000);
+          });
         });
-      });
-    }
-
-    // 讓 storage 事件能同步這頁的愛心
-    function syncCurrentHeart(){
-      const id = getPostIdFromLocation();
-      const btn = document.getElementById('post-like-btn');
-      const likesSpan = document.getElementById('post-likes');
-      if (btn && likesSpan) {
-        const currentLikes = parseInt(likesSpan.textContent || '0', 10);
-        renderHeart(btn, id, currentLikes, 'post-likes');
       }
-    }
+    })();
 
+    // 主流程：開頁 +1、讀數字、綁愛心
     (async () => {
-      const POST_ID = getPostIdFromLocation();
-
-      // 開頁 +1 觀看（就算失敗也不中斷）
+      // 進頁 +1（即使失敗也不擋後續）
       try { await addView(POST_ID); } catch(e){ console.warn('addView fail', e); }
 
-      // 取得最新數字（失敗給 0）
+      // 抓最新數字
       let views = 0, likes = 0;
       try {
         const s = await getStats(POST_ID);
@@ -164,36 +291,43 @@
       if (likesEl) likesEl.textContent = likes;
       if (btn)     renderHeart(btn, POST_ID, likes, 'post-likes');
 
-      // 綁定愛心
-      if (btn) {
+      // 綁定愛心（同一使用者不可重複按）
+      if (btn){
         btn.addEventListener('click', async (e) => {
           e.preventDefault();
           if (isLiked(POST_ID)) return;
 
-          btn.disabled = true;
-          const curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
+          let curLikes = parseInt(document.getElementById('post-likes')?.textContent || '0', 10);
+          renderHeart(btn, POST_ID, curLikes + 1, 'post-likes'); // 樂觀 +1
 
-          // 樂觀 +1
-          renderHeart(btn, POST_ID, curLikes + 1, 'post-likes');
-
-          try {
+          try{
             const res = await likeAPI(POST_ID);
-            if (res && res.ok) {
+            if (res && res.ok){
               setLiked(POST_ID, true);
               renderHeart(btn, POST_ID, res.likes ?? (curLikes + 1), 'post-likes');
-            } else {
+            }else{
               renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
               alert('按讚失敗，請稍後再試。');
-              btn.disabled = false;
             }
-          } catch (err) {
+          }catch(err){
             renderHeart(btn, POST_ID, curLikes, 'post-likes'); // 復原
             alert('按讚失敗，請稍後再試。');
-            btn.disabled = false;
           }
         });
       }
     })();
+
+    // 跨分頁同步愛心外觀
+    window.addEventListener('storage', (e) => {
+      if (e.key !== LIKE_KEY) return;
+      const btn = document.getElementById('post-like-btn');
+      const likesSpan = document.getElementById('post-likes');
+      if (btn && likesSpan){
+        const curLikes = parseInt(likesSpan.textContent || '0', 10);
+        renderHeart(btn, POST_ID, curLikes, 'post-likes');
+      }
+    });
   </script>
 </body>
 </html>
+
