@@ -61,15 +61,22 @@
     <div class="stats"> <!-- 統計列（觀看數＋按讚） -->
       <div class="view"><span id="post-views">0</span> views</div> <!-- 觀看數文字（稍後灌入數字） -->
       <div class="like"> <!-- 愛心容器 -->
-        <button class="like-btn" id="post-like-btn">♡ <span id="post-likes">0</span></button> <!-- 愛心按鈕＋讚數 -->
+        <!-- ✨ 新增 ARIA：螢幕閱讀器可讀；aria-pressed 會在 JS 中同步 -->
+        <button class="like-btn" id="post-like-btn" aria-label="按讚" aria-pressed="false">♡ <span id="post-likes">0</span></button>
       </div> <!-- 愛心容器結束 -->
     </div> <!-- 統計列結束 -->
   </main> <!-- 主內容結束 -->
 
   <script src="/api.js?v=1"></script> <!-- 先載入共用 API 設定（提供 window.API_URL） -->
 
-  <script> /* 內文頁專用腳本：sendBeacon + 讀統計 + 愛心 */
+  <script> /* 內文頁專用腳本：sendBeacon + 讀統計 + 愛心 + 補丁 */
     const API_URL = window.API_URL; /* 從 api.js 取得後端 Web App /exec 端點 */
+    if (!API_URL) { /* ✅ 防呆：避免忘了引用 api.js 時整頁壞掉 */
+      console.error('API_URL 未設定：請確認已在 </body> 前引入 /api.js');
+      // 可選：友善提示
+      // alert('後端設定未載入，請稍後再試或聯絡站長。');
+    }
+
     const POST_ID = decodeURIComponent(location.pathname.split('/').pop() || 'index.html'); /* 以檔名作為文章 ID（和首頁一致） */
 
     async function apiGet(params){ /* 小工具：用 GET 呼叫 GAS（相容你現有介面） */
@@ -92,6 +99,7 @@
       btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`; /* 依狀態顯示 ❤️ / ♡ */
       btnEl.classList.toggle('is-liked', liked); /* 已按讚加上樣式 */
       btnEl.disabled = liked; /* 已按讚就鎖定按鈕 */
+      btnEl.setAttribute('aria-pressed', liked ? 'true' : 'false'); /* ✅ 新增：同步 ARIA 狀態 */
     }
 
     function reportViewWithBeacon(id){ /* 用 sendBeacon 回報瀏覽（不阻塞頁面） */
@@ -120,7 +128,17 @@
     })(); /* 立刻執行分享初始化 */
 
     (async () => { /* 主流程（立即執行的 async 函式） */
-      reportViewWithBeacon(POST_ID); /* 一載入就透過 sendBeacon 回報一次瀏覽（不阻塞） */
+
+      /* ✅ 新增：Session 去重（同一分頁/重整在一定時間內只記一次 view） */
+      const VIEW_KEY = `viewed:${POST_ID}`;                 /* sessionStorage 鍵名 */
+      const expireHours = 8;                                 /* 幾小時內視為已看過（可自行調整） */
+      const now = Date.now();                                /* 現在時間戳 */
+      const last = Number(sessionStorage.getItem(VIEW_KEY) || 0); /* 上次記錄時間 */
+      const isExpired = !last || (now - last > expireHours * 3600 * 1000); /* 是否過期 */
+      if (isExpired) {
+        reportViewWithBeacon(POST_ID);                       /* 未記錄或過期 → 回報 view */
+        sessionStorage.setItem(VIEW_KEY, String(now));       /* 記下這次時間 */
+      }
 
       let views = 0, likes = 0; /* 預設統計為 0 */
       try {
@@ -168,7 +186,7 @@
       const likesSpan = document.getElementById('post-likes'); /* 抓讚數 */
       if (btn && likesSpan){ /* 確認元素存在 */
         const curLikes = parseInt(likesSpan.textContent || '0', 10); /* 取目前畫面讚數 */
-        renderHeart(btn, POST_ID, curLikes, 'post-likes'); /* 依本機 liked 狀態重新渲染外觀 */
+        renderHeart(btn, POST_ID, curLikes, 'post-likes'); /* 依本機 liked 狀態重新渲染外觀（含 aria-pressed） */
       }
     }); /* storage 事件監聽結束 */
   </script> <!-- 內文頁專用腳本結束 -->
