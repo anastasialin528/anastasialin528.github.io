@@ -28,7 +28,7 @@
     @media (max-width:1024px){.posts{column-count:2}}
     @media (max-width:600px){.posts{column-count:1}}
 
-    .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.1);text-decoration:none;color:inherit;transition:transform .3s ease;display:inline-block;width:100%;margin-bottom:1.5rem;break-inside:avoid;position:relative} /* 卡片 */
+    .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.1);text-decoration:none;color:inherit;transition:transform .3s ease;display:block;width:100%;margin-bottom:1.5rem;break-inside:avoid;position:relative} /* 卡片 */
     .card:hover{transform:translateY(-5px)} /* 滑過浮起 */
     .card img{width:100%;height:320px;object-fit:cover;display:block} /* 卡片圖 */
     .card-content{padding:1rem} /* 卡片內距 */
@@ -93,212 +93,47 @@
     </div>
   </footer>
 
-  <!-- ✅ 先載入共用 API 設定（這行會把 window.API_URL 設好） -->
   <script src="/api.js?v=1"></script>
 
-  <!-- ✅ 然後才載入首頁主程式（此處會使用 window.API_URL） -->
   <script>
-    const API_URL = window.API_URL; // 從 api.js 讀取統一管理的後端網址
-
-    /* ========== 後端呼叫封裝（與 GAS Web App 對接） ========== */
-    async function apiGet(params){ // GET 介面（相容 like/unlike/get）
-      const url = API_URL + '?' + new URLSearchParams(params).toString(); // 串 URL 參數
-      const r = await fetch(url, { cache:'no-store' }); // 不使用快取
-      return r.json(); // 回傳 JSON
-    }
-    async function apiPost(body){ // POST 介面（批次查用）
-      const r = await fetch(API_URL, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(body)
-      });
-      return r.json();
-    }
-
-    /* ========== 舊款包裝（保留相容性） ========== */
-    const getStats = (id) => apiGet({ action:'get', id }); // 單篇查詢（備援）
-    const likeAPI  = (id) => apiGet({ action:'like', id }); // 按讚（GET）
-
-    /* ========== 本機按讚紀錄（跨頁共用） ========== */
-    const LIKE_KEY = 'blog_liked_map'; // localStorage 鍵名
-    function loadLiked(){ try { return JSON.parse(localStorage.getItem(LIKE_KEY) || '{}'); } catch { return {}; } } // 取 map
-    function saveLiked(m){ localStorage.setItem(LIKE_KEY, JSON.stringify(m)); } // 存 map
-    function isLiked(id){ return !!loadLiked()[id]; } // 查是否按過
-    function setLiked(id,val){ const m=loadLiked(); m[id]=!!val; saveLiked(m); } // 設定狀態
-
-    /* ========== 本地快取（views/likes；讓首頁秒出數字） ========== */
-    const LS_CACHE_KEY = 'stats-cache-home-v1'; // 快取鍵（改版可 +1）
-    function loadCache(){ try { return JSON.parse(localStorage.getItem(LS_CACHE_KEY) || '{}'); } catch { return {}; } } // 讀快取
-    function saveCache(obj){ try { localStorage.setItem(LS_CACHE_KEY, JSON.stringify(obj)); } catch {} } // 寫快取
-
-    /* ========== UI：愛心渲染 ========== */
-    function renderHeart(btnEl, id, likeCount, likesSpanId){
-      const liked = isLiked(id); // 讀本機狀態
-      btnEl.innerHTML = `${liked ? '❤️' : '♡'} <span id="${likesSpanId}">${likeCount ?? 0}</span>`; // 內容
-      btnEl.classList.toggle('is-liked', liked); // 樣式
-      btnEl.disabled = liked; // 已按讚就鎖
-    }
-
-    /* ========== 文章清單（與你原本相同） ========== */
-    const posts = [
-      { tag:"旅遊", href:"2023年6月25日.html", img:"images/九份.jpg",      title:"｜九份｜",           date:"2023年6月25日", excerpt:"收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️" },
-      { tag:"旅遊", href:"2023年7月2日.html",  img:"images/BLUE.jpg",     title:"｜台中老家三日遊｜", date:"2023年7月2日",  excerpt:"LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳" },
-      { tag:"旅遊", href:"2023年9月29日.html", img:"images/林口海邊夕陽.jpg", title:"｜林口海邊｜",       date:"2023年9月29日", excerpt:"放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋" },
-      { tag:"旅遊", href:"2023年11月16日.html",img:"images/DSC0E8692.jpg", title:"｜弘前城公園｜",       date:"2023年11月16日",excerpt:"旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城..." },
-      { tag:"旅遊", href:"2023年11月18日.html",img:"images/街貓.jpg",       title:"｜街貓｜",             date:"2023年11月18日",excerpt:"好幸運，今天遇見住在柿園裡的小貓。更幸運的是能有機會迅速拍下牠可愛的背影。相機果然需要隨身攜帶，路途中總是有美好的畫面值得紀錄。" },
-      { tag:"旅遊", href:"2023年11月19日.html",img:"images/楓樹.jpg",       title:"｜毛越寺的楓樹｜",     date:"2023年11月19日",excerpt:"光影從葉子上頭打下來，或穿透或產生暗部陰影的效果，加上楓葉原先漸層的色彩令人著迷。" },
-      { tag:"旅遊", href:"2023年11月24日.html",img:"images/DSC0E8750.jpg", title:"｜弘前城植物園｜",     date:"2023年11月24日",excerpt:"之於火紅的楓葉🍁其實我更愛銀杏的黃。好想讓整片銀杏佈滿底片啊～這棵在弘前城植物園超巨大的樹🌲" },
-      { tag:"旅遊", href:"2023年11月26日.html",img:"images/DSC0E8282.jpg", title:"｜標準鏡｜",           date:"2023年11月26日",excerpt:"旅行最常用的是標準鏡。小光圈拍中遠景偽廣角，小品特寫又最自然，完整保留當下的樣貌。" },
-      { tag:"旅遊", href:"2023年11月28日.html",img:"images/DSC08289.jpg",  title:"｜鳴子峽火車站｜",     date:"2023年11月28日",excerpt:"11/10旅行第二天6:50左右，我們從仙台站搭乘山彥號..." },
-      { tag:"星空", href:"2024年12月3日.html", img:"images/1.jpg",         title:"｜晨曦前的星空｜",     date:"2024年12月3日", excerpt:"昨天五點半起床趕航海曙光，今天更早拍到更多星星與疑似火流星…" },
-      { tag:"星空", href:"2025年3月2日.html",  img:"images/DSC09815.jpg",  title:"｜溫馨的夜｜",         date:"2025年3月2日",  excerpt:"日落後雲隙透出上弦月與金星，紅色地平線與微笑月亮…" },
-      { tag:"日常", href:"2024年10月23日.html",img:"images/聖誕樹.jpg",     title:"｜聖誕樹｜",           date:"2024年10月23日",excerpt:"多年願望：在家擺一棵會帶來幸福感的聖誕樹。" },
-      { tag:"日常", href:"2025年3月5日.html",  img:"images/天空大鳥.jpg",   title:"｜美麗的天空｜",       date:"2025年3月5日",  excerpt:"天氣不好拍不到星，就地取材，仍能遇見上好風景。" },
-      { tag:"日常", href:"2025年4月15日.html", img:"images/苔蘚.jpg",       title:"｜四月十五日｜",       date:"2025年4月15日", excerpt:"一首詩與一段自述，配色地獄後的日常療癒：新朋友苔蘚。" },
-      { tag:"潛水", href:"2025年4月21日.html", img:"images/面鏡.jpg",       title:"｜面鏡開箱｜",         date:"2025年4月21日", excerpt:"週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。" }
-    ];
-
-    /* 取得容器、準備 ID 陣列（供批次查） */
-    const postList = document.getElementById("postList");
-    const ids = []; // 收集全部文章 id
-    const BATCH_MAX = 80; // 分批上限（很多文章時避免 payload 過大）
-
-    /* 跨分頁同步（別的分頁按讚，這頁跟著更新外觀） */
-    window.addEventListener('storage', (e) => {
-      if (e.key !== LIKE_KEY) return;
-      if (typeof syncAllHearts === 'function') syncAllHearts();
-    });
-
-    /* 解析連結取得文章 ID（用檔名） */
-    function idFromHref(href){
-      const last = new URL(href, location.href).pathname.split('/').pop();
-      return decodeURIComponent(last || 'index.html');
-    }
-
-    /* === 第一步：先畫卡片（初始 0；愛心用本機狀態） === */
-    posts.forEach((post, index) => {
-      const id = idFromHref(post.href); // 由 href 取得 id
-      ids.push(id); // 收進 id 陣列
-
-      const card = document.createElement("a"); // 建立卡片
-      card.href = post.href; // 指向內頁
-      card.className = "card"; // 套用樣式
-      card.setAttribute("data-tag", post.tag); // 存分類標籤
-      card.innerHTML = `
-        <img src="${post.img}" alt="${post.title}" loading="lazy">
-        <div class="card-content">
-          <h2>${post.title}</h2>
-          <div class="date">${post.date}</div>
-          <p>${post.excerpt}</p>
-          <div class="card-meta">
-            <span id="views-${index}">0 views</span>
-            <button class="like-btn" type="button" id="like-btn-${index}">
-              ${isLiked(id) ? '❤️' : '♡'} <span id="likes-${index}">0</span>
-            </button>
-          </div>
-        </div>
-      `;
-      postList.appendChild(card); // 插入卡片牆
-
-      // 綁定愛心點擊：樂觀 +1 → 打後端 → 校正 → 寫回快取
-      document.getElementById(`like-btn-${index}`).addEventListener('click', async (e) => {
-        e.preventDefault(); e.stopPropagation();
-        if (isLiked(id)) return; // 已按過直接略過
-
-        const btn = e.currentTarget;
-        const likesSpan = document.getElementById(`likes-${index}`);
-        const curLikes = parseInt(likesSpan.textContent || '0', 10);
-
-        renderHeart(btn, id, curLikes + 1, `likes-${index}`); // 先+1
-        try {
-          const res = await likeAPI(id); // 打後端
-          if (res && res.ok) {
-            setLiked(id, true); // 本機標記
-            const newLikes =
-              (res.data && res.data.likes != null) ? res.data.likes :
-              (res.likes != null ? res.likes : (curLikes + 1));
-            renderHeart(btn, id, newLikes, `likes-${index}`); // 用後端值覆蓋
-
-            // 更新本地快取（讓下次首屏快）
-            const cache = loadCache();
-            cache[id] = cache[id] || { views: 0, likes: 0 };
-            cache[id].likes = Number(newLikes) || 0;
-            saveCache(cache);
-          } else {
-            renderHeart(btn, id, curLikes, `likes-${index}`); // 復原
-            alert('按讚失敗，請稍後再試。');
-          }
-        } catch (err) {
-          renderHeart(btn, id, curLikes, `likes-${index}`); // 復原
-          alert('按讚失敗，請稍後再試。');
-        }
-      });
-    });
-
-    /* 供 storage 事件使用：把目前頁面的所有愛心依本機狀態重渲染一次 */
-    function syncAllHearts(){
-      posts.forEach((post, index) => {
-        const id = idFromHref(post.href);
-        const btn = document.getElementById(`like-btn-${index}`);
-        const likesSpan = document.getElementById(`likes-${index}`);
-        if (btn && likesSpan) {
-          const currentLikes = parseInt(likesSpan.textContent || '0', 10);
-          renderHeart(btn, id, currentLikes, `likes-${index}`);
-        }
-      });
-    }
-
-    /* === 第二步：用本地快取先灌值（避免 0→跳動） === */
-    (() => {
-      const cache = loadCache();
-      posts.forEach((post, index) => {
-        const id = idFromHref(post.href);
-        const datum = cache[id];
-        if (!datum) return;
-        const v = document.getElementById(`views-${index}`);
-        const l = document.getElementById(`likes-${index}`);
-        if (v && typeof datum.views === 'number') v.textContent = `${datum.views} views`;
-        if (l && typeof datum.likes === 'number') l.textContent = datum.likes;
-      });
-    })();
-
-    /* === 第三步：分批向後端取最新數字 → 覆蓋 DOM → 更新本地快取 === */
-    (async () => {
-      try {
-        const cache = loadCache(); // 先拿目前快取
-        for (let i = 0; i < ids.length; i += BATCH_MAX) { // 分批處理
-          const slice = ids.slice(i, i + BATCH_MAX); // 本批 id
-          const r = await apiPost({ action:'get', ids: slice }); // 批次查
-          if (r && r.ok && r.data) {
-            // 1) 回填到 DOM（只處理這批）
-            posts.forEach((post, index) => {
-              const id = idFromHref(post.href);
-              if (!slice.includes(id)) return; // 不在本批略過
-              const info = r.data[id] || {};
-              const v = document.getElementById(`views-${index}`);
-              const btn = document.getElementById(`like-btn-${index}`);
-              if (v)  v.textContent = `${(info.views ?? 0)} views`;
-              if (btn) renderHeart(btn, id, (info.likes ?? 0), `likes-${index}`);
-            });
-            // 2) 更新本地快取
-            Object.entries(r.data).forEach(([id, val]) => {
-              cache[id] = { views: Number(val.views)||0, likes: Number(val.likes)||0 };
-            });
-            saveCache(cache);
-          }
-        }
-      } catch (err) {
-        console.error('批次取數失敗：', err);
+    document.addEventListener('DOMContentLoaded', () => {
+      const postList = document.getElementById("postList");
+      if (!postList) {
+        console.error('找不到 #postList，請確認 HTML 是否存在該容器');
+        return;
       }
-    })();
 
-    /* === 標籤篩選 === */
-    function filterTag(tag){
-      const cards = document.querySelectorAll('.card');
-      cards.forEach(card => {
-        card.style.display = (tag==='all' || card.dataset.tag===tag) ? 'inline-block' : 'none';
+      const posts = [
+        { tag:"旅遊", href:"2023年6月25日.html", img:"images/九份.jpg", title:"｜九份｜", date:"2023年6月25日", excerpt:"收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️" },
+        { tag:"旅遊", href:"2023年7月2日.html",  img:"images/BLUE.jpg", title:"｜台中老家三日遊｜", date:"2023年7月2日",  excerpt:"LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳" },
+        { tag:"旅遊", href:"2023年9月29日.html", img:"images/林口海邊夕陽.jpg", title:"｜林口海邊｜", date:"2023年9月29日", excerpt:"放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋" },
+        { tag:"旅遊", href:"2023年11月16日.html",img:"images/DSC0E8692.jpg", title:"｜弘前城公園｜", date:"2023年11月16日",excerpt:"旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城..." },
+        { tag:"旅遊", href:"2023年11月18日.html",img:"images/街貓.jpg", title:"｜街貓｜", date:"2023年11月18日",excerpt:"好幸運，今天遇見住在柿園裡的小貓。更幸運的是能有機會迅速拍下牠可愛的背影。相機果然需要隨身攜帶，路途中總是有美好的畫面值得紀錄。" }
+      ];
+
+      posts.forEach((post, index) => {
+        const card = document.createElement("a");
+        card.href = post.href;
+        card.className = "card";
+        card.setAttribute("data-tag", post.tag);
+        card.innerHTML = `
+          <img src="${post.img}" alt="${post.title}" loading="lazy">
+          <div class="card-content">
+            <h2>${post.title}</h2>
+            <div class="date">${post.date}</div>
+            <p>${post.excerpt}</p>
+          </div>
+        `;
+        postList.appendChild(card);
       });
-    }
+
+      window.filterTag = function(tag) {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+          card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'block' : 'none';
+        });
+      };
+    });
   </script>
 </body> <!-- 主體結束（注意：api.js 已在上方、主腳本在其後） -->
 </html> <!-- 文件結束 -->
