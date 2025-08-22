@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+<!DOCTYPE html> <!-- HTML5 文件宣告 -->
+<html lang="zh-Hant"> <!-- 頁面語系：繁體中文 -->
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>dEaR dIaRy</title>
-
+  <meta charset="UTF-8"> <!-- 編碼 UTF-8，避免亂碼 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- RWD 視窗設定 -->
+  <title>Anastasia</title> <!-- 瀏覽器分頁標題 -->
   <style>
+    /* ====== 全站基本樣式 ====== */
     body{margin:0;font-family:"Microsoft JhengHei",sans-serif;background:#f9f9f6;color:#333}
     header{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#212121;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box}
     header h1{margin:0;font-size:2rem;color:#fff;white-space:nowrap;flex-shrink:0}
@@ -48,8 +48,8 @@
     .footer-line{height:2px;background:#133d33;border:none;width:100%;margin:1rem auto 1.25rem}
     .footer-copy{text-align:center;font-size:.9rem;color:#6b7b74}
     @media (max-width:768px){.footer-social{justify-content:center;gap:2rem}}
-  </style> <!-- 樣式結束 -->
-</head>
+  </style>
+</head> <!-- 文件頭結束 -->
 
 <body>
   <header>
@@ -96,12 +96,34 @@
   <script src="/api.js?v=1"></script>
 
   <script>
+    /* === 文章清單（首頁顯示順序）=== */
+    const posts = [
+      { tag:"旅遊", href:"2023年6月25日.html", img:"images/九份.jpg",      title:"｜九份｜",           date:"2023年6月25日", excerpt:"收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️" },
+      { tag:"旅遊", href:"2023年7月2日.html",  img:"images/BLUE.jpg",     title:"｜台中老家三日遊｜", date:"2023年7月2日",  excerpt:"LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳" },
+      { tag:"旅遊", href:"2023年9月29日.html", img:"images/林口海邊夕陽.jpg", title:"｜林口海邊｜",       date:"2023年9月29日", excerpt:"放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋" },
+      { tag:"旅遊", href:"2023年11月16日.html",img:"images/DSC0E8692.jpg", title:"｜弘前城公園｜",       date:"2023年11月16日",excerpt:"旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城..." },
+      { tag:"旅遊", href:"2023年11月18日.html",img:"images/街貓.jpg",       title:"｜街貓｜",             date:"2023年11月18日",excerpt:"好幸運，今天遇見住在柿園裡的小貓。更幸運的是能有機會迅速拍下牠可愛的背影。相機果然需要隨身攜帶，路途中總是有美好的畫面值得紀錄。" },
+      { tag:"旅遊", href:"2023年11月19日.html",img:"images/楓樹.jpg",       title:"｜毛越寺的楓樹｜",     date:"2023年11月19日",excerpt:"光影從葉子上頭打下來，或穿透或產生暗部陰影的效果，加上楓葉原先漸層的色彩令人著迷。" },
+      { tag:"旅遊", href:"2023年11月24日.html",img:"images/DSC0E8750.jpg", title:"｜弘前城植物園｜",     date:"2023年11月24日",excerpt:"之於火紅的楓葉🍁其實我更愛銀杏的黃。好想讓整片銀杏佈滿底片啊～這棵在弘前城植物園超巨大的樹🌲" },
+      { tag:"旅遊", href:"2023年11月26日.html",img:"images/DSC0E8282.jpg", title:"｜標準鏡｜",           date:"2023年11月26日",excerpt:"旅行最常用的是標準鏡。小光圈拍中遠景偽廣角，小品特寫又最自然，完整保留當下的樣貌。" },
+      { tag:"旅遊", href:"2023年11月28日.html",img:"images/DSC08289.jpg",  title:"｜鳴子峽火車站｜",     date:"2023年11月28日",excerpt:"11/10旅行第二天6:50左右，我們從仙台站搭乘山彥號..." },
+      { tag:"星空", href:"2024年12月3日.html", img:"images/1.jpg",         title:"｜晨曦前的星空｜",     date:"2024年12月3日", excerpt:"昨天五點半起床趕航海曙光，今天更早拍到更多星星與疑似火流星…" },
+      { tag:"星空", href:"2025年3月2日.html",  img:"images/DSC09815.jpg",  title:"｜溫馨的夜｜",         date:"2025年3月2日",  excerpt:"日落後雲隙透出上弦月與金星，紅色地平線與微笑月亮…" },
+      { tag:"日常", href:"2024年10月23日.html",img:"images/聖誕樹.jpg",     title:"｜聖誕樹｜",           date:"2024年10月23日",excerpt:"多年願望：在家擺一棵會帶來幸福感的聖誕樹。" },
+      { tag:"日常", href:"2025年3月5日.html",  img:"images/天空大鳥.jpg",   title:"｜美麗的天空｜",       date:"2025年3月5日",  excerpt:"天氣不好拍不到星，就地取材，仍能遇見上好風景。" },
+      { tag:"日常", href:"2025年4月15日.html", img:"images/苔蘚.jpg",       title:"｜四月十五日｜",       date:"2025年4月15日", excerpt:"一首詩與一段自述，配色地獄後的日常療癒：新朋友苔蘚。" },
+      { tag:"潛水", href:"2025年4月21日.html", img:"images/面鏡.jpg",       title:"｜面鏡開箱｜",         date:"2025年4月21日", excerpt:"週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。" }
+    ];
+
+    const postList = document.getElementById("postList"); // 取得卡片牆容器
+
+    /* === 向後端獲取資料並顯示在首頁 === */
     async function fetchPostData() {
       try {
         const response = await fetch(window.API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'get', ids: ['post-1', 'post-2', 'post-3', 'post-4', 'post-5', 'post-6', 'post-7', 'post-8', 'post-9', 'post-10'] }) // 假設有固定的文章 ID
+          body: JSON.stringify({ action: 'get', ids: posts.map(post => idFromHref(post.href)) })
         });
         const data = await response.json();
         return data.data;
@@ -111,33 +133,13 @@
       }
     }
 
-    async function updateLikes(postId) {
-      try {
-        const response = await fetch(`${window.API_URL}?action=like&id=${encodeURIComponent(postId)}`, { method: 'POST' });
-        const data = await response.json();
-        if (!data.ok) throw new Error('按讚失敗');
-        return data.likes; // 返回更新後的愛心數
-      } catch (error) {
-        console.error("更新按讚數失敗", error);
-      }
-    }
-
-    async function updateView(postId) {
-      try {
-        const payload = { action: 'view', id: postId };
-        const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-        navigator.sendBeacon(window.API_URL, blob);
-      } catch (error) {
-        console.error("無法回報瀏覽次數", error);
-      }
-    }
-
     document.addEventListener('DOMContentLoaded', async () => {
-      const posts = await fetchPostData();
-      const postList = document.getElementById('postList');
+      const postsData = await fetchPostData();
 
-      posts.forEach(post => {
-        const { id, img, title, date, excerpt, views, likes } = post;
+      posts.forEach((post, index) => {
+        const { id, img, title, date, excerpt } = post;
+        const { views, likes } = postsData[id] || {};
+
         const card = document.createElement('a');
         card.href = post.href;
         card.className = 'card';
@@ -150,22 +152,23 @@
             <p>${excerpt}</p>
           </div>
           <div class="card-meta">
-            <span class="views">${views} views</span>
+            <span class="views">${views || 0} views</span>
             <button class="like-btn" type="button" data-post-id="${id}">
-              ${likes > 0 ? '❤️' : '♡'} <span class="likes">${likes}</span>
+              ${likes ? '❤️' : '♡'} <span class="likes">${likes || 0}</span>
             </button>
           </div>
         `;
         postList.appendChild(card);
 
+        // 更新瀏覽次數
+        updateView(id);
+
+        // 點擊愛心按鈕
         const likeButton = card.querySelector('.like-btn');
         likeButton.addEventListener('click', async () => {
           const updatedLikes = await updateLikes(id);
           likeButton.innerHTML = `❤️ <span class="likes">${updatedLikes}</span>`;
         });
-
-        // 更新瀏覽次數
-        updateView(id);
       });
     });
 
