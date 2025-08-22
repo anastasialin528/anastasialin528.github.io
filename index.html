@@ -1,498 +1,456 @@
 <!DOCTYPE html> /*測試*/
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Anastasia</title>
-    <style>
-        /* ====== 全站基本樣式 ====== */
-        body {
-            margin: 0;
-            font-family: "Microsoft JhengHei", sans-serif;
-            background: #f9f9f6;
-            color: #333;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Anastasia</title>
+    <style>
+        /* ====== 全站基本樣式 ====== */
+        body {
+            margin: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f9f9f6;
+            color: #333;
+        }
 
-        /* ====== Header（固定在頂端） ====== */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            background: #212121;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-sizing: border-box;
-        }
+        /* ====== Header（固定在頂端） ====== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #212121;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
 
-        header h1 {
-            margin: 0;
-            font-size: 2rem;
-            color: #fff;
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #fff;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
 
-        nav {
-            display: flex;
-            gap: 1.5rem;
-            margin-left: auto;
-            margin-right: 1rem;
-            flex-shrink: 0;
-        }
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            margin-left: auto;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            white-space: nowrap;
-        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            white-space: nowrap;
+        }
 
-        nav a:hover {
-            text-decoration: underline;
-        }
+        nav a:hover {
+            text-decoration: underline;
+        }
 
-        /* ====== Hero 區塊 ====== */
-        .hero-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
-            grid-auto-rows: 50vh;
-            width: 100vw;
-            margin-top: 64px;
-        }
+        /* ====== Hero 區塊 ====== */
+        .hero-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+            grid-auto-rows: 50vh;
+            width: 100vw;
+            margin-top: 64px;
+        }
 
-        .hero-gallery img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        .hero-gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
-        .hero-title {
-            text-align: center;
-            padding: 2rem 1rem;
-            font-size: 3rem;
-            color: #6fb1a0;
-            font-weight: bold;
-            font-family: 'Segoe Script', cursive;
-        }
+        .hero-title {
+            text-align: center;
+            padding: 2rem 1rem;
+            font-size: 3rem;
+            color: #6fb1a0;
+            font-weight: bold;
+            font-family: 'Segoe Script', cursive;
+        }
 
-        /* ====== 版面容器 ====== */
-        .content-wrapper {
-            background: #f9f9f6;
-            padding: 2rem 1rem;
-            display: flex;
-            justify-content: center;
-        }
+        /* ====== 版面容器 ====== */
+        .content-wrapper {
+            background: #f9f9f6;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+        }
 
-        main {
-            max-width: 1000px;
-            width: 100%;
-        }
+        main {
+            max-width: 1000px;
+            width: 100%;
+        }
 
-        /* ====== 標籤（篩選） ====== */
-        .tags {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
+        /* ====== 標籤（篩選） ====== */
+        .tags {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-        .tags button {
-            background: #fff;
-            border: 2px solid #6fb1a0;
-            color: #6fb1a0;
-            padding: .5rem 1.2rem;
-            margin: .4rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all .3s ease;
-        }
+        .tags button {
+            background: #fff;
+            border: 2px solid #6fb1a0;
+            color: #6fb1a0;
+            padding: .5rem 1.2rem;
+            margin: .4rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all .3s ease;
+        }
 
-        .tags button:hover {
-            background: #6fb1a0;
-            color: #fff;
-        }
+        .tags button:hover {
+            background: #6fb1a0;
+            color: #fff;
+        }
 
-        /* ====== 卡片牆（Masonry 模擬） ====== */
-        .posts {
-            column-count: 3;
-            column-gap: 1.5rem;
-        }
+        /* ====== 卡片牆（Masonry 模擬） ====== */
+        .posts {
+            column-count: 3;
+            column-gap: 1.5rem;
+        }
 
-        @media (max-width: 1024px) {
-            .posts {
-                column-count: 2;
-            }
-        }
+        @media (max-width: 1024px) {
+            .posts {
+                column-count: 2;
+            }
+        }
 
-        @media (max-width: 600px) {
-            .posts {
-                column-count: 1;
-            }
-        }
+        @media (max-width: 600px) {
+            .posts {
+                column-count: 1;
+            }
+        }
 
-        /* ====== 卡片樣式 ====== */
-        .card {
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
-            text-decoration: none;
-            color: inherit;
-            transition: transform .3s ease;
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 1.5rem;
-            break-inside: avoid;
-            position: relative;
-        }
+        /* ====== 卡片樣式 ====== */
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+            text-decoration: none;
+            color: inherit;
+            transition: transform .3s ease;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            break-inside: avoid;
+            position: relative;
+        }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-        .card img {
-            width: 100%;
-            height: 320px;
-            object-fit: cover;
-            display: block;
-        }
+        .card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+        }
 
-        .card-content {
-            padding: 1rem;
-        }
+        .card-content {
+            padding: 1rem;
+        }
 
-        .card-content h2 {
-            margin: 0 0 .5rem;
-            color: #6fb1a0;
-            font-size: 1.4rem;
-        }
+        .card-content h2 {
+            margin: 0 0 .5rem;
+            color: #6fb1a0;
+            font-size: 1.4rem;
+        }
 
-        .card-content .date {
-            font-size: .9rem;
-            color: #999;
-            margin-bottom: .5rem;
-        }
+        .card-content .date {
+            font-size: .9rem;
+            color: #999;
+            margin-bottom: .5rem;
+        }
 
-        .card-content p {
-            margin: 0;
-            line-height: 1.6;
-            color: #555;
-        }
+        .card-content p {
+            margin: 0;
+            line-height: 1.6;
+            color: #555;
+        }
 
-        .card-meta {
-            border-top: 1px solid #ccc;
-            margin-top: 1rem;
-            padding-top: .8rem;
-            padding-left: .5rem;
-            padding-right: .5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: .9rem;
-            color: #999;
-        }
+        .card-meta {
+            border-top: 1px solid #ccc;
+            margin-top: 1rem;
+            padding-top: .8rem;
+            padding-left: .5rem;
+            padding-right: .5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: .9rem;
+            color: #999;
+        }
 
-        .like-btn {
-            background: none;
-            border: none;
-            color: red;
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-        }
+        .like-btn {
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
 
-        .like-btn span {
-            margin-left: 5px;
-        }
+        .like-btn span {
+            margin-left: 5px;
+        }
 
-        .like-btn.is-liked {
-            opacity: .6;
-            cursor: default;
-            pointer-events: none;
-        }
+        .like-btn.is-liked {
+            opacity: .6;
+            cursor: default;
+            pointer-events: none;
+        }
 
-        /* ====== 頁尾 ====== */
-        .site-footer {
-            background: #f1f0ed;
-            padding: 3rem 1rem;
-        }
+        /* ====== 頁尾 ====== */
+        .site-footer {
+            background: #f1f0ed;
+            padding: 3rem 1rem;
+        }
 
-        .footer-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-            position: relative;
-        }
+        .footer-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-        .footer-social {
-            display: flex;
-            gap: 3rem;
-            justify-content: flex-end;
-            margin-bottom: 1.25rem;
-            font-style: italic;
-        }
+        .footer-social {
+            display: flex;
+            gap: 3rem;
+            justify-content: flex-end;
+            margin-bottom: 1.25rem;
+            font-style: italic;
+        }
 
-        .footer-social a {
-            color: #133d33;
-            text-decoration: none;
-        }
+        .footer-social a {
+            color: #133d33;
+            text-decoration: none;
+        }
 
-        .footer-social a:hover {
-            text-decoration: underline;
-        }
+        .footer-social a:hover {
+            text-decoration: underline;
+        }
 
-        .footer-line {
-            height: 2px;
-            background: #133d33;
-            border: none;
-            width: 100%;
-            margin: 1rem auto 1.25rem;
-        }
+        .footer-line {
+            height: 2px;
+            background: #133d33;
+            border: none;
+            width: 100%;
+            margin: 1rem auto 1.25rem;
+        }
 
-        .footer-copy {
-            text-align: center;
-            font-size: .9rem;
-            color: #6b7b74;
-        }
+        .footer-copy {
+            text-align: center;
+            font-size: .9rem;
+            color: #6b7b74;
+        }
 
-        @media (max-width: 768px) {
-            .footer-social {
-                justify-content: center;
-                gap: 2rem;
-            }
-        }
-    </style>
+        @media (max-width: 768px) {
+            .footer-social {
+                justify-content: center;
+                gap: 2rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <h1>dEaR dIaRy</h1>
-        <nav>
-            <a href="index.html">MAIN PAGE</a>
-            <a href="about.html">ABOUT ME</a>
-            <a href="contact.html">CONTACT</a>
-        </nav>
-    </header>
+    <header>
+        <h1>dEaR dIaRy</h1>
+        <nav>
+            <a href="index.html">MAIN PAGE</a>
+            <a href="about.html">ABOUT ME</a>
+            <a href="contact.html">CONTACT</a>
+        </nav>
+    </header>
 
-    <div class="hero-gallery">
-        <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy">
-    </div>
-    <div class="hero-title">Beautiful Little Things</div>
-    <div class="content-wrapper">
-        <main>
-            <div class="tags" aria-label="文章分類篩選">
-                <button type="button" onclick="filterTag('all')">全部</button>
-                <button type="button" onclick="filterTag('旅遊')">旅遊</button>
-                <button type="button" onclick="filterTag('星空')">星空</button>
-                <button type="button" onclick="filterTag('日常')">日常</button>
-                <button type="button" onclick="filterTag('潛水')">潛水</button>
-            </div>
+    <div class="hero-gallery">
+        <img src="images/DSC0E8628.jpg" alt="Hero image" loading="lazy">
+    </div>
+    <div class="hero-title">Beautiful Little Things</div>
+    <div class="content-wrapper">
+        <main>
+            <div class="tags" aria-label="文章分類篩選">
+                <button type="button" onclick="filterTag('all')">全部</button>
+                <button type="button" onclick="filterTag('旅遊')">旅遊</button>
+                <button type="button" onclick="filterTag('星空')">星空</button>
+                <button type="button" onclick="filterTag('日常')">日常</button>
+                <button type="button" onclick="filterTag('潛水')">潛水</button>
+            </div>
 
-            <div class="posts" id="postList"></div>
-        </main>
-    </div>
+            <div class="posts" id="postList"></div>
+        </main>
+    </div>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <nav class="footer-social" aria-label="Social links">
-                <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a>
-                <a href="https://www.instagram.com/anastasialin528/" target="_blank" rel="noopener">Instagram</a>
-                <a href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a>
-                <a href="https://www.youtube.com/" target="_blank" rel="noopener">Youtube</a>
-                <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
-            </nav>
-            <hr class="footer-line">
-            <div class="footer-copy">© 2025 我的日記部落格</div>
-        </div>
-    </footer>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <nav class="footer-social" aria-label="Social links">
+                <a href="https://www.facebook.com/anastasialin528" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.instagram.com/anastasialin528/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.pinterest.com/" target="_blank" rel="noopener">Pinterest</a>
+                <a href="https://www.youtube.com/" target="_blank" rel="noopener">Youtube</a>
+                <a href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+            </nav>
+            <hr class="footer-line">
+            <div class="footer-copy">© 2025 我的日記部落格</div>
+        </div>
+    </footer>
 
-    <script>
-        const posts = [
-            {
-                tag: "旅遊",
-                id: "2023年6月25日", // 使用一個唯一的 ID，例如檔名
-                href: "2023年6月25日.html",
-                img: "images/九份.jpg",
-                title: "｜九份｜",
-                date: "2023年6月25日",
-                excerpt: "收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️"
-            },
-            {
-                tag: "旅遊",
-                id: "2023年7月2日",
-                href: "2023年7月2日.html",
-                img: "images/BLUE.jpg",
-                title: "｜台中老家三日遊｜",
-                date: "2023年7月2日",
-                excerpt: "LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳"
-            },
-            {
-                tag: "旅遊",
-                id: "2023年9月29日",
-                href: "2023年9月29日.html",
-                img: "images/林口海邊夕陽.jpg",
-                title: "｜林口海邊｜",
-                date: "2023年9月29日",
-                excerpt: "放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋"
-            },
-            {
-                tag: "旅遊",
-                id: "2023年11月16日",
-                href: "2023年11月16日.html",
-                img: "images/DSC0E8692.jpg",
-                title: "｜弘前城公園｜",
-                date: "2023年11月16日",
-                excerpt: "旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城..."
-            },
-            {
-                tag: "旅遊",
-                id: "2023年11月18日",
-                href: "2023年11月18日.html",
-                img: "images/街貓.jpg",
-                title: "｜街貓｜",
-                date: "2023年11月18日",
-                excerpt: "好幸運，今天遇見住在柿園裡的小貓。更幸運的是能有機會迅速拍下牠可愛的背影。相機果然需要隨身攜帶，路途中總是有美好的畫面值得紀錄。"
-            },
-            {
-                tag: "旅遊",
-                id: "2023年11月19日",
-                href: "2023年11月19日.html",
-                img: "images/楓樹.jpg",
-                title: "｜毛越寺的楓樹｜",
-                date: "2023年11月19日",
-                excerpt: "光影從葉子上頭打下來，或穿透或產生暗部陰影的效果，加上楓葉原先漸層的色彩令人著迷。"
-            },
-            {
-                tag: "旅遊",
-                id: "2023年11月24日",
-                href: "2023年11月24日.html",
-                img: "images/DSC0E8750.jpg",
-                title: "｜弘前城植物園｜",
-                date: "2023年11月24日",
-                excerpt: "之於火紅的楓葉🍁其實我更愛銀杏的黃。好想讓整片銀杏佈滿底片啊～這棵在弘前城植物園超巨大的樹🌲"
-            },
-            {
-                tag: "旅遊",
-                id: "2023年11月26日",
-                href: "2023年11月26日.html",
-                img: "images/DSC0E8282.jpg",
-                title: "｜標準鏡｜",
-                date: "2023年11月26日",
-                excerpt: "旅行最常用的是標準鏡。小光圈拍中遠景偽廣角，小品特寫又最自然，完整保留當下的樣貌。"
-            },
-            {
-                tag: "旅遊",
-                id: "2023年11月28日",
-                href: "2023年11月28日.html",
-                img: "images/DSC08289.jpg",
-                title: "｜鳴子峽火車站｜",
-                date: "2023年11月28日",
-                excerpt: "11/10旅行第二天6:50左右，我們從仙台站搭乘山彥號..."
-            },
-            {
-                tag: "星空",
-                id: "2024年12月3日",
-                href: "2024年12月3日.html",
-                img: "images/1.jpg",
-                title: "｜晨曦前的星空｜",
-                date: "2024年12月3日",
-                excerpt: "昨天五點半起床趕航海曙光，今天更早拍到更多星星與疑似火流星..."
-            },
-            {
-                tag: "星空",
-                id: "2025年3月2日",
-                href: "2025年3月2日.html",
-                img: "images/DSC09815.jpg",
-                title: "｜溫馨的夜｜",
-                date: "2025年3月2日",
-                excerpt: "日落後雲隙透出上弦月與金星，紅色地平線與微笑月亮..."
-            },
-            {
-                tag: "日常",
-                id: "2024年10月23日",
-                href: "2024年10月23日.html",
-                img: "images/聖誕樹.jpg",
-                title: "｜聖誕樹｜",
-                date: "2024年10月23日",
-                excerpt: "多年願望：在家擺一棵會帶來幸福感的聖誕樹。"
-            },
-            {
-                tag: "日常",
-                id: "2025年3月5日",
-                href: "2025年3月5日.html",
-                img: "images/天空大鳥.jpg",
-                title: "｜美麗的天空｜",
-                date: "2025年3月5日",
-                excerpt: "天氣不好拍不到星，就地取材，仍能遇見上好風景。"
-            },
-            {
-                tag: "日常",
-                id: "2025年4月15日",
-                href: "2025年4月15日.html",
-                img: "images/苔蘚.jpg",
-                title: "｜四月十五日｜",
-                date: "2025年4月15日",
-                excerpt: "一首詩與一段自述，配色地獄後的日常療癒：新朋友苔蘚。"
-            },
-            {
-                tag: "潛水",
-                id: "2025年4月21日",
-                href: "2025年4月21日.html",
-                img: "images/面鏡.jpg",
-                title: "｜面鏡開箱｜",
-                date: "2025年4月21日",
-                excerpt: "週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。"
-            }
-        ];
-
-        const postList = document.getElementById("postList");
-
-        posts.forEach((post) => {
-            const card = document.createElement("a");
-            card.href = post.href;
-            card.className = "card";
-            card.setAttribute("data-post-id", post.id); // **這行是正確的，保留**
-            card.setAttribute("data-tag", post.tag);
-            card.innerHTML = `
-                <img src="${post.img}" alt="${post.title}" loading="lazy">
-                <div class="card-content">
-                    <h2>${post.title}</h2>
-                    <div class="date">${post.date}</div>
-                    <p>${post.excerpt}</p>
-                    <div class="card-meta">
-                        <span><span class="views">0</span> views</span>
-                        <button class="like-btn" type="button" data-post-id="${post.id}" aria-label="按讚">
-                            <span>♡</span> <span class="likes">0</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-            postList.appendChild(card);
-        });
-
-        // 篩選功能，保持不變
-        function filterTag(tag) {
-            const allCards = document.querySelectorAll('.card');
-            allCards.forEach(card => {
-                if (tag === 'all' || card.dataset.tag === tag) {
-                    card.style.display = 'inline-block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
-
-   
-<script>
+    <script>
         const posts = [
-            //... 你的文章陣列
+            {
+                tag: "旅遊",
+                id: "2023年6月25日",
+                href: "2023年6月25日.html",
+                img: "images/九份.jpg",
+                title: "｜九份｜",
+                date: "2023年6月25日",
+                excerpt: "收假前一衝💃🕺🏻/依山傍海超強外景⛰️🏖️"
+            },
+            {
+                tag: "旅遊",
+                id: "2023年7月2日",
+                href: "2023年7月2日.html",
+                img: "images/BLUE.jpg",
+                title: "｜台中老家三日遊｜",
+                date: "2023年7月2日",
+                excerpt: "LaLaport踩點尋找龍貓好朋友：龍貓BLUE/遲來的一大堆生日禮物🎁裝滿一卡皮箱🧳"
+            },
+            {
+                tag: "旅遊",
+                id: "2023年9月29日",
+                href: "2023年9月29日.html",
+                img: "images/林口海邊夕陽.jpg",
+                title: "｜林口海邊｜",
+                date: "2023年9月29日",
+                excerpt: "放鬆的海岸線/鹹鹹的海風/懷念的阿Q桶麵/美味的抹茶冰淇淋"
+            },
+            {
+                tag: "旅遊",
+                id: "2023年11月16日",
+                href: "2023年11月16日.html",
+                img: "images/DSC0E8692.jpg",
+                title: "｜弘前城公園｜",
+                date: "2023年11月16日",
+                excerpt: "旅程最後一天，為了在前往仙台機場前抓緊時間前往弘前城..."
+            },
+            {
+                tag: "旅遊",
+                id: "2023年11月18日",
+                href: "2023年11月18日.html",
+                img: "images/街貓.jpg",
+                title: "｜街貓｜",
+                date: "2023年11月18日",
+                excerpt: "好幸運，今天遇見住在柿園裡的小貓。更幸運的是能有機會迅速拍下牠可愛的背影。相機果然需要隨身攜帶，路途中總是有美好的畫面值得紀錄。"
+            },
+            {
+                tag: "旅遊",
+                id: "2023年11月19日",
+                href: "2023年11月19日.html",
+                img: "images/楓樹.jpg",
+                title: "｜毛越寺的楓樹｜",
+                date: "2023年11月19日",
+                excerpt: "光影從葉子上頭打下來，或穿透或產生暗部陰影的效果，加上楓葉原先漸層的色彩令人著迷。"
+            },
+            {
+                tag: "旅遊",
+                id: "2023年11月24日",
+                href: "2023年11月24日.html",
+                img: "images/DSC0E8750.jpg",
+                title: "｜弘前城植物園｜",
+                date: "2023年11月24日",
+                excerpt: "之於火紅的楓葉🍁其實我更愛銀杏的黃。好想讓整片銀杏佈滿底片啊～這棵在弘前城植物園超巨大的樹🌲"
+            },
+            {
+                tag: "旅遊",
+                id: "2023年11月26日",
+                href: "2023年11月26日.html",
+                img: "images/DSC0E8282.jpg",
+                title: "｜標準鏡｜",
+                date: "2023年11月26日",
+                excerpt: "旅行最常用的是標準鏡。小光圈拍中遠景偽廣角，小品特寫又最自然，完整保留當下的樣貌。"
+            },
+            {
+                tag: "旅遊",
+                id: "2023年11月28日",
+                href: "2023年11月28日.html",
+                img: "images/DSC08289.jpg",
+                title: "｜鳴子峽火車站｜",
+                date: "2023年11月28日",
+                excerpt: "11/10旅行第二天6:50左右，我們從仙台站搭乘山彥號..."
+            },
+            {
+                tag: "星空",
+                id: "2024年12月3日",
+                href: "2024年12月3日.html",
+                img: "images/1.jpg",
+                title: "｜晨曦前的星空｜",
+                date: "2024年12月3日",
+                excerpt: "昨天五點半起床趕航海曙光，今天更早拍到更多星星與疑似火流星..."
+            },
+            {
+                tag: "星空",
+                id: "2025年3月2日",
+                href: "2025年3月2日.html",
+                img: "images/DSC09815.jpg",
+                title: "｜溫馨的夜｜",
+                date: "2025年3月2日",
+                excerpt: "日落後雲隙透出上弦月與金星，紅色地平線與微笑月亮..."
+            },
+            {
+                tag: "日常",
+                id: "2024年10月23日",
+                href: "2024年10月23日.html",
+                img: "images/聖誕樹.jpg",
+                title: "｜聖誕樹｜",
+                date: "2024年10月23日",
+                excerpt: "多年願望：在家擺一棵會帶來幸福感的聖誕樹。"
+            },
+            {
+                tag: "日常",
+                id: "2025年3月5日",
+                href: "2025年3月5日.html",
+                img: "images/天空大鳥.jpg",
+                title: "｜美麗的天空｜",
+                date: "2025年3月5日",
+                excerpt: "天氣不好拍不到星，就地取材，仍能遇見上好風景。"
+            },
+            {
+                tag: "日常",
+                id: "2025年4月15日",
+                href: "2025年4月15日.html",
+                img: "images/苔蘚.jpg",
+                title: "｜四月十五日｜",
+                date: "2025年4月15日",
+                excerpt: "一首詩與一段自述，配色地獄後的日常療癒：新朋友苔蘚。"
+            },
+            {
+                tag: "潛水",
+                id: "2025年4月21日",
+                href: "2025年4月21日.html",
+                img: "images/面鏡.jpg",
+                title: "｜面鏡開箱｜",
+                date: "2025年4月21日",
+                excerpt: "週間沒時間下水，先做陸上鍛鍊與面鏡『開鏡』儀式。"
+            }
         ];
+
         const postList = document.getElementById("postList");
+
         posts.forEach((post) => {
             const card = document.createElement("a");
             card.href = post.href;
@@ -528,11 +486,11 @@
             });
         }
     </script>
-    <script src="api.js"></script>
-    <script>
-      // 在所有卡片都建立完成後，才呼叫統計函式
-      initBlogStats();
-    </script>
+
+    <script src="api.js"></script>
+    <script>
+      // 載入 api.js 後，在所有卡片都建立完成後才呼叫統計函式
+      initBlogStats();
+    </script>
 </body>
 </html>
-
